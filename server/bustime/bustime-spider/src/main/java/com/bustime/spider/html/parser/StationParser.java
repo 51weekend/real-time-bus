@@ -1,5 +1,6 @@
-package com.realtimebus.spider.html.parser;
+package com.bustime.spider.html.parser;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import org.htmlparser.tags.TableTag;
 import org.htmlparser.util.NodeList;
 
 import com.alibaba.fastjson.JSON;
+import com.bustime.core.logger.LoggerUtils;
 
 /**
  * 
@@ -29,6 +31,7 @@ import com.alibaba.fastjson.JSON;
 public class StationParser {
 
     private static Map<Integer, String> colMap = new HashMap<Integer, String>();
+    private static String url;
 
     static {
         colMap.put(0, "stationName");
@@ -37,31 +40,32 @@ public class StationParser {
         colMap.put(3, "road");
         colMap.put(4, "roadSection");
         colMap.put(5, "trend");
+
+        try {
+            url = "http://www.szjt.gov.cn/apts/default.aspx?__EVENTVALIDATION="
+                    + URLEncoder.encode("/wEWBQLi9afBDgLq+uyKCAKkmJj/DwL0+sTIDgLl5vKEDpw94uqehgsgP25TIVg5cQBBQZj0",
+                            "utf-8") + "&__VIEWSTATE="
+                    + URLEncoder.encode("/wEPDwULLTE5ODM5MjcxNzlkZAPmAlFZ6B58iSScBgX0og8wpbih", "utf-8")
+                    + "&ctl00$MainContent$SearchCode=" + URLEncoder.encode("搜索", "utf-8")
+                    + "&ctl00$MainContent$StandName=";
+        } catch (UnsupportedEncodingException e) {
+            LoggerUtils.error("init StationParser url error", e);
+        }
     }
 
-    /**
-    * 入口方法.
-    * 
-    * @param args
-    * @throws Exception
-    */
     public static void main(String args[]) throws Exception {
-        String path = "http://www.szjt.gov.cn/apts/default.aspx?__EVENTVALIDATION="
-                + URLEncoder
-                        .encode("/wEWBQLi9afBDgLq+uyKCAKkmJj/DwL0+sTIDgLl5vKEDpw94uqehgsgP25TIVg5cQBBQZj0", "utf-8")
-                + "&__VIEWSTATE=" + URLEncoder.encode("/wEPDwULLTE5ODM5MjcxNzlkZAPmAlFZ6B58iSScBgX0og8wpbih", "utf-8")
-                + "&ctl00$MainContent$SearchCode=" + URLEncoder.encode("搜索", "utf-8") + "&ctl00$MainContent$StandName="
-                + URLEncoder.encode("海悦花园", "utf-8");
-        parser(path);
+        StationParser parser = new StationParser();
+        System.out.println(parser.parser("海悦花园"));
 
     }
 
     /**
-     * 解析站点内容 TODO:参数为站点名称
+     * 解析站点
      * @param url
      * @throws Exception
      */
-    public static void parser(String url) throws Exception {
+    public String parser(String name) throws Exception {
+        url += URLEncoder.encode(name, "utf-8");
         Parser parser = new Parser(url);
         parser.setEncoding("utf8");
         TagNameFilter aFilter = new TagNameFilter("span");
@@ -71,9 +75,9 @@ public class StationParser {
         Node tag = pList.elements().nextNode();
 
         if (!(tag instanceof Span)) {
-            return;
+            return null;
         }
-
+        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
         NodeList table = tag.getChildren();
         for (int i = 0; i < table.size(); i++) {
             Node node = table.elementAt(i);
@@ -81,7 +85,7 @@ public class StationParser {
                 continue;
             }
             NodeList tableRows = node.getChildren();
-            List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+
             for (int j = 1; j < tableRows.size(); j++) {
                 TableRow row = (TableRow) tableRows.elementAt(j);
                 TableColumn[] cols = row.getColumns();
@@ -97,8 +101,9 @@ public class StationParser {
                 data.add(rowData);
 
             }
-            System.out.println(JSON.toJSONString(data));
         }
+
+        return JSON.toJSONString(data);
     }
 
 }

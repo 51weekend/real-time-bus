@@ -4,7 +4,7 @@
  * Created on 2012-11-21.
  */
 
-package com.realtimebus.core.model;
+package com.bustime.core.model;
 
 /**
  * 站台信息.
