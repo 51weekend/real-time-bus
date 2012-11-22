@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+<Configure id="Server" class="org.mortbay.jetty.Server">
+  <Set name="ThreadPool">
+    <New class="org.mortbay.thread.QueuedThreadPool">
+      <Set name="minThreads">30</Set>
+      <Set name="maxThreads">400</Set>
+      <Set name="lowThreads">20</Set>
+      <Set name="SpawnOrShrinkAt">2</Set>
+    </New>
+  </Set>
+
+  <Call name="addConnector">
+    <Arg>
+      <New class="org.mortbay.jetty.nio.SelectChannelConnector">
+        <Set name="host"><SystemProperty name="jetty.host"/></Set>
+        <Set name="port"><SystemProperty name="jetty.port" default="8080"/></Set>
+        <Set name="maxIdleTime">30000</Set>
+        <Set name="Acceptors">10</Set>
+        <Set name="statsOn">false</Set>
+        <Set name="confidentialPort">8443</Set>
+        <Set name="lowResourcesConnections">5000</Set>
+        <Set name="lowResourcesMaxIdleTime">5000</Set>
+        <Set name="acceptQueueSize">1000</Set>
+      </New>
+    </Arg>
+  </Call>
+
+  <Set name="handler">
+    <New id="Handlers" class="org.mortbay.jetty.handler.HandlerCollection">
+      <Set name="handlers">
+        <Array type="org.mortbay.jetty.Handler">
+          <Item>
+            <New id="Contexts" class="org.mortbay.jetty.handler.ContextHandlerCollection"/>
+          </Item>
+          <Item>
+            <New id="RequestLog" class="org.mortbay.jetty.handler.RequestLogHandler"/>
+          </Item>
+        </Array>
+      </Set>
+    </New>
+  </Set>
+
+  <Call name="addLifeCycle">
+    <Arg>
+      <New class="org.mortbay.jetty.deployer.WebAppDeployer">
+        <Set name="contexts"><Ref id="Contexts"/></Set>
+        <Set name="webAppDir"><SystemProperty name="project.home" default="."/>/webapps</Set>
+        <Set name="parentLoaderPriority">false</Set>
+        <Set name="extract">true</Set>
+        <Set name="allowDuplicates">false</Set>
+        <Set name="defaultsDescriptor"><SystemProperty name="project.home" default="."/>/conf/jetty/webdefault.xml</Set>
+      </New>
+    </Arg>
+  </Call>
+
+  <Set name="stopAtShutdown">true</Set>
+  <Set name="sendServerVersion">true</Set>
+  <Set name="sendDateHeader">true</Set>
+  <Set name="gracefulShutdown">1000</Set>
+  <!-- 
+  <New id="ServerLog" class="java.io.PrintStream">
+    <Arg>
+      <New class="org.mortbay.util.RolloverFileOutputStream">
+        <Arg><SystemProperty name="log.home" default="."/>/stderrout.log</Arg>
+        <Arg type="boolean">false</Arg>
+        <Arg type="int">90</Arg>
+        <Get id="ServerLogName" name="datedFilename"/>
+      </New>
+    </Arg>
+  </New>
+
+  <Call class="org.mortbay.log.Log" name="info"><Arg>Redirecting stderr/stdout to <Ref id="ServerLogName"/></Arg></Call>
+  <Call class="java.lang.System" name="setErr"><Arg><Ref id="ServerLog"/></Arg></Call>
+  <Call class="java.lang.System" name="setOut"><Arg><Ref id="ServerLog"/></Arg></Call>
+   -->
+</Configure>
+

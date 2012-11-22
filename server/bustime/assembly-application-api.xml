@@ -1,0 +1,49 @@
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+
+	<id>api</id>
+	<formats>
+		<format>tar.gz</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<files>
+		<file>
+			<source>bustime-api/target/bustime-api-${project.version}.war</source>
+			<destName>api.war</destName>
+			<outputDirectory>bustime/webapps</outputDirectory>
+		</file>
+		<file>
+			<source>deploy/bin/service</source>
+			<destName>service</destName>
+			<outputDirectory>bustime/bin</outputDirectory>
+		</file>
+		<file>
+			<source>deploy/conf/jetty/jetty.xml</source>
+			<destName>jetty.xml</destName>
+			<outputDirectory>bustime/conf/jetty</outputDirectory>
+		</file>
+		<file>
+			<source>deploy/conf/jetty/webdefault.xml</source>
+			<destName>webdefault.xml</destName>
+			<outputDirectory>bustime/conf/jetty</outputDirectory>
+		</file>
+		<file>
+			<source>deploy/conf/bustime.properties</source>
+			<destName>bustime.properties</destName>
+			<outputDirectory>bustime/conf</outputDirectory>
+		</file>
+		<file>
+			<source>deploy/conf/bustime_local.properties</source>
+			<destName>bustime_local.properties</destName>
+			<outputDirectory>bustime/conf</outputDirectory>
+		</file>
+		<file>
+			<source>deploy/conf/bustime_prod.properties</source>
+			<destName>bustime_prod.properties</destName>
+			<outputDirectory>bustime/conf</outputDirectory>
+		</file>
+	</files>
+
+</assembly>

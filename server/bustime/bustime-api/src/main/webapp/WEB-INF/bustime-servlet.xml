@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd 
+		">
+
+	<context:annotation-config />
+
+	<mvc:resources location="/common/" mapping="/common/**" />
+	<mvc:resources location="/files/" mapping="/files/**" />
+	<mvc:resources location="/apks/" mapping="/apks/**" />
+	<mvc:resources location="/*.html" mapping="/*.html" />
+	<mvc:resources location="/images/" mapping="/images/**" />
+
+	<mvc:annotation-driven />
+
+	<import resource="classpath:applicationContext-core.xml" />
+
+
+	<context:component-scan base-package="com.bustime.web.controller" />
+
+	<bean
+		class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
+		<property name="basePackage" value="com.bustime.web.controller"></property>
+	</bean>
+
+</beans>

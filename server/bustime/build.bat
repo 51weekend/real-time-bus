@@ -1,0 +1,1 @@
+mvn clean install assembly:assembly -Dmaven.test.skip=true

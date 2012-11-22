@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomcatProjectProperties>
+    <rootDir>/src/main/webapp</rootDir>
+    <exportSource>false</exportSource>
+    <reloadable>true</reloadable>
+    <redirectLogger>false</redirectLogger>
+    <updateXml>true</updateXml>
+    <warLocation></warLocation>
+    <extraInfo></extraInfo>
+    <webPath>bustime</webPath>
+    <webClassPathEntries>
+        <webClassPathEntry>/bustime-api/target/classes</webClassPathEntry>
+        <webClassPathEntry>/bustime-core/target/classes</webClassPathEntry>
+        <webClassPathEntry>/bustime-spider/target/classes</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/aspectj/aspectjweaver/1.6.8/aspectjweaver-1.6.8.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/com/alibaba/fastjson/1.1.23/fastjson-1.1.23.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/commons-beanutils/commons-beanutils/1.8.0/commons-beanutils-1.8.0.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/commons-dbcp/commons-dbcp/1.4/commons-dbcp-1.4.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/commons-lang/commons-lang/2.4/commons-lang-2.4.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/commons-pool/commons-pool/1.5.4/commons-pool-1.5.4.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/mysql/mysql-connector-java/5.1.10/mysql-connector-java-5.1.10.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/net/sf/ezmorph/ezmorph/1.0.6/ezmorph-1.0.6.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.4.0/jackson-core-asl-1.4.0.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.4.0/jackson-mapper-asl-1.4.0.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/htmlparser/HTMLParser/1.6/htmlparser-1.6.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/mybatis/mybatis-spring/1.0.1/mybatis-spring-1.0.1.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/mybatis/mybatis/3.0.6/mybatis-3.0.6.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/slf4j/slf4j-api/1.7.2/slf4j-api-1.7.2.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/slf4j/slf4j-log4j12/1.7.2/slf4j-log4j12-1.7.2.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/springframework/spring-aop/3.0.5.RELEASE/spring-aop-3.0.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/springframework/spring-asm/3.0.5.RELEASE/spring-asm-3.0.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/springframework/spring-beans/3.0.5.RELEASE/spring-beans-3.0.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/springframework/spring-context-support/3.0.5.RELEASE/spring-context-support-3.0.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/springframework/spring-context/3.0.5.RELEASE/spring-context-3.0.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/springframework/spring-core/3.0.5.RELEASE/spring-core-3.0.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/springframework/spring-expression/3.0.5.RELEASE/spring-expression-3.0.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/springframework/spring-jdbc/3.0.5.RELEASE/spring-jdbc-3.0.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/springframework/spring-orm/3.0.5.RELEASE/spring-orm-3.0.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/springframework/spring-test/3.0.5.RELEASE/spring-test-3.0.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/springframework/spring-tx/3.0.5.RELEASE/spring-tx-3.0.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/springframework/spring-web/3.0.5.RELEASE/spring-web-3.0.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/springframework/spring-webmvc/3.0.5.RELEASE/spring-webmvc-3.0.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Documents and Settings/chengdong/.m2/repository/org/tuckey/urlrewritefilter/3.0.4/urlrewritefilter-3.0.4.jar</webClassPathEntry>
+        <webClassPathEntry>D:/tool/dev/java/jdk1.6.0_30/jre/lib/charsets.jar</webClassPathEntry>
+        <webClassPathEntry>D:/tool/dev/java/jdk1.6.0_30/jre/lib/ext/dnsns.jar</webClassPathEntry>
+        <webClassPathEntry>D:/tool/dev/java/jdk1.6.0_30/jre/lib/ext/localedata.jar</webClassPathEntry>
+        <webClassPathEntry>D:/tool/dev/java/jdk1.6.0_30/jre/lib/ext/sunjce_provider.jar</webClassPathEntry>
+        <webClassPathEntry>D:/tool/dev/java/jdk1.6.0_30/jre/lib/ext/sunmscapi.jar</webClassPathEntry>
+        <webClassPathEntry>D:/tool/dev/java/jdk1.6.0_30/jre/lib/ext/sunpkcs11.jar</webClassPathEntry>
+        <webClassPathEntry>D:/tool/dev/java/jdk1.6.0_30/jre/lib/jce.jar</webClassPathEntry>
+        <webClassPathEntry>D:/tool/dev/java/jdk1.6.0_30/jre/lib/jsse.jar</webClassPathEntry>
+        <webClassPathEntry>D:/tool/dev/java/jdk1.6.0_30/jre/lib/resources.jar</webClassPathEntry>
+        <webClassPathEntry>D:/tool/dev/java/jdk1.6.0_30/jre/lib/rt.jar</webClassPathEntry>
+        <webClassPathEntry>D:/tool/dev/java/jdk1.6.0_30/lib/tools.jar</webClassPathEntry>
+    </webClassPathEntries>
+</tomcatProjectProperties>

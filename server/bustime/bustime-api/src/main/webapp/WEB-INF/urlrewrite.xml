@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.0//EN" 
+	"http://tuckey.org/res/dtds/urlrewrite3.0.dtd">
+<urlrewrite>
+	<!--
+	<rule>
+		<note>
+			- 这是一个通用请求url rewrite
+			- 将请求forword url加上“.do”的处理器上。
+			- 例：
+			-   请求 http://{domain}/user/login    将被forward到 http://{domain}/user/login.do
+			-   请求 http://{domain}/user/login/   将被forward到 http://{domain}/user/login.do
+			-   请求 http://{domain}/user/logout/  将被forward到 http://{domain}/user/logout.do
+		</note>
+		<from>^/([_a-zA-Z]+[_0-9a-zA-Z-/]*[_0-9a-zA-Z]+)/?$</from>
+		<to type="forward">/$1.do</to>
+	</rule>
+	//-->
+	
+	<rule>
+		<note>文件下载</note>
+		<from>^/files/([0-9]+)/([0-9]+)/([0-9]+)/([a-zA-Z0-9]+)\.([a-zA-Z0-9]+)$</from>
+		<to type="forward">/file/down?year=$1&amp;month=$2&amp;day=$3&amp;fileName=$4&amp;fileSuffix=$5</to>
+	</rule>
+	
+	<rule>
+		<note>文件下载</note>
+		<from>^/files/([0-9]+)/([0-9]+)/([0-9]+)/([a-zA-Z0-9]+)\.([a-zA-Z0-9]+)\_([0-9]+)$</from>
+		<to type="forward">/file/down?year=$1&amp;month=$2&amp;day=$3&amp;fileName=$4&amp;fileSuffix=$5&amp;imageWidth=$6&amp;imageHeight=$6</to>
+	</rule>
+	
+	<rule>
+		<note>文件下载</note>
+		<from>^/files/([0-9]+)/([0-9]+)/([0-9]+)/([a-zA-Z0-9]+)\.([a-zA-Z0-9]+)\_([0-9]+)x([0-9]+)$</from>
+		<to type="forward">/file/down?year=$1&amp;month=$2&amp;day=$3&amp;fileName=$4&amp;fileSuffix=$5&amp;imageWidth=$6&amp;imageHeight=$7</to>
+	</rule>
+	
+	<rule>
+		<note>文件下载</note>
+		<from>^/apks/([a-zA-Z0-9\_\-\.]+)$</from>
+		<to type="forward">/apk/down?fileName=$1</to>
+	</rule>
+	
+</urlrewrite>  

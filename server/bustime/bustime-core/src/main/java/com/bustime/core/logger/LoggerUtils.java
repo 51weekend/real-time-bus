@@ -20,6 +20,7 @@ public class LoggerUtils {
     private static final Logger alarm = LoggerFactory.getLogger("com.snda.family.server.looger.alarm");
 
     public static void error(String errorMessage, Throwable e) {
+        e.printStackTrace();
         error.error(errorMessage, e);
     }
 

@@ -6,6 +6,8 @@
 
 package com.bustime.core.model;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * 站台信息.
  *
@@ -13,27 +15,36 @@ package com.bustime.core.model;
  */
 public class Station {
 
-    private String stationName;
-    private String stationCode;
+    private String link;
+    private String standCode;
     private String area;
     private String road;
     private String roadSection;
     private String trend;
+    private String standName;
 
-    public String getStationName() {
-        return stationName;
+    public String getLink() {
+        return link;
     }
 
-    public void setStationName(String stationName) {
-        this.stationName = stationName;
+    public void setLink(String link) {
+        this.link = link;
     }
 
-    public String getStationCode() {
-        return stationCode;
+    public String getStandCode() {
+        return standCode;
     }
 
-    public void setStationCode(String stationCode) {
-        this.stationCode = stationCode;
+    public void setStandCode(String standCode) {
+        this.standCode = standCode;
+    }
+
+    public String getStandName() {
+        return standName;
+    }
+
+    public void setStandName(String standName) {
+        this.standName = standName;
     }
 
     public String getArea() {
@@ -66,6 +77,10 @@ public class Station {
 
     public void setTrend(String trend) {
         this.trend = trend;
+    }
+
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 
 }
