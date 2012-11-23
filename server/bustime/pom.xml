@@ -9,6 +9,7 @@
 		<module>bustime-api</module>
 		<module>bustime-spider</module>
 		<module>bustime-core</module>
+		<module>bustime-utils</module>
 	</modules>
 
 	<properties>

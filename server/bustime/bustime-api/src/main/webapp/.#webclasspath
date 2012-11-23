@@ -1,4 +1,4 @@
-E:\GitHub\realTimeBus\server\bustime\bustime-api\target\classes
+E:\GitHub\real-time-bus\server\bustime\bustime-api\target\classes
 D:\tool\dev\java\jdk1.6.0_30\jre\lib\resources.jar
 D:\tool\dev\java\jdk1.6.0_30\jre\lib\rt.jar
 D:\tool\dev\java\jdk1.6.0_30\jre\lib\jsse.jar
@@ -9,7 +9,14 @@ D:\tool\dev\java\jdk1.6.0_30\jre\lib\ext\localedata.jar
 D:\tool\dev\java\jdk1.6.0_30\jre\lib\ext\sunjce_provider.jar
 D:\tool\dev\java\jdk1.6.0_30\jre\lib\ext\sunmscapi.jar
 D:\tool\dev\java\jdk1.6.0_30\jre\lib\ext\sunpkcs11.jar
-E:\GitHub\realTimeBus\server\bustime\bustime-core\target\classes
+E:\GitHub\real-time-bus\server\bustime\bustime-core\target\classes
+E:\GitHub\real-time-bus\server\bustime\bustime-spider\target\classes
+E:\GitHub\real-time-bus\server\bustime\bustime-utils\target\classes
+C:\Documents and Settings\chengdong\.m2\repository\org\slf4j\slf4j-api\1.7.2\slf4j-api-1.7.2.jar
+C:\Documents and Settings\chengdong\.m2\repository\org\slf4j\slf4j-log4j12\1.7.2\slf4j-log4j12-1.7.2.jar
+C:\Documents and Settings\chengdong\.m2\repository\com\alibaba\fastjson\1.1.23\fastjson-1.1.23.jar
+C:\Documents and Settings\chengdong\.m2\repository\org\htmlparser\HTMLParser\1.6\htmlparser-1.6.jar
+D:\tool\dev\java\jdk1.6.0_30\lib\tools.jar
 C:\Documents and Settings\chengdong\.m2\repository\org\springframework\spring-aop\3.0.5.RELEASE\spring-aop-3.0.5.RELEASE.jar
 C:\Documents and Settings\chengdong\.m2\repository\aopalliance\aopalliance\1.0\aopalliance-1.0.jar
 C:\Documents and Settings\chengdong\.m2\repository\org\springframework\spring-asm\3.0.5.RELEASE\spring-asm-3.0.5.RELEASE.jar
@@ -25,12 +32,6 @@ C:\Documents and Settings\chengdong\.m2\repository\org\springframework\spring-tx
 C:\Documents and Settings\chengdong\.m2\repository\org\springframework\spring-test\3.0.5.RELEASE\spring-test-3.0.5.RELEASE.jar
 C:\Documents and Settings\chengdong\.m2\repository\org\springframework\spring-web\3.0.5.RELEASE\spring-web-3.0.5.RELEASE.jar
 C:\Documents and Settings\chengdong\.m2\repository\org\springframework\spring-webmvc\3.0.5.RELEASE\spring-webmvc-3.0.5.RELEASE.jar
-C:\Documents and Settings\chengdong\.m2\repository\org\htmlparser\HTMLParser\1.6\htmlparser-1.6.jar
-D:\tool\dev\java\jdk1.6.0_30\lib\tools.jar
-C:\Documents and Settings\chengdong\.m2\repository\org\slf4j\slf4j-api\1.7.2\slf4j-api-1.7.2.jar
-C:\Documents and Settings\chengdong\.m2\repository\org\slf4j\slf4j-log4j12\1.7.2\slf4j-log4j12-1.7.2.jar
-C:\Documents and Settings\chengdong\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar
-C:\Documents and Settings\chengdong\.m2\repository\com\alibaba\fastjson\1.1.23\fastjson-1.1.23.jar
 C:\Documents and Settings\chengdong\.m2\repository\commons-lang\commons-lang\2.4\commons-lang-2.4.jar
 C:\Documents and Settings\chengdong\.m2\repository\org\mybatis\mybatis\3.0.6\mybatis-3.0.6.jar
 C:\Documents and Settings\chengdong\.m2\repository\org\mybatis\mybatis-spring\1.0.1\mybatis-spring-1.0.1.jar
@@ -38,8 +39,10 @@ C:\Documents and Settings\chengdong\.m2\repository\commons-dbcp\commons-dbcp\1.4
 C:\Documents and Settings\chengdong\.m2\repository\commons-pool\commons-pool\1.5.4\commons-pool-1.5.4.jar
 C:\Documents and Settings\chengdong\.m2\repository\mysql\mysql-connector-java\5.1.10\mysql-connector-java-5.1.10.jar
 C:\Documents and Settings\chengdong\.m2\repository\aspectj\aspectjweaver\1.6.8\aspectjweaver-1.6.8.jar
-E:\GitHub\realTimeBus\server\bustime\bustime-spider\target\classes
 C:\Documents and Settings\chengdong\.m2\repository\org\tuckey\urlrewritefilter\3.0.4\urlrewritefilter-3.0.4.jar
+C:\Documents and Settings\chengdong\.m2\repository\ant\ant\1.5\ant-1.5.jar
+C:\Documents and Settings\chengdong\.m2\repository\log4j\log4j\1.2.8\log4j-1.2.8.jar
+C:\Documents and Settings\chengdong\.m2\repository\commons-logging\commons-logging\1.0\commons-logging-1.0.jar
 C:\Documents and Settings\chengdong\.m2\repository\net\sf\json-lib\json-lib\2.4\json-lib-2.4-jdk15.jar
 C:\Documents and Settings\chengdong\.m2\repository\commons-beanutils\commons-beanutils\1.8.0\commons-beanutils-1.8.0.jar
 C:\Documents and Settings\chengdong\.m2\repository\commons-collections\commons-collections\3.2.1\commons-collections-3.2.1.jar

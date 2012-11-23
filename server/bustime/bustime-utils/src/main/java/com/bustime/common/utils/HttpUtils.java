@@ -4,7 +4,7 @@
  * Created on 2012-11-22.
  */
 
-package com.bustime.core.utils;
+package com.bustime.common.utils;
 
 import java.util.HashMap;
 import java.util.Map;

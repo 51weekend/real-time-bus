@@ -13,8 +13,8 @@ import org.htmlparser.Parser;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.bustime.core.logger.LoggerUtils;
-import com.bustime.core.model.Station;
+import com.bustime.common.logger.LoggerUtils;
+import com.bustime.common.model.Station;
 
 /**
  * 

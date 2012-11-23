@@ -15,11 +15,6 @@
 			<artifactId>bustime-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>bustime.com</groupId>
-			<artifactId>bustime-spider</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.tuckey</groupId>

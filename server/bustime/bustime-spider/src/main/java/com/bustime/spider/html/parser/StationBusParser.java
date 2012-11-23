@@ -12,8 +12,8 @@ import org.htmlparser.util.ParserException;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.bustime.core.logger.LoggerUtils;
-import com.bustime.core.model.StationBus;
+import com.bustime.common.logger.LoggerUtils;
+import com.bustime.common.model.StationBus;
 
 /**
  * 

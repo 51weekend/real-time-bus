@@ -11,6 +11,17 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>bustime.com</groupId>
+			<artifactId>bustime-spider</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>bustime.com</groupId>
+			<artifactId>bustime-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
 		</dependency>
@@ -63,10 +74,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
-		<dependency>
-			<artifactId>htmlparser</artifactId>
-			<groupId>org.htmlparser</groupId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>

@@ -4,7 +4,7 @@
  * Created on 2012-8-3.
  */
 
-package com.bustime.core.logger;
+package com.bustime.common.logger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

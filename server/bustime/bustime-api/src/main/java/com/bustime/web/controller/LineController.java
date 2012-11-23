@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bustime.core.utils.ResultModel;
-import com.bustime.spider.html.parser.LineParser;
+import com.bustime.common.utils.ResultModel;
+import com.bustime.core.service.LineService;
 
 /**
  * TODO.
@@ -25,7 +25,7 @@ import com.bustime.spider.html.parser.LineParser;
 public class LineController {
 
     @Autowired
-    private LineParser lineParser;
+    private LineService lineService;
 
     @RequestMapping
     @ResponseBody
@@ -35,7 +35,7 @@ public class LineController {
             result.setResultCode(ResultModel.PARAMETER_ERROR);
             return result;
         }
-        result.setData(lineParser.getLines(lineNumber));
+        result.setData(lineService.getLine(lineNumber));
         return result;
     }
 

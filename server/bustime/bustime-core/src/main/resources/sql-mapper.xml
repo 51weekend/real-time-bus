@@ -4,22 +4,13 @@
 <!--  
 	<select id="queryGroup" parameterType="long"
 		resultType="com.snda.family.core.domain.ChatGroup">
-		select id,name,type,MEMBERS as chatNumber from TB_GROUP where id = #{id}	</select>
+		select id,name,type,MEMBERS as chatNumber from TB_GROUP where id = ##{id}	</select>
 
 
 	<update id="updateFeedComments" parameterType="long">
 		update tb_life_hotspot t set t.comments = t.comments + 1 where t.id = #{id}	</update>
 
-	<insert id="saveNotifyConfig" parameterType="com.snda.family.core.domain.DBNotifyConfig">
-		<selectKey keyProperty="id" order="BEFORE" resultType="long">
-			select SEQ_NOTIFY_CONFIG.NEXTVAL from dual
-		</selectKey>
-		insert into tb_notify_config
-		(id, account, key, value, status)
-
-		values
-		(#{id}, #{account}, #{key}, #{value}, 1)
-	</insert>
+	
 
 	<update id="updateNotifyConfig" parameterType="com.snda.family.core.domain.DBNotifyConfig">
 		update tb_notify_config set value = #{value} where account=#{account} and
@@ -27,5 +18,20 @@
 	</update>
 	
 	-->
+	
+	
+	<select id="queryLine" 
+		resultType="com.bustime.common.model.Line">
+		select lineGuid, lineNumber, lineInfo, link, trend, status from line where status = 'enable'
+	</select>
+	
+	<insert id="saveLine" parameterType="com.bustime.common.model.Line">
+	
+		INSERT INTO line
+		  (lineGuid, lineNumber, lineInfo, link, trend, status)
+		VALUES
+		  (#{lineGuid}, #{lineNumber}, #{lineInfo}, #{link}, #{trend}, 'enable')
+
+	</insert>
 
 </mapper>

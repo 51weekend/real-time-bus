@@ -24,7 +24,7 @@ import org.htmlparser.tags.TableTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
-import com.bustime.core.utils.HttpUtils;
+import com.bustime.common.utils.HttpUtils;
 
 /**
  * TODO.

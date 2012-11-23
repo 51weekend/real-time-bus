@@ -4,7 +4,7 @@
  * Created on 2012-11-22.
  */
 
-package com.bustime.core.model;
+package com.bustime.common.model;
 
 import com.alibaba.fastjson.JSON;
 

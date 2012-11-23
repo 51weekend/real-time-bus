@@ -1,4 +1,4 @@
-package com.bustime.core.utils;
+package com.bustime.common.utils;
 
 import java.io.Serializable;
 import java.util.Date;
