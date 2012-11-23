@@ -20,9 +20,12 @@
 	-->
 	
 	
-	<select id="queryLine" 
+	<select id="queryLine"  parameterType="String"
 		resultType="com.bustime.common.model.Line">
-		select lineGuid, lineNumber, lineInfo, link, trend, status from line where status = 'enable'
+			select lineGuid, lineNumber, lineInfo, link, trend, status
+			  from line
+			 where status = 'enable'
+			   and lineNumber = #{lineNumber}
 	</select>
 	
 	<insert id="saveLine" parameterType="com.bustime.common.model.Line">
