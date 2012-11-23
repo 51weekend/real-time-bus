@@ -16,10 +16,10 @@ import com.alibaba.fastjson.JSON;
 public class Line {
 
     private String lineGuid;
+    private String lineNumber;
     private String lineInfo;
     private String link;
     private String trend;
-    private String lineNumber;
 
     public String getLineGuid() {
         return lineGuid;
