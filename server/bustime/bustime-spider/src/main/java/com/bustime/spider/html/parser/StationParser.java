@@ -5,14 +5,13 @@ import static com.bustime.spider.html.parser.meta.ParserUrl.StationUrl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.htmlparser.Parser;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.bustime.common.logger.LoggerUtils;
 import com.bustime.common.model.Station;
 
@@ -22,7 +21,8 @@ import com.bustime.common.model.Station;
  *
  * @author chengdong
  */
-public class StationParser extends BaseParser {
+@Service
+public class StationParser extends BaseParser<Station> {
 
     private String url;
 
@@ -56,26 +56,15 @@ public class StationParser extends BaseParser {
         return JSON.toJSONString(data);
     }
 
-    public List<Station> getStationByName(String stationName) {
-        List<Station> stations = new ArrayList<Station>();
-        try {
-            String jsonArray = this.parser(stationName);
-            JSONArray singleLines = JSONArray.parseArray(jsonArray);
 
-            for (int i = 0; i < singleLines.size(); i++) {
-                Station station = JSON.parseObject(JSON.toJSONString(singleLines.get(i)), Station.class);
-                stations.add(station);
-            }
-        } catch (Exception e) {
-            LoggerUtils.error("get the station from remote error of name:" + stationName, e);
-        }
-
-        return stations;
+    @Override
+    public Station parseObject(String jsonString) {
+        return JSON.parseObject(jsonString, Station.class);
     }
 
     public static void main(String args[]) throws Exception {
         StationParser parser = new StationParser();
-        List<Station> stations = parser.getStationByName("莲花新村");
+        List<Station> stations = parser.getData("莲花新村");
         for (int i = 0; i < stations.size(); i++) {
             System.out.println(stations.get(i));
         }

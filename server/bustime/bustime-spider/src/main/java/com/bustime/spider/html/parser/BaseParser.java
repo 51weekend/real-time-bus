@@ -24,6 +24,9 @@ import org.htmlparser.tags.TableTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.bustime.common.logger.LoggerUtils;
 import com.bustime.common.utils.HttpUtils;
 
 /**
@@ -31,7 +34,7 @@ import com.bustime.common.utils.HttpUtils;
  *
  * @author chengdong
  */
-public class BaseParser {
+public abstract class BaseParser<T> {
 
     protected Map<Integer, String> colMap = new HashMap<Integer, String>();
 
@@ -75,6 +78,25 @@ public class BaseParser {
             }
         }
         return data;
+    }
+
+    public abstract String parser(String parameter) throws Exception;
+
+    public abstract T parseObject(String jsonString);
+
+    public List<T> getData(String stationCode) {
+        List<T> stationBuses = new ArrayList<T>();
+        try {
+            String jsonArray = this.parser(stationCode);
+            JSONArray singleLines = JSONArray.parseArray(jsonArray);
+
+            for (int i = 0; i < singleLines.size(); i++) {
+                stationBuses.add(parseObject(JSON.toJSONString(singleLines.get(i))));
+            }
+        } catch (Exception e) {
+            LoggerUtils.error("get the stationBuses from remote error of stationCode:" + stationCode, e);
+        }
+        return stationBuses;
     }
 
 }

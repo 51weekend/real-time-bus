@@ -11,7 +11,6 @@ import static com.bustime.spider.html.parser.meta.ParserUrl.LineUrl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +18,6 @@ import org.htmlparser.Parser;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.bustime.common.logger.LoggerUtils;
 import com.bustime.common.model.Line;
 
@@ -29,7 +27,7 @@ import com.bustime.common.model.Line;
  * @author chengdong
  */
 @Service
-public class LineParser extends BaseParser {
+public class LineParser extends BaseParser<Line> {
 
     private StringBuilder url = new StringBuilder();
 
@@ -59,28 +57,14 @@ public class LineParser extends BaseParser {
         return JSON.toJSONString(data);
     }
 
-    public List<Line> getLines(String lineNumber) {
-        List<Line> lines = new ArrayList<Line>();
-        try {
-            String jsonArray = this.parser(lineNumber);
-            JSONArray singleLines = JSONArray.parseArray(jsonArray);
-
-            for (int i = 0; i < singleLines.size(); i++) {
-                Line line = JSON.parseObject(JSON.toJSONString(singleLines.get(i)), Line.class);
-                line.setLineNumber(lineNumber);
-                lines.add(line);
-            }
-        } catch (Exception e) {
-            LoggerUtils.error("get the bus line from remote error of lineNumber:" + lineNumber, e);
-        }
-
-        return lines;
-
+    @Override
+    public Line parseObject(String jsonString) {
+        return JSON.parseObject(jsonString, Line.class);
     }
 
     public static void main(String args[]) throws Exception {
         LineParser parser = new LineParser();
-        List<Line> lines = parser.getLines("快线2");
+        List<Line> lines = parser.getData("快线2");
 
         for (int i = 0; i < lines.size(); i++) {
             System.out.println(lines.get(i));

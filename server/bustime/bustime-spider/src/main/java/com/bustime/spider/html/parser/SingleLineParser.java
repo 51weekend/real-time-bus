@@ -9,15 +9,13 @@ package com.bustime.spider.html.parser;
 import static com.bustime.spider.html.parser.meta.CharacterEncode.UTF8;
 import static com.bustime.spider.html.parser.meta.ParserUrl.SingleLineUrl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.htmlparser.Parser;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.bustime.common.logger.LoggerUtils;
 import com.bustime.common.model.SingleLine;
 
 /**
@@ -25,7 +23,8 @@ import com.bustime.common.model.SingleLine;
  *
  * @author chengdong
  */
-public class SingleLineParser extends BaseParser {
+@Service
+public class SingleLineParser extends BaseParser<SingleLine> {
 
     public SingleLineParser() {
         colMap.put(0, "link");
@@ -34,27 +33,9 @@ public class SingleLineParser extends BaseParser {
         colMap.put(3, "time");
     }
 
-    /**
-     * 根据车次编号,获取车次线路实时信息
-     * @param lineCode 车次编号
-     * @return
-     */
-    public List<SingleLine> getSingleLine(String lineCode) {
-        List<SingleLine> lines = new ArrayList<SingleLine>();
-        try {
-            String jsonArray = this.parser(lineCode);
-            JSONArray singleLines = JSONArray.parseArray(jsonArray);
-
-            for (int i = 0; i < singleLines.size(); i++) {
-                SingleLine line = JSON.parseObject(JSON.toJSONString(singleLines.get(i)), SingleLine.class);
-                line.setLineCode(lineCode);
-                lines.add(line);
-            }
-        } catch (Exception e) {
-            LoggerUtils.error("get the line data from remote error of line:" + lineCode, e);
-        }
-
-        return lines;
+    @Override
+    public SingleLine parseObject(String jsonString) {
+        return JSON.parseObject(jsonString, SingleLine.class);
     }
 
     /**
@@ -72,7 +53,7 @@ public class SingleLineParser extends BaseParser {
 
     public static void main(String args[]) throws Exception {
         SingleLineParser parser = new SingleLineParser();
-        List<SingleLine> lines = parser.getSingleLine("6b3ad726-d033-422b-ba65-43253011865d");
+        List<SingleLine> lines = parser.getData("6b3ad726-d033-422b-ba65-43253011865d");
 
         for (int i = 0; i < lines.size(); i++) {
             System.out.println(lines.get(i));
