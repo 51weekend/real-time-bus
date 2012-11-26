@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bustime.common.utils.ResultModel;
-import com.bustime.core.service.LineService;
+import com.bustime.core.service.ApiService;
 
 /**
  * TODO.
@@ -22,20 +22,32 @@ import com.bustime.core.service.LineService;
  * @author chengdong
  */
 @Controller
-public class LineController {
+public class ApiController {
 
     @Autowired
-    private LineService lineService;
+    private ApiService apiService;
 
     @RequestMapping
     @ResponseBody
-    public ResultModel query(@RequestParam(value = "lineNumber", required = false) String lineNumber) {
+    public ResultModel queryLine(@RequestParam(value = "lineNumber", required = false) String lineNumber) {
         ResultModel result = new ResultModel();
         if (StringUtils.isEmpty(lineNumber)) {
             result.setResultCode(ResultModel.PARAMETER_ERROR);
             return result;
         }
-        result.setData(lineService.getLine(lineNumber));
+        result.setData(apiService.queryLine(lineNumber));
+        return result;
+    }
+
+    @RequestMapping
+    @ResponseBody
+    public ResultModel querySingleLine(@RequestParam(value = "lineCode", required = false) String lineCode) {
+        ResultModel result = new ResultModel();
+        if (StringUtils.isEmpty(lineCode)) {
+            result.setResultCode(ResultModel.PARAMETER_ERROR);
+            return result;
+        }
+        result.setData(apiService.querySingleLine(lineCode));
         return result;
     }
 
