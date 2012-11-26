@@ -6,6 +6,7 @@
 
 package com.bustime.spider.html.parser;
 
+import static com.bustime.spider.html.parser.ParserHolder.LINE_PARSER_KEY;
 import static com.bustime.spider.html.parser.meta.CharacterEncode.UTF8;
 import static com.bustime.spider.html.parser.meta.ParserUrl.LineUrl;
 
@@ -41,6 +42,8 @@ public class LineParser extends BaseParser<Line> {
         } catch (UnsupportedEncodingException e) {
             LoggerUtils.error("init LineParser url error", e);
         }
+        ParserHolder.registerParser(LINE_PARSER_KEY, this);
+
     }
 
     /**
@@ -70,6 +73,16 @@ public class LineParser extends BaseParser<Line> {
             System.out.println(lines.get(i));
         }
 
+    }
+
+    @Override
+    public String getQuerySql() {
+        return "queryLine";
+    }
+
+    @Override
+    public String getSaveSql() {
+        return "saveLine";
     }
 
 }

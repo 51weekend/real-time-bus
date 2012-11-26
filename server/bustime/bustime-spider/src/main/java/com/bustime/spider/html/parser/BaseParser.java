@@ -104,4 +104,8 @@ public abstract class BaseParser<T> {
         return stationBuses;
     }
 
+    public abstract String getQuerySql();
+
+    public abstract String getSaveSql();
+
 }

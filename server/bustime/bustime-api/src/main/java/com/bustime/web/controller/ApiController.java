@@ -11,6 +11,7 @@ import static com.bustime.common.utils.ResultModel.SERVER_ERROR;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,4 +103,5 @@ public class ApiController {
         result.setData(apiService.queryStationBus(stationCode));
         return result;
     }
+
 }
