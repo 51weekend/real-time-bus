@@ -27,6 +27,7 @@ import org.htmlparser.util.ParserException;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.bustime.common.logger.LoggerUtils;
+import com.bustime.common.model.StationBus;
 import com.bustime.common.utils.HttpUtils;
 
 /**
@@ -91,7 +92,11 @@ public abstract class BaseParser<T> {
             JSONArray singleLines = JSONArray.parseArray(jsonArray);
 
             for (int i = 0; i < singleLines.size(); i++) {
-                stationBuses.add(parseObject(JSON.toJSONString(singleLines.get(i))));
+                T data = parseObject(JSON.toJSONString(singleLines.get(i)));
+                if (data instanceof StationBus) {
+                    ((StationBus) data).setStandCode(stationCode);
+                }
+                stationBuses.add(data);
             }
         } catch (Exception e) {
             LoggerUtils.error("get the stationBuses from remote error of stationCode:" + stationCode, e);

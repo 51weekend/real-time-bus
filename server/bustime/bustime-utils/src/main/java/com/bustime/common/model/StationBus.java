@@ -6,6 +6,8 @@
 
 package com.bustime.common.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.alibaba.fastjson.JSON;
 
 /**
@@ -48,6 +50,7 @@ public class StationBus {
         this.lineInfo = lineInfo;
     }
 
+    @JsonIgnore
     public String getLink() {
         return link;
     }

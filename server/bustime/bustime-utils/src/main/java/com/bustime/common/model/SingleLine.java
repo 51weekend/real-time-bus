@@ -6,6 +6,8 @@
 
 package com.bustime.common.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.alibaba.fastjson.JSON;
 
 /**
@@ -45,6 +47,7 @@ public class SingleLine {
         this.standName = standName;
     }
 
+    @JsonIgnore
     public String getLink() {
         return link;
     }
