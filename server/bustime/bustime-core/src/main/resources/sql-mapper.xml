@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bustime">
-<!--  
-	<select id="queryGroup" parameterType="long"
-		resultType="com.snda.family.core.domain.ChatGroup">
-		select id,name,type,MEMBERS as chatNumber from TB_GROUP where id = ##{id}	</select>
 
-
-	<update id="updateFeedComments" parameterType="long">
-		update tb_life_hotspot t set t.comments = t.comments + 1 where t.id = #{id}	</update>
-
-	
-
-	<update id="updateNotifyConfig" parameterType="com.snda.family.core.domain.DBNotifyConfig">
-		update tb_notify_config set value = #{value} where account=#{account} and
-		key = #{key}
-	</update>
-	
-	-->
-	
-	
 	<select id="queryLine"  parameterType="String"
 		resultType="com.bustime.common.model.Line">
 			select lineGuid, lineNumber, lineInfo, link, trend, status
@@ -34,7 +16,6 @@
 		  (lineGuid, lineNumber, lineInfo, link, trend, status)
 		VALUES
 		  (#{lineGuid}, #{lineNumber}, #{lineInfo}, #{link}, #{trend}, 'enable')
-
 	</insert>
 
 </mapper>

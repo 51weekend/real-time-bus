@@ -16,20 +16,11 @@ import com.alibaba.fastjson.JSON;
  * @author chengdong
  */
 public class SingleLine {
-    private String busNumber;
     private String standCode;
     private String standName;
     private String link;
     private String time;
-    private String lineCode;
-
-    public String getBusNumber() {
-        return busNumber;
-    }
-
-    public void setBusNumber(String busNumber) {
-        this.busNumber = busNumber;
-    }
+    private String lineGuid;
 
     public String getStandCode() {
         return standCode;
@@ -64,12 +55,12 @@ public class SingleLine {
         this.time = time;
     }
 
-    public String getLineCode() {
-        return lineCode;
+    public String getLineGuid() {
+        return lineGuid;
     }
 
-    public void setLineCode(String lineCode) {
-        this.lineCode = lineCode;
+    public void setLineGuid(String lineGuid) {
+        this.lineGuid = lineGuid;
     }
 
     public String toString() {
