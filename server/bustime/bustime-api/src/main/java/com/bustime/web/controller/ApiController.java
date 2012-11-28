@@ -11,7 +11,6 @@ import static com.bustime.common.utils.ResultModel.SERVER_ERROR;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +44,11 @@ public class ApiController {
         }
         // 线路信息基本不会变化、如果本地有、就不去远程爬取,客户端也可以做缓存
         try {
+            System.out.println(lineNumber);
+            System.out.println(URLDecoder.decode(lineNumber, "UTF-8"));
             result.setData(apiService.queryLine(URLDecoder.decode(lineNumber, "UTF-8")));
-        } catch (UnsupportedEncodingException e) {
-            LoggerUtils.error("decode lineNumber error", e);
+        } catch (Exception e) {
+            LoggerUtils.error("query line error", e);
             result.setResultCode(SERVER_ERROR);
         }
         return result;

@@ -3,12 +3,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TextView
+    <RelativeLayout
+        android:id="@+id/layout_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world"
-        tools:context=".BustimeActivity" />
+        android:layout_centerInParent="true" >
+
+        <EditText
+            android:id="@+id/stationName"
+            style="@style/stationName"
+            android:layout_width="120dip"
+            android:layout_height="wrap_content"
+            android:hint="@string/stationName"
+            android:textColorHint="#afafaf"
+            android:textSize="14.7sp" />
+
+        <Button
+            android:id="@+id/searchByStationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/stationName"
+            android:text="@string/queryStation"
+            android:textColor="#ffffff"
+            android:textSize="14.7sp" />
+
+        <EditText
+            android:id="@+id/line"
+            style="@style/stationName"
+            android:layout_width="120dip"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stationName"
+            android:hint="@string/lineName"
+            android:textColorHint="#afafaf"
+            android:textSize="14.7sp" />
+
+        <Button
+            android:id="@+id/searchByLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchByStationName"
+            android:layout_toRightOf="@+id/line"
+            android:text="@string/queryLine"
+            android:textColor="#ffffff"
+            android:textSize="14.7sp" />
+    </RelativeLayout>
 
 </RelativeLayout>

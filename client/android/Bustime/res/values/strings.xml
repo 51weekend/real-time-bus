@@ -3,6 +3,14 @@
     <string name="app_name">Bustime</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_bustime">BustimeActivity</string>
+    <string name="title_activity_bustime">实时公交</string>
+    <string name="stationName">站台,如:观前街</string>
+    <string name="lineName">线路,如:117</string>
+    <string name="search">搜索</string>
+    <string name="queryStation">查站点</string>
+    <string name="queryLine">查线路</string>
+    <string name="line_required">请输入公交线路!</string>
+    <string name="station_required">请输入站台名称!</string>
+    <string name="title_activity_line_info">LineInfoActivity</string>
 
 </resources>
