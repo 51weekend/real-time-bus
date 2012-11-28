@@ -54,6 +54,12 @@ public class ApiService {
     @Autowired
     private MybatisBaseDao<SingleLine> singleLineDao;
 
+    @Autowired
+    private MybatisBaseDao<StationBus> stationBusDao;
+
+    @Autowired
+    private MybatisBaseDao<Station> stationDao;
+
     private ThreadPoolExecutor executor;
 
     private int threads = 4;
@@ -134,10 +140,10 @@ public class ApiService {
             @Override
             public void run() {
                 try {
-                    List<SingleLine> dbData = singleLineDao.selectList("queryStationBus", stationCode);
+                    List<StationBus> dbData = stationBusDao.selectList("queryStationBus", stationCode);
                     if (CollectionUtils.isEmpty(dbData)) {
                         for (StationBus staBus : stationBus) {
-                            singleLineDao.save("saveStationBus", staBus);
+                            stationBusDao.save("saveStationBus", staBus);
                         }
                     }
                 } catch (Exception e) {
@@ -154,7 +160,30 @@ public class ApiService {
      * @return
      */
     public List<Station> queryStation(String stationName) {
-        return stationParser.getData(stationName);
+        List<Station> stations = stationDao.selectList("queryStationByName", stationName);
+        if (!CollectionUtils.isEmpty(stations)) {
+            return stations;
+        }
+        final List<Station> parserStations = stationParser.getData(stationName);
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (CollectionUtils.isEmpty(parserStations)) {
+                        return;
+                    }
+                    for (Station station : parserStations) {
+                        List<Station> dbData = stationDao.selectList("queryStationByCode", station.getStandCode());
+                        if (CollectionUtils.isEmpty(dbData)) {
+                            stationBusDao.save("saveStation", station);
+                        }
+                    }
+                } catch (Exception e) {
+                    LoggerUtils.error("save station error", e);
+                }
+            }
+        });
+        return parserStations;
     }
 
 }
