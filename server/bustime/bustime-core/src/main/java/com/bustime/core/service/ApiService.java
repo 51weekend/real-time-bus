@@ -7,11 +7,17 @@
 package com.bustime.core.service;
 
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import com.bustime.common.logger.LoggerUtils;
 import com.bustime.common.model.Line;
 import com.bustime.common.model.SingleLine;
 import com.bustime.common.model.Station;
@@ -34,9 +40,6 @@ public class ApiService {
     private LineParser lineParser;
 
     @Autowired
-    private MybatisBaseDao<Line> lineDao;
-
-    @Autowired
     private SingleLineParser singleLineParser;
 
     @Autowired
@@ -44,6 +47,25 @@ public class ApiService {
 
     @Autowired
     private StationParser stationParser;
+
+    @Autowired
+    private MybatisBaseDao<Line> lineDao;
+
+    @Autowired
+    private MybatisBaseDao<SingleLine> singleLineDao;
+
+    private ThreadPoolExecutor executor;
+
+    private int threads = 4;
+    private int queueSize = 1000;
+
+    @PostConstruct
+    public void init() {
+
+        executor = new ThreadPoolExecutor(threads, threads, Long.MAX_VALUE, TimeUnit.NANOSECONDS,
+                new ArrayBlockingQueue<Runnable>(queueSize));
+        executor.prestartCoreThread();
+    }
 
     // TODO 服务里面的方法都可以重构.将这些parser注册到总线、根据请求获取对应实现
     /**
@@ -55,10 +77,20 @@ public class ApiService {
         List<Line> lines = lineDao.selectList("queryLine", lineNumber);
         if (CollectionUtils.isEmpty(lines)) {
             lines = lineParser.getData(lineNumber);
-            // TODO 这里可以异步来做,通过生产消费的方式、采用队列
-            for (Line line : lines) {
-                lineDao.save("saveLine", line);
-            }
+            final List<Line> saveData = lines;
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        for (Line line : saveData) {
+                            lineDao.save("saveLine", line);
+                        }
+                    } catch (Exception e) {
+                        LoggerUtils.error("save line error", e);
+                    }
+                }
+            });
+
         }
         return lines;
     }
@@ -68,9 +100,27 @@ public class ApiService {
      * @param lineCode 线路编号  如:6b3ad726-d033-422b-ba65-43253011865d
      * @return
      */
-    public List<SingleLine> querySingleLine(String lineCode) {
+    public List<SingleLine> querySingleLine(final String lineCode) {
         // 可以考虑后台定时(30s)对所有线路运行车辆的实时信息爬取一次、有变更的话、服务端push给客户端、或者客户端从服务端读取.
-        return singleLineParser.getData(lineCode);
+
+        final List<SingleLine> data = singleLineParser.getData(lineCode);
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    List<SingleLine> dbData = singleLineDao.selectList("querySingleLine", lineCode);
+                    if (CollectionUtils.isEmpty(dbData)) {
+                        for (SingleLine single : data) {
+                            singleLineDao.save("saveSingleLine", single);
+                        }
+                    }
+                } catch (Exception e) {
+                    LoggerUtils.error("save SingleLine error", e);
+                }
+            }
+        });
+
+        return data;
     }
 
     /**
@@ -78,8 +128,24 @@ public class ApiService {
      * @param stationCode 站台编号 如:CVZ
      * @return
      */
-    public List<StationBus> queryStationBus(String stationCode) {
-        return stationBusParser.getData(stationCode);
+    public List<StationBus> queryStationBus(final String stationCode) {
+        final List<StationBus> stationBus = stationBusParser.getData(stationCode);
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    List<SingleLine> dbData = singleLineDao.selectList("queryStationBus", stationCode);
+                    if (CollectionUtils.isEmpty(dbData)) {
+                        for (StationBus staBus : stationBus) {
+                            singleLineDao.save("saveStationBus", staBus);
+                        }
+                    }
+                } catch (Exception e) {
+                    LoggerUtils.error("save stationBus error", e);
+                }
+            }
+        });
+        return stationBus;
     }
 
     /**
