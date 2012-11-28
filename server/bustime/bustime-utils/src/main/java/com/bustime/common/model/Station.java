@@ -17,13 +17,13 @@ import com.alibaba.fastjson.JSON;
  */
 public class Station {
 
-    private String link;
     private String standCode;
-    private String area;
+    private String standName;
     private String road;
     private String roadSection;
+    private String area;
     private String trend;
-    private String standName;
+    private String link;
 
     @JsonIgnore
     public String getLink() {

@@ -61,16 +61,4 @@ public class SingleLineParser extends BaseParser<SingleLine> {
 
     }
 
-    @Override
-    public String getQuerySql() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String getSaveSql() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
 }

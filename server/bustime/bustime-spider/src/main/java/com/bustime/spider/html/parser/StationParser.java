@@ -56,7 +56,6 @@ public class StationParser extends BaseParser<Station> {
         return JSON.toJSONString(data);
     }
 
-
     @Override
     public Station parseObject(String jsonString) {
         return JSON.parseObject(jsonString, Station.class);
@@ -68,18 +67,6 @@ public class StationParser extends BaseParser<Station> {
         for (int i = 0; i < stations.size(); i++) {
             System.out.println(stations.get(i));
         }
-    }
-
-    @Override
-    public String getQuerySql() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String getSaveSql() {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }

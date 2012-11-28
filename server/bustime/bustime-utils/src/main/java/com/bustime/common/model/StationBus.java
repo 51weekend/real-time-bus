@@ -17,14 +17,16 @@ import com.alibaba.fastjson.JSON;
  */
 public class StationBus {
 
-    private String busNumber;
     private String lineGuid;
-    private String lineInfo;
     private String link;
+    private String standCode;
+    // 下面三个字段不持久化
+    private String busNumber;
     private String standNum;
     private String time;
-    private String trend;
-    private String standCode;
+
+    // private String lineInfo;
+    // private String trend;
 
     public String getBusNumber() {
         return busNumber;
@@ -40,14 +42,6 @@ public class StationBus {
 
     public void setLineGuid(String lineGuid) {
         this.lineGuid = lineGuid;
-    }
-
-    public String getLineInfo() {
-        return lineInfo;
-    }
-
-    public void setLineInfo(String lineInfo) {
-        this.lineInfo = lineInfo;
     }
 
     @JsonIgnore
@@ -73,14 +67,6 @@ public class StationBus {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getTrend() {
-        return trend;
-    }
-
-    public void setTrend(String trend) {
-        this.trend = trend;
     }
 
     public String getStandCode() {

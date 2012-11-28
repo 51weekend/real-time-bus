@@ -75,14 +75,4 @@ public class LineParser extends BaseParser<Line> {
 
     }
 
-    @Override
-    public String getQuerySql() {
-        return "queryLine";
-    }
-
-    @Override
-    public String getSaveSql() {
-        return "saveLine";
-    }
-
 }

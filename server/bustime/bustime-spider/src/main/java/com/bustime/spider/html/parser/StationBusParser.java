@@ -52,16 +52,4 @@ public class StationBusParser extends BaseParser<StationBus> {
         }
     }
 
-    @Override
-    public String getQuerySql() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String getSaveSql() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
 }

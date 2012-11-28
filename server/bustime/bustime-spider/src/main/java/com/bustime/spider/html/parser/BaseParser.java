@@ -104,13 +104,9 @@ public abstract class BaseParser<T> {
                 stationBuses.add(data);
             }
         } catch (Exception e) {
-            LoggerUtils.error("get the stationBuses from remote error of stationCode:" + parameter, e);
+            LoggerUtils.error("get the data from remote error of parameter:" + parameter, e);
         }
         return stationBuses;
     }
-
-    public abstract String getQuerySql();
-
-    public abstract String getSaveSql();
 
 }

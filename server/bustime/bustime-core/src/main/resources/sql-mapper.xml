@@ -2,20 +2,95 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bustime">
 
-	<select id="queryLine"  parameterType="String"
+	<select id="queryLine" parameterType="String"
 		resultType="com.bustime.common.model.Line">
-			select lineGuid, lineNumber, lineInfo, link, trend, status
-			  from line
-			 where status = 'enable'
-			   and lineNumber = #{lineNumber}
+		select lineGuid, lineNumber, lineInfo, link, trend, status
+		from line
+		where status = 'enable'
+		and lineNumber = #{lineNumber}
 	</select>
-	
+
 	<insert id="saveLine" parameterType="com.bustime.common.model.Line">
-	
+
 		INSERT INTO line
-		  (lineGuid, lineNumber, lineInfo, link, trend, status)
+		(lineGuid, lineNumber, lineInfo, link, trend, status)
 		VALUES
-		  (#{lineGuid}, #{lineNumber}, #{lineInfo}, #{link}, #{trend}, 'enable')
+		(#{lineGuid}, #{lineNumber}, #{lineInfo}, #{link}, #{trend}, 'enable')
 	</insert>
+
+	<select id="querySingleLine" parameterType="String"
+		resultType="com.bustime.common.model.SingleLine">
+		select lineGuid, standCode, standName, link, status
+		from singleline
+		where status = 'enable'
+		and lineGuid = #{lineGuid}
+	</select>
+
+
+	<insert id="saveSingleLine" parameterType="com.bustime.common.model.SingleLine">
+
+		INSERT INTO singleline
+		(lineGuid,
+		standCode,
+		standName,
+		link,
+		status)
+		VALUES
+		(
+		#{lineGuid},
+		#{standCode},
+		#{standName},
+		#{link},
+		'enable'
+		)
+	</insert>
+
+	<insert id="saveStationBus" parameterType="com.bustime.common.model.StationBus">
+
+		INSERT INTO station_bus
+		(lineGuid,
+		standCode,
+		link,
+		status)
+		VALUES
+		(
+		#{lineGuid},
+		#{standCode},
+		#{link},
+		'enable'
+		);
+	</insert>
+
+	<select id="queryStationBus" parameterType="com.bustime.common.model.StationBus"
+		resultType="com.bustime.common.model.StationBus">
+		select * from station_bus where lineGuid = #{lineCode} and
+		standCode = #{standCode}
+	</select>
+
+	<insert id="saveStation" parameterType="com.bustime.common.model.Station">
+		INSERT INTO station
+		(standCode,
+		standName,
+		road,
+		roadSection,
+		area,
+		trend
+		)
+		VALUES
+		(#{standCode},
+		#{standName},
+		#{road},
+		#{roadSection},
+		#{area},
+		#{trend}
+		)
+	</insert>
+
+	<select id="queryStation" parameterType="com.bustime.common.model.Station"
+		resultType="com.bustime.common.model.StationBus">
+		select * from station_bus where standCode = #{standCode}
+	</select>
+
+
 
 </mapper>
