@@ -6,10 +6,14 @@
 
 package com.bustime.core.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 
@@ -81,24 +85,48 @@ public class ApiService {
      */
     public List<Line> queryLine(String lineNumber) {
         List<Line> lines = lineDao.selectList("queryLine", lineNumber);
-        if (CollectionUtils.isEmpty(lines)) {
-            lines = lineParser.getData(lineNumber);
-            final List<Line> saveData = lines;
-            executor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        for (Line line : saveData) {
+        if (!CollectionUtils.isEmpty(lines)) {
+            return lines;
+        }
+
+        lines = lineParser.getData(lineNumber);
+        final List<Line> saveData = new ArrayList<Line>();
+        for (Line line : lines) {
+            line.setLineInfo(line.getLineInfo());
+            line.setTrend(line.getTrend());
+            saveData.add(line);
+        }
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    for (Line line : saveData) {
+                        List<Line> exist = lineDao.selectList("queryLineByGuid", line.getLineGuid());
+                        if (CollectionUtils.isEmpty(exist)) {
                             lineDao.save("saveLine", line);
                         }
-                    } catch (Exception e) {
-                        LoggerUtils.error("save line error", e);
                     }
+                } catch (Exception e) {
+                    LoggerUtils.error("save line error", e);
                 }
-            });
+            }
+        });
 
+        List<Line> result = new ArrayList<Line>();
+        for (Line line : lines) {
+            // 远程爬的数据、支持模糊查询、去掉多余的数据
+            // 过滤、如 输入 2 像 快线路2号 2路 2 这样的返回 想812 216 这样的就不返回
+            if (isNumeric(line.getLineNumber()) && !line.getLineNumber().equals(lineNumber)) {
+                continue;
+            }
+            result.add(line);
         }
-        return lines;
+        return result;
+    }
+
+    private boolean isNumeric(String str) {
+        Pattern pattern = Pattern.compile("[0-9]*");
+        return pattern.matcher(str).matches();
     }
 
     /**
@@ -120,6 +148,7 @@ public class ApiService {
                             singleLineDao.save("saveSingleLine", single);
                         }
                     }
+                    updateLine(data);
                 } catch (Exception e) {
                     LoggerUtils.error("save SingleLine error", e);
                 }
@@ -127,6 +156,24 @@ public class ApiService {
         });
 
         return data;
+    }
+
+    private void updateLine(List<SingleLine> lineInfo) {
+        if (CollectionUtils.isEmpty(lineInfo)) {
+            return;
+        }
+        List<Line> data = lineDao.selectList("queryLineByGuid", lineInfo.get(0).getLineGuid());
+        if (!CollectionUtils.isEmpty(data)) {
+            if (data.get(0).getTotalStation() > 0) {
+                return;
+            }
+        }
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("lineGuid", lineInfo.get(0).getLineGuid());
+        parameters.put("startStation", lineInfo.get(0).getStandName());
+        parameters.put("endStation", lineInfo.get(lineInfo.size() - 1).getStandName());
+        parameters.put("totalStation", lineInfo.size());
+        lineDao.update("updateLine", parameters);
     }
 
     /**

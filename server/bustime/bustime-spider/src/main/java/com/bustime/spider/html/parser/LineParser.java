@@ -67,7 +67,7 @@ public class LineParser extends BaseParser<Line> {
 
     public static void main(String args[]) throws Exception {
         LineParser parser = new LineParser();
-        List<Line> lines = parser.getData("快线2");
+        List<Line> lines = parser.getData("2");
 
         for (int i = 0; i < lines.size(); i++) {
             System.out.println(lines.get(i));

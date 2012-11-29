@@ -27,7 +27,6 @@ import org.htmlparser.util.ParserException;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.bustime.common.logger.LoggerUtils;
-import com.bustime.common.model.Line;
 import com.bustime.common.model.SingleLine;
 import com.bustime.common.model.StationBus;
 import com.bustime.common.utils.HttpUtils;
@@ -100,9 +99,6 @@ public abstract class BaseParser<T> {
                 }
                 if (data instanceof SingleLine) {
                     ((SingleLine) data).setLineGuid(parameter);
-                }
-                if (data instanceof Line) {
-                    ((Line) data).setLineNumber(parameter);
                 }
 
                 stationBuses.add(data);

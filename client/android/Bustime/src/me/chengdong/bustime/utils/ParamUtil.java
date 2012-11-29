@@ -14,5 +14,6 @@ package me.chengdong.bustime.utils;
 public class ParamUtil {
 
     public static final String STATION_NAME = "stationName";
+    public static final String LINE_GUID = "lineGuid";
 
 }

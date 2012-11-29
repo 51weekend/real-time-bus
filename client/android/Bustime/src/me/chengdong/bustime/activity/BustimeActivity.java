@@ -3,7 +3,6 @@ package me.chengdong.bustime.activity;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.ParamUtil;
 import me.chengdong.bustime.utils.StringUtil;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,7 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class BustimeActivity extends Activity implements OnClickListener {
+public class BustimeActivity extends BaseActivity implements OnClickListener {
 
     private final static String TAG = "BustimeActivity";
 
@@ -24,7 +23,7 @@ public class BustimeActivity extends Activity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LogUtil.d(TAG, "onCreate");
-        setContentView(R.layout.activity_bustime);
+        setContentView(R.layout.bustime);
 
         mQueryStationBtn = (Button) findViewById(R.id.searchByStationName);
         mQueryStationBtn.setOnClickListener(this);
@@ -56,7 +55,7 @@ public class BustimeActivity extends Activity implements OnClickListener {
             }
             Intent intent = new Intent();
             intent.setClass(this, LineInfoActivity.class);
-            intent.putExtra(ParamUtil.STATION_NAME, mLineEdittext.getText().toString());
+            intent.putExtra(ParamUtil.LINE_GUID, mLineEdittext.getText().toString());
             startActivity(intent);
             break;
         default:
@@ -102,7 +101,7 @@ public class BustimeActivity extends Activity implements OnClickListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_bustime, menu);
+        getMenuInflater().inflate(R.menu.bustime, menu);
         return true;
     }
 

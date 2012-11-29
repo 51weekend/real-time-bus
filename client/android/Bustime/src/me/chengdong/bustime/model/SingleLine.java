@@ -4,11 +4,9 @@
  * Created on 2012-11-22.
  */
 
-package com.bustime.common.model;
+package me.chengdong.bustime.model;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
-import com.alibaba.fastjson.JSON;
+import org.json.JSONObject;
 
 /**
  * TODO.
@@ -18,7 +16,6 @@ import com.alibaba.fastjson.JSON;
 public class SingleLine {
     private String standCode;
     private String standName;
-    private String link;
     private String time;
     private String lineGuid;
 
@@ -38,19 +35,7 @@ public class SingleLine {
         this.standName = standName;
     }
 
-    @JsonIgnore
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
     public String getTime() {
-        if (time == null) {
-            return "";
-        }
         return time;
     }
 
@@ -66,8 +51,11 @@ public class SingleLine {
         this.lineGuid = lineGuid;
     }
 
-    public String toString() {
-        return JSON.toJSONString(this);
+    public void deserialize(JSONObject json) {
+        this.standCode = json.optString("standCode");
+        this.standName = json.optString("standName");
+        this.lineGuid = json.optString("lineGuid");
+        this.time = json.optString("time");
     }
 
 }
