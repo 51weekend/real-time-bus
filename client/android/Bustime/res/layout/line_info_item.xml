@@ -7,37 +7,41 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="fill_parent" >
 
         <RelativeLayout
             android:id="@+id/layout_line_total"
             android:layout_width="wrap_content"
-            android:layout_height="52dip"
-            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="13.3dip"
-            android:layout_marginTop="8dp" >
+            android:layout_marginTop="8dp"
+            android:background="@color/green" >
 
             <TextView
                 android:id="@+id/tv_lineNumber"
                 android:layout_width="52dip"
                 android:layout_height="26dip"
-                android:textColor="#666666"
-                android:textSize="14sp" />
+                android:gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_lineTotalStation"
                 android:layout_width="52dip"
                 android:layout_height="26dip"
                 android:layout_below="@+id/tv_lineNumber"
-                android:textColor="#666666"
-                android:textSize="14sp" />
+                android:gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/layout_line_detail_start"
             android:layout_width="fill_parent"
-            android:layout_height="26dip"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="13.3dip"
             android:layout_marginTop="5dip"
             android:layout_toRightOf="@+id/layout_line_total" >
@@ -48,8 +52,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="fill_horizontal"
                 android:text="@string/name_start"
-                android:textColor="#666666"
-                android:textSize="10sp" />
+                android:textColor="#008000"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_startStation"
@@ -57,8 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tv_start"
                 android:gravity="fill_horizontal"
-                android:textColor="#666666"
-                android:textSize="10sp" />
+                android:textColor="#000000"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_time"
@@ -68,8 +72,8 @@
                 android:layout_marginTop="3.33dp"
                 android:singleLine="true"
                 android:text="@string/name_run_time"
-                android:textColor="#999999"
-                android:textSize="8sp" />
+                android:textColor="#000000"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_run_time"
@@ -80,14 +84,14 @@
                 android:layout_marginLeft="5dip"
                 android:layout_toRightOf="@+id/tv_time"
                 android:singleLine="true"
-                android:textColor="#999999"
-                android:textSize="8sp" />
+                android:textColor="#000000"
+                android:textSize="10sp" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/layout_line_detail_end"
             android:layout_width="fill_parent"
-            android:layout_height="26dip"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/layout_line_detail_start"
             android:layout_marginLeft="13.3dip"
             android:layout_marginTop="5dip"
@@ -99,8 +103,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="fill_horizontal"
                 android:text="@string/name_end"
-                android:textColor="#666666"
-                android:textSize="10sp" />
+                android:textColor="#FF0000"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_endStation"
@@ -108,8 +112,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tv_end"
                 android:gravity="fill_horizontal"
-                android:textColor="#666666"
-                android:textSize="10sp" />
+                android:textColor="#000000"
+                android:textSize="14sp" />
         </RelativeLayout>
     </RelativeLayout>
 

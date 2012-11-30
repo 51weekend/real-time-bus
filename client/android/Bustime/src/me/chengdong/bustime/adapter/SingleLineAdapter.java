@@ -12,10 +12,13 @@ import java.util.List;
 import me.chengdong.bustime.activity.R;
 import me.chengdong.bustime.activity.SingleLineActivity;
 import me.chengdong.bustime.model.SingleLine;
+import me.chengdong.bustime.utils.StringUtil;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -54,8 +57,10 @@ public class SingleLineAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.single_line_item, null);
             holder = new ViewHolder();
-
+            holder.rlStation = (RelativeLayout) convertView.findViewById(R.id.layout_single_line_detail);
+            holder.rlCurrentStation = (RelativeLayout) convertView.findViewById(R.id.layout_single_line_detail_current);
             holder.tvStationName = (TextView) convertView.findViewById(R.id.tv_stationName);
+            holder.tvCurrentStationName = (TextView) convertView.findViewById(R.id.tv_current_stationName);
             holder.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
 
             convertView.setTag(holder);
@@ -64,14 +69,26 @@ public class SingleLineAdapter extends BaseAdapter {
         }
 
         SingleLine singleLine = items.get(position);
-        holder.tvStationName.setText(singleLine.getStandName());
-        holder.tvTime.setText(singleLine.getTime());
+
+        if (StringUtil.isEmpty(singleLine.getTime())) {
+            holder.rlStation.setVisibility(View.VISIBLE);
+            holder.rlCurrentStation.setVisibility(View.GONE);
+            holder.tvStationName.setText(Html.fromHtml("<u>" + singleLine.getStandName() + "</u>"));
+        } else {
+            holder.rlStation.setVisibility(View.GONE);
+            holder.rlCurrentStation.setVisibility(View.VISIBLE);
+            holder.tvCurrentStationName.setText(Html.fromHtml("<u>" + singleLine.getStandName() + "</u>"));
+            holder.tvTime.setText("  "+singleLine.getTime());
+        }
 
         return convertView;
     }
 
     class ViewHolder {
+        RelativeLayout rlStation;
+        RelativeLayout rlCurrentStation;
         TextView tvStationName;
+        TextView tvCurrentStationName;
         TextView tvTime;
     }
 

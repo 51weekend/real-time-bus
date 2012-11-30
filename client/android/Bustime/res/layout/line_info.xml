@@ -3,8 +3,36 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_margin="0px"
+    android:background="@drawable/main_bg"
     android:orientation="vertical"
     android:padding="0px" >
+
+    <RelativeLayout
+        android:id="@+id/top_relativelayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/top_bg" >
+
+        <Button
+            android:id="@+id/back_btn"
+            style="@style/titlebtnfont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10.7dip"
+            android:background="@drawable/btn_back"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/back" />
+
+        <TextView
+            android:id="@+id/title_textview"
+            style="@style/titlefont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/lineName" />
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/line_info_listview"

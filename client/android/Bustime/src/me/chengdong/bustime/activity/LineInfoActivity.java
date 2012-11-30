@@ -17,14 +17,17 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 
-public class LineInfoActivity extends BaseActivity implements OnItemClickListener {
+public class LineInfoActivity extends BaseActivity implements OnItemClickListener{
 
     private final static String TAG = "LineInfoActivity";
 
     private LineInfoAdapter mLineAdapter;
     private final List<Line> mLineList = new ArrayList<Line>(0);
+
+    private Button mBackBtn;
 
     private ListView lineListView;
 
@@ -36,6 +39,9 @@ public class LineInfoActivity extends BaseActivity implements OnItemClickListene
         setContentView(R.layout.line_info);
         Intent intent = getIntent();
         stationName = intent.getStringExtra(ParamUtil.LINE_GUID);
+
+        mBackBtn = (Button) findViewById(R.id.back_btn);
+        mBackBtn.setOnClickListener(this);
 
         lineListView = (ListView) this.findViewById(R.id.line_info_listview);
         lineListView.setCacheColorHint(0);
@@ -107,6 +113,18 @@ public class LineInfoActivity extends BaseActivity implements OnItemClickListene
             closeProgressDialog();
             mLineAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+        case R.id.back_btn:
+            this.finish();
+            break;
+        default:
+            break;
+        }
+
     }
 
 }

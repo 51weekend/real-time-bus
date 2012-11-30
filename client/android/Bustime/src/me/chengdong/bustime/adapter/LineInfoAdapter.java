@@ -68,8 +68,8 @@ public class LineInfoAdapter extends BaseAdapter {
 
         Line line = items.get(position);
         holder.tvLineNumber.setText(line.getLineNumber());
-        holder.tvLineTotalStation.setText(line.getTotalStation() == 0 ? "" : String.valueOf(line.getTotalStation())
-                + "站");
+        holder.tvLineTotalStation.setText("("
+                + (line.getTotalStation() == 0 ? "" : String.valueOf(line.getTotalStation())) + "站)");
         holder.tvStartStation.setText(line.getStartStation());
         holder.tvRunTime.setText(line.getRunTime());
         holder.tvEndStation.setText(line.getEndStation());

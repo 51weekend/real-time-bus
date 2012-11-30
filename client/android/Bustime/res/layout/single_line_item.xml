@@ -1,35 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="120dip"
+    android:layout_height="40dip"
     android:descendantFocusability="blocksDescendants"
-    android:gravity="center_vertical" >
+    android:gravity="center_horizontal" >
 
     <RelativeLayout
-        android:id="@+id/layout_single_line_detail_start"
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dip" >
+        android:id="@+id/layout_single_line_detail"
+        android:layout_width="120dip"
+        android:layout_height="40dip"
+        android:layout_gravity="center_vertical"
+        android:visibility="visible" >
 
         <TextView
             android:id="@+id/tv_stationName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="fill_horizontal"
-            android:text="@string/name_start"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:singleLine="true"
             android:textColor="#666666"
-            android:textSize="10sp" />
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_single_line_detail_current"
+        android:layout_width="120dip"
+        android:layout_height="40dip"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="5dip"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/tv_current_stationName"
+            android:layout_width="wrap_content"
+            android:layout_height="20dip"
+            android:background="@color/green"
+            android:gravity="fill_horizontal"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_time_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="20dip"
+            android:layout_below="@+id/tv_current_stationName"
+            android:singleLine="true"
+            android:text="@string/arrive_station_time"
+            android:textColor="#666666"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_stationName"
-            android:gravity="fill_horizontal"
-            android:text="@string/name_start"
+            android:layout_height="20dip"
+            android:layout_below="@+id/tv_current_stationName"
+            android:layout_toRightOf="@+id/tv_time_tips"
+            android:singleLine="true"
             android:textColor="#666666"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
     </RelativeLayout>
 
 </LinearLayout>

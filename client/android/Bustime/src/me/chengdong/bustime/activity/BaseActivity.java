@@ -8,13 +8,14 @@ package me.chengdong.bustime.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.view.View.OnClickListener;
 
 /**
  * TODO.
  *
  * @author chengdong
  */
-public class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity implements OnClickListener {
 
     // 在子类中初始化
     protected ProgressDialog mLoadDialog;

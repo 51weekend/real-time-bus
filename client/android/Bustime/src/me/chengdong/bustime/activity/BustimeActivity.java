@@ -7,16 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class BustimeActivity extends BaseActivity implements OnClickListener {
+public class BustimeActivity extends BaseActivity {
 
     private final static String TAG = "BustimeActivity";
 
-    protected Button mQueryStationBtn, mQueryLineBtn;
+    protected Button mQueryStationBtn, mQueryLineBtn, mLogoutBtn;
     private EditText mLineEdittext, mStationEdittext;
 
     @Override
@@ -29,12 +28,16 @@ public class BustimeActivity extends BaseActivity implements OnClickListener {
         mQueryStationBtn.setOnClickListener(this);
         mQueryLineBtn = (Button) findViewById(R.id.searchByLine);
         mQueryLineBtn.setOnClickListener(this);
+        mLogoutBtn = (Button) findViewById(R.id.btn_logout);
+        mLogoutBtn.setOnClickListener(this);
 
         mLineEdittext = (EditText) findViewById(R.id.line);
         mLineEdittext.setSingleLine(true);
+        mLineEdittext.clearFocus();
 
         mStationEdittext = (EditText) findViewById(R.id.stationName);
         mStationEdittext.setSingleLine(true);
+        mStationEdittext.clearFocus();
 
     }
 
@@ -42,12 +45,6 @@ public class BustimeActivity extends BaseActivity implements OnClickListener {
     public void onClick(View v) {
 
         switch (v.getId()) {
-        case R.id.searchByStationName:
-            if (StringUtil.isEmpty(mStationEdittext.getText().toString())) {
-                Toast.makeText(BustimeActivity.this, R.string.station_required, Toast.LENGTH_SHORT).show();
-                break;
-            }
-            break;
         case R.id.searchByLine:
             if (StringUtil.isEmpty(mLineEdittext.getText().toString())) {
                 Toast.makeText(BustimeActivity.this, R.string.line_required, Toast.LENGTH_SHORT).show();
@@ -57,6 +54,15 @@ public class BustimeActivity extends BaseActivity implements OnClickListener {
             intent.setClass(this, LineInfoActivity.class);
             intent.putExtra(ParamUtil.LINE_GUID, mLineEdittext.getText().toString());
             startActivity(intent);
+            break;
+        case R.id.searchByStationName:
+            if (StringUtil.isEmpty(mStationEdittext.getText().toString())) {
+                Toast.makeText(BustimeActivity.this, R.string.station_required, Toast.LENGTH_SHORT).show();
+                break;
+            }
+            break;
+        case R.id.btn_logout:
+            this.finish();
             break;
         default:
             break;

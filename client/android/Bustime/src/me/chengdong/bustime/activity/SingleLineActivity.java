@@ -13,6 +13,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 public class SingleLineActivity extends BaseActivity {
@@ -25,6 +28,10 @@ public class SingleLineActivity extends BaseActivity {
 
     private ListView singleLineListView;
 
+    private ImageView mFrefreshBtn;
+
+    private Button mBackBtn;
+
     private final List<SingleLine> mSingleLineList = new ArrayList<SingleLine>();
 
     @Override
@@ -34,6 +41,12 @@ public class SingleLineActivity extends BaseActivity {
 
         Intent intent = getIntent();
         lineGuid = intent.getStringExtra(ParamUtil.LINE_GUID);
+
+        mFrefreshBtn = (ImageView) findViewById(R.id.iv_refresh);
+        mFrefreshBtn.setOnClickListener(this);
+
+        mBackBtn = (Button) findViewById(R.id.back_btn);
+        mBackBtn.setOnClickListener(this);
 
         singleLineListView = (ListView) this.findViewById(R.id.single_line_listview);
         singleLineListView.setCacheColorHint(0);
@@ -87,5 +100,25 @@ public class SingleLineActivity extends BaseActivity {
             closeProgressDialog();
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+        case R.id.back_btn:
+            this.finish();
+            break;
+        case R.id.iv_refresh:
+            mLoadDialog.show();
+            new QuerySingleLineTask().execute();
+            break;
+        case R.id.btn_logout:
+            this.finish();
+            break;
+        default:
+            break;
+        }
+
     }
 }

@@ -15,4 +15,18 @@
         <item name="android:shadowDy">1</item>
     </style>
 
+    <style name="titlebtnfont" parent="@style/fontshadow">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="titlefont" parent="@style/fontshadow">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:width">180dip</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">middle</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>

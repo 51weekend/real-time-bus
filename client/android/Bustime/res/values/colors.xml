@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="rc_headimg_name">#1675a9</color>
+    
+    <color name="rc_line_split_color">#ebebeb</color>
+    
+    <color name="rc_timeslot_line_color">#d85730</color>
+    
+    <color name="rc_settings_pressed_color">#c6c2c0</color>
+    
+    <color name="rc_helpfeed_pressed_color">#d6e7f5</color>
+    
+    <color name="green">#62B736</color>
+ 
+    <color name="white">#FFFFFF</color>
+
+</resources>
