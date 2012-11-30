@@ -20,7 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class LineInfoActivity extends BaseActivity implements OnItemClickListener{
+public class LineInfoActivity extends BaseActivity implements OnItemClickListener {
 
     private final static String TAG = "LineInfoActivity";
 
@@ -59,6 +59,9 @@ public class LineInfoActivity extends BaseActivity implements OnItemClickListene
     @Override
     public void onResume() {
         super.onResume();
+        if (mLineList != null && mLineList.size() > 0) {
+            return;
+        }
         mLoadDialog.show();
         new QueryLineTask().execute();
         LogUtil.d(TAG, "onResume");
