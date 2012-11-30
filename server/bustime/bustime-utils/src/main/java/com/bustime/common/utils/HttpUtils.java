@@ -33,6 +33,9 @@ public class HttpUtils {
         }
         for (int i = 0; i < parametersString.length; i++) {
             String[] keyValue = parametersString[i].split("=");
+            if (keyValue == null || keyValue.length < 2) {
+                continue;
+            }
             String key = keyValue[0];
             parameters.put(key.replace(key.charAt(0), Character.toLowerCase(key.charAt(0))), keyValue[1]);
 
