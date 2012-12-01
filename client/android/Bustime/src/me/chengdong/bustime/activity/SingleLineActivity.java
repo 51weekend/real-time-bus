@@ -3,9 +3,13 @@ package me.chengdong.bustime.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import roboguice.inject.InjectView;
+
+import com.google.inject.Inject;
+
 import me.chengdong.bustime.adapter.SingleLineAdapter;
-import me.chengdong.bustime.http.DownLoadData;
 import me.chengdong.bustime.model.SingleLine;
+import me.chengdong.bustime.module.DownLoadData;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.ParamUtil;
 import android.app.ProgressDialog;
@@ -20,105 +24,110 @@ import android.widget.ListView;
 
 public class SingleLineActivity extends BaseActivity {
 
-    private static final String TAG = SingleLineActivity.class.getSimpleName();
+	private static final String TAG = SingleLineActivity.class.getSimpleName();
 
-    private String lineGuid;
+	private String lineGuid;
 
-    private SingleLineAdapter mAdapter;
+	private SingleLineAdapter mAdapter;
 
-    private ListView singleLineListView;
+	@InjectView(R.id.single_line_listview)
+	ListView singleLineListView;
 
-    private ImageView mFrefreshBtn;
+	@InjectView(R.id.iv_refresh)
+	ImageView mFrefreshBtn;
 
-    private Button mBackBtn;
+	@InjectView(R.id.back_btn)
+	Button mBackBtn;
 
-    private final List<SingleLine> mSingleLineList = new ArrayList<SingleLine>();
+	@Inject
+	DownLoadData downLoadData;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.single_line);
+	private final List<SingleLine> mSingleLineList = new ArrayList<SingleLine>();
 
-        Intent intent = getIntent();
-        lineGuid = intent.getStringExtra(ParamUtil.LINE_GUID);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.single_line);
 
-        mFrefreshBtn = (ImageView) findViewById(R.id.iv_refresh);
-        mFrefreshBtn.setOnClickListener(this);
+		Intent intent = getIntent();
+		lineGuid = intent.getStringExtra(ParamUtil.LINE_GUID);
 
-        mBackBtn = (Button) findViewById(R.id.back_btn);
-        mBackBtn.setOnClickListener(this);
+		mFrefreshBtn.setOnClickListener(this);
 
-        singleLineListView = (ListView) this.findViewById(R.id.single_line_listview);
-        singleLineListView.setCacheColorHint(0);
+		mBackBtn.setOnClickListener(this);
 
-        mLoadDialog = new ProgressDialog(this);
-        mLoadDialog.setMessage("正在车次动态信息...");
-        mAdapter = new SingleLineAdapter(SingleLineActivity.this, mSingleLineList);
-        singleLineListView.setAdapter(mAdapter);
+		singleLineListView.setCacheColorHint(0);
 
-        mAdapter.notifyDataSetChanged();
-    }
+		mLoadDialog = new ProgressDialog(this);
+		mLoadDialog.setMessage("正在车次动态信息...");
+		mAdapter = new SingleLineAdapter(SingleLineActivity.this,
+				mSingleLineList);
+		singleLineListView.setAdapter(mAdapter);
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mLoadDialog.show();
-        new QuerySingleLineTask().execute();
-        LogUtil.d(TAG, "onResume");
-    }
+		mAdapter.notifyDataSetChanged();
+	}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.single_line, menu);
-        return true;
-    }
+	@Override
+	public void onResume() {
+		super.onResume();
+		mLoadDialog.show();
+		new QuerySingleLineTask().execute();
+		LogUtil.d(TAG, "onResume");
+	}
 
-    private class QuerySingleLineTask extends AsyncTask<Void, Void, Void> {
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.single_line, menu);
+		return true;
+	}
 
-        @Override
-        public void onPreExecute() {
-            openProgressDialog();
-        }
+	private class QuerySingleLineTask extends AsyncTask<Void, Void, Void> {
 
-        @Override
-        protected Void doInBackground(Void... params) {
+		@Override
+		public void onPreExecute() {
+			openProgressDialog();
+		}
 
-            try {
-                List<SingleLine> temps = DownLoadData.getSingleLine(SingleLineActivity.this, lineGuid);
-                mSingleLineList.clear();
-                mSingleLineList.addAll(temps);
+		@Override
+		protected Void doInBackground(Void... params) {
 
-            } catch (Exception e) {
-                LogUtil.e(TAG, "获取数据出错", e);
-            }
+			try {
+				List<SingleLine> temps = downLoadData.getSingleLine(
+						SingleLineActivity.this, lineGuid);
+				mSingleLineList.clear();
+				mSingleLineList.addAll(temps);
 
-            return null;
-        }
+			} catch (Exception e) {
+				LogUtil.e(TAG, "获取数据出错", e);
+			}
 
-        @Override
-        protected void onPostExecute(Void result) {
-            closeProgressDialog();
-            mAdapter.notifyDataSetChanged();
-        }
-    }
+			return null;
+		}
 
-    @Override
-    public void onClick(View v) {
+		@Override
+		protected void onPostExecute(Void result) {
+			closeProgressDialog();
+			mAdapter.notifyDataSetChanged();
+		}
+	}
 
-        switch (v.getId()) {
-        case R.id.back_btn:
-            this.finish();
-            break;
-        case R.id.iv_refresh:
-            mLoadDialog.show();
-            new QuerySingleLineTask().execute();
-            break;
-        case R.id.btn_logout:
-            this.finish();
-            break;
-        default:
-            break;
-        }
+	@Override
+	public void onClick(View v) {
 
-    }
+		switch (v.getId()) {
+		case R.id.back_btn:
+			this.finish();
+			break;
+		case R.id.iv_refresh:
+			mLoadDialog.show();
+			new QuerySingleLineTask().execute();
+			break;
+		case R.id.btn_logout:
+			this.finish();
+			break;
+		default:
+			break;
+		}
+
+	}
 }

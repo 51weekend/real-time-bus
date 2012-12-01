@@ -4,9 +4,13 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import roboguice.inject.InjectView;
+
+import com.google.inject.Inject;
+
 import me.chengdong.bustime.adapter.LineInfoAdapter;
-import me.chengdong.bustime.http.DownLoadData;
 import me.chengdong.bustime.model.Line;
+import me.chengdong.bustime.module.DownLoadData;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.ParamUtil;
 import android.app.ProgressDialog;
@@ -20,114 +24,121 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class LineInfoActivity extends BaseActivity implements OnItemClickListener {
+public class LineInfoActivity extends BaseActivity implements
+		OnItemClickListener {
 
-    private final static String TAG = "LineInfoActivity";
+	private final static String TAG = LineInfoActivity.class.getSimpleName();
 
-    private LineInfoAdapter mLineAdapter;
-    private final List<Line> mLineList = new ArrayList<Line>(0);
+	@InjectView(R.id.back_btn)
+	private Button mBackBtn;
 
-    private Button mBackBtn;
+	@InjectView(R.id.line_info_listview)
+	private ListView lineListView;
 
-    private ListView lineListView;
+	@Inject
+	DownLoadData downLoadData;
 
-    private String stationName;
+	private String stationName;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.line_info);
-        Intent intent = getIntent();
-        stationName = intent.getStringExtra(ParamUtil.LINE_GUID);
+	private LineInfoAdapter mLineAdapter;
+	private final List<Line> mLineList = new ArrayList<Line>(0);
 
-        mBackBtn = (Button) findViewById(R.id.back_btn);
-        mBackBtn.setOnClickListener(this);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.line_info);
 
-        lineListView = (ListView) this.findViewById(R.id.line_info_listview);
-        lineListView.setCacheColorHint(0);
+		Intent intent = getIntent();
+		stationName = intent.getStringExtra(ParamUtil.LINE_GUID);
 
-        mLoadDialog = new ProgressDialog(this);
-        mLoadDialog.setMessage("正在查询车次信息...");
-        mLineAdapter = new LineInfoAdapter(LineInfoActivity.this, mLineList);
-        lineListView.setAdapter(mLineAdapter);
-        lineListView.setOnItemClickListener(this);
+		mBackBtn.setOnClickListener(this);
 
-        mLineAdapter.notifyDataSetChanged();
+		lineListView.setCacheColorHint(0);
 
-    }
+		mLoadDialog = new ProgressDialog(this);
+		mLoadDialog.setMessage("正在查询车次信息...");
+		mLineAdapter = new LineInfoAdapter(LineInfoActivity.this, mLineList);
+		lineListView.setAdapter(mLineAdapter);
+		lineListView.setOnItemClickListener(this);
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mLineList != null && mLineList.size() > 0) {
-            return;
-        }
-        mLoadDialog.show();
-        new QueryLineTask().execute();
-        LogUtil.d(TAG, "onResume");
-    }
+		mLineAdapter.notifyDataSetChanged();
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.line_info, menu);
-        return true;
-    }
+	}
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View convertView, int position, long id) {
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (mLineList != null && mLineList.size() > 0) {
+			return;
+		}
+		mLoadDialog.show();
+		new QueryLineTask().execute();
+		LogUtil.d(TAG, "onResume");
+	}
 
-        Line line = this.mLineList.get((int) id);
-        if (line == null) {
-            LogUtil.d(TAG, "line info is null ");
-            return;
-        }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.line_info, menu);
+		return true;
+	}
 
-        Intent intent = new Intent();
-        intent.setClass(this, SingleLineActivity.class);
-        intent.putExtra(ParamUtil.LINE_GUID, line.getLineGuid());
-        startActivity(intent);
-    }
+	@Override
+	public void onItemClick(AdapterView<?> parent, View convertView,
+			int position, long id) {
 
-    private class QueryLineTask extends AsyncTask<Void, Void, Void> {
+		Line line = this.mLineList.get((int) id);
+		if (line == null) {
+			LogUtil.d(TAG, "line info is null ");
+			return;
+		}
 
-        @Override
-        public void onPreExecute() {
-            openProgressDialog();
-        }
+		Intent intent = new Intent();
+		intent.setClass(this, SingleLineActivity.class);
+		intent.putExtra(ParamUtil.LINE_GUID, line.getLineGuid());
+		startActivity(intent);
+	}
 
-        @Override
-        protected Void doInBackground(Void... params) {
+	private class QueryLineTask extends AsyncTask<Void, Void, Void> {
 
-            try {
-                String name = URLEncoder.encode(stationName, "utf-8");
-                List<Line> temps = DownLoadData.getLine(LineInfoActivity.this, URLEncoder.encode(name, "utf-8"));
-                mLineList.clear();
-                mLineList.addAll(temps);
+		@Override
+		public void onPreExecute() {
+			openProgressDialog();
+		}
 
-            } catch (Exception e) {
-                LogUtil.e(TAG, "获取数据出错", e);
-            }
+		@Override
+		protected Void doInBackground(Void... params) {
 
-            return null;
-        }
+			try {
+				String name = URLEncoder.encode(stationName, "utf-8");
+				List<Line> temps = downLoadData.getLine(LineInfoActivity.this,
+						URLEncoder.encode(name, "utf-8"));
+				mLineList.clear();
+				mLineList.addAll(temps);
 
-        @Override
-        protected void onPostExecute(Void result) {
-            closeProgressDialog();
-            mLineAdapter.notifyDataSetChanged();
-        }
-    }
+			} catch (Exception e) {
+				LogUtil.e(TAG, "获取数据出错", e);
+			}
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-        case R.id.back_btn:
-            this.finish();
-            break;
-        default:
-            break;
-        }
+			return null;
+		}
 
-    }
+		@Override
+		protected void onPostExecute(Void result) {
+			closeProgressDialog();
+			mLineAdapter.notifyDataSetChanged();
+		}
+	}
+
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+		case R.id.back_btn:
+			this.finish();
+			break;
+		default:
+			break;
+		}
+
+	}
 
 }
