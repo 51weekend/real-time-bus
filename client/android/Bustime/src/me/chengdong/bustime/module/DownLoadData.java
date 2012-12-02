@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.chengdong.bustime.activity.SingleLineActivity;
+import me.chengdong.bustime.activity.StationInfoActivity;
 import me.chengdong.bustime.http.HttpClientUtil;
 import me.chengdong.bustime.http.HttpResult;
 import me.chengdong.bustime.model.Line;
 import me.chengdong.bustime.model.SingleLine;
+import me.chengdong.bustime.model.Station;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.NetworkUtil;
 
@@ -36,6 +38,7 @@ public class DownLoadData {
 	public static final String SERVER_CONTEXT = "/api";
 	public static final String QUERY_LINE_PATH = "/api/queryLine";
 	public static final String QUERY_SINGLE_LINE_PATH = "/api/querySingleLine";
+	public static final String QUERY_STATION_PATH = "/api/queryStation";
 
 	/**
 	 * 获取车次信息
@@ -132,6 +135,52 @@ public class DownLoadData {
 
 		} catch (Exception e) {
 			LogUtil.e(TAG, "从服务器获取车次运行信息异常:", e);
+		}
+
+		return lines;
+	}
+
+	public List<Station> getStation(StationInfoActivity context,
+			String stationName) {
+		List<Station> lines = new ArrayList<Station>();
+		if (!NetworkUtil.isNetworkAvailable(context)) {
+			// TODO 提示用户、网络不可用+
+			return lines;
+		}
+
+		try {
+			String path = SERVER_CONTEXT + QUERY_STATION_PATH;
+
+			String req = "stationName=" + stationName;
+
+			HttpResult httpResult = HttpClientUtil.callServer(context,
+					SERVER_HOST, false, path, req, "UTF-8");
+
+			if ((httpResult == null) || !httpResult.isSuccess()) {
+				return lines;
+			}
+			String jsonStr = httpResult.getResponse();
+			LogUtil.d(TAG, jsonStr);
+			JSONObject jsonObj = new JSONObject(jsonStr);
+			int resultCode = jsonObj.optInt("resultCode", -1);
+			if (resultCode != 0) {
+				return lines;
+			}
+
+			JSONArray records = (JSONArray) jsonObj.get("data");
+
+			if (records == null || records.length() == 0) {
+				return lines;
+			}
+			for (int i = 0, len = records.length(); i < len; i++) {
+				Station station = new Station();
+				station.deserialize(records.getJSONObject(i));
+				lines.add(station);
+
+			}
+
+		} catch (Exception e) {
+			LogUtil.e(TAG, "从服务器获取站台信息异常:", e);
 		}
 
 		return lines;

@@ -122,9 +122,6 @@ public class SingleLineActivity extends BaseActivity {
 			mLoadDialog.show();
 			new QuerySingleLineTask().execute();
 			break;
-		case R.id.btn_logout:
-			this.finish();
-			break;
 		default:
 			break;
 		}

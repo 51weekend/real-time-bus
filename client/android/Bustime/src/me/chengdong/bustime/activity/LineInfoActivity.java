@@ -4,33 +4,37 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import roboguice.inject.InjectView;
-
-import com.google.inject.Inject;
-
 import me.chengdong.bustime.adapter.LineInfoAdapter;
 import me.chengdong.bustime.model.Line;
 import me.chengdong.bustime.module.DownLoadData;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.ParamUtil;
+import me.chengdong.bustime.utils.StringUtil;
+import roboguice.inject.InjectView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.inject.Inject;
 
 public class LineInfoActivity extends BaseActivity implements
 		OnItemClickListener {
 
 	private final static String TAG = LineInfoActivity.class.getSimpleName();
 
-	@InjectView(R.id.back_btn)
-	private Button mBackBtn;
+	@InjectView(R.id.searchByLine)
+	Button mQueryLineBtn;
+
+	@InjectView(R.id.line)
+	EditText mLineEdittext;
 
 	@InjectView(R.id.line_info_listview)
 	private ListView lineListView;
@@ -38,7 +42,7 @@ public class LineInfoActivity extends BaseActivity implements
 	@Inject
 	DownLoadData downLoadData;
 
-	private String stationName;
+	private String lineNumber;
 
 	private LineInfoAdapter mLineAdapter;
 	private final List<Line> mLineList = new ArrayList<Line>(0);
@@ -46,12 +50,13 @@ public class LineInfoActivity extends BaseActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		LogUtil.d(TAG, "onCreate");
 		setContentView(R.layout.line_info);
 
-		Intent intent = getIntent();
-		stationName = intent.getStringExtra(ParamUtil.LINE_GUID);
+		mQueryLineBtn.setOnClickListener(this);
 
-		mBackBtn.setOnClickListener(this);
+		mLineEdittext.setSingleLine(true);
+		mLineEdittext.clearFocus();
 
 		lineListView.setCacheColorHint(0);
 
@@ -71,15 +76,31 @@ public class LineInfoActivity extends BaseActivity implements
 		if (mLineList != null && mLineList.size() > 0) {
 			return;
 		}
-		mLoadDialog.show();
+		if (StringUtil.isEmpty(lineNumber)) {
+			return;
+		}
+		openProgressDialog();
 		new QueryLineTask().execute();
 		LogUtil.d(TAG, "onResume");
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.line_info, menu);
-		return true;
+	public void onClick(View v) {
+
+		switch (v.getId()) {
+		case R.id.searchByLine:
+			if (StringUtil.isEmpty(mLineEdittext.getText().toString())) {
+				Toast.makeText(LineInfoActivity.this, R.string.line_required,
+						Toast.LENGTH_SHORT).show();
+				break;
+			}
+
+			lineNumber = mLineEdittext.getText().toString();
+			new QueryLineTask().execute();
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -102,6 +123,9 @@ public class LineInfoActivity extends BaseActivity implements
 
 		@Override
 		public void onPreExecute() {
+			if (StringUtil.isEmpty(lineNumber)) {
+				return;
+			}
 			openProgressDialog();
 		}
 
@@ -109,7 +133,10 @@ public class LineInfoActivity extends BaseActivity implements
 		protected Void doInBackground(Void... params) {
 
 			try {
-				String name = URLEncoder.encode(stationName, "utf-8");
+				if (StringUtil.isEmpty(lineNumber)) {
+					return null;
+				}
+				String name = URLEncoder.encode(lineNumber, "utf-8");
 				List<Line> temps = downLoadData.getLine(LineInfoActivity.this,
 						URLEncoder.encode(name, "utf-8"));
 				mLineList.clear();
@@ -127,18 +154,6 @@ public class LineInfoActivity extends BaseActivity implements
 			closeProgressDialog();
 			mLineAdapter.notifyDataSetChanged();
 		}
-	}
-
-	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-		case R.id.back_btn:
-			this.finish();
-			break;
-		default:
-			break;
-		}
-
 	}
 
 }

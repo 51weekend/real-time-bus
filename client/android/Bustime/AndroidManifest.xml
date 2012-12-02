@@ -15,8 +15,9 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar" >
         <activity
-            android:name=".BustimeActivity"
-            android:label="@string/title_bustime" >
+            android:name=".MainActivity"
+            android:label="@string/title_bustime"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,11 +26,18 @@
         </activity>
         <activity
             android:name=".LineInfoActivity"
-            android:label="@string/title_line_info" >
+            android:label="@string/title_line_info"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".SingleLineActivity"
-            android:label="@string/title_single_line" >
+            android:label="@string/title_single_line"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".StationInfoActivity"
+            android:label="@string/title_activity_station_info"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

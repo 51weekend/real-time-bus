@@ -1,6 +1,8 @@
 <resources>
-
-    <style name="AppTheme" parent="android:Theme.Light" />
+    
+    <style name="app_theme" parent="android:Theme.NoTitleBar">
+		<item name="android:windowBackground">@drawable/app_background</item>
+	</style>
 
     <style name="fontshadow">
         <item name="android:shadowColor">#99000000</item>
