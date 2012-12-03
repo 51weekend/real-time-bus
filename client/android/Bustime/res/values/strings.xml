@@ -29,5 +29,6 @@
     </string-array>
 
     <string name="title_activity_station_info">StationInfoActivity</string>
+    <string name="title_activity_station_bus">StationBusActivity</string>
 
 </resources>

@@ -9,7 +9,7 @@ package me.chengdong.bustime.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.chengdong.bustime.activity.LineInfoActivity;
+import me.chengdong.bustime.activity.LineActivity;
 import me.chengdong.bustime.activity.R;
 import me.chengdong.bustime.model.Line;
 import android.view.LayoutInflater;
@@ -28,7 +28,7 @@ public class LineInfoAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<Line> items = new ArrayList<Line>();
 
-    public LineInfoAdapter(LineInfoActivity context, List<Line> items) {
+    public LineInfoAdapter(LineActivity context, List<Line> items) {
         this.inflater = LayoutInflater.from(context);
         this.items = items;
     }
@@ -52,7 +52,7 @@ public class LineInfoAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.line_info_item, null);
+            convertView = inflater.inflate(R.layout.line_item, null);
             holder = new ViewHolder();
 
             holder.tvLineNumber = (TextView) convertView.findViewById(R.id.tv_lineNumber);

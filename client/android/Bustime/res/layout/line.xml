@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0px"
+    android:background="@drawable/main_bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/top_relativelayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/top_bg" >
+
+        <EditText
+            android:id="@+id/line"
+            style="@style/stationName"
+            android:layout_width="120dip"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:hint="@string/lineName"
+            android:textColorHint="#afafaf"
+            android:textSize="14.7sp" />
+
+        <Button
+            android:id="@+id/searchByLine"
+            style="@style/titlebtnfont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10.7dip"
+            android:background="@drawable/top_btn"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/queryLine" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/line_info_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/top_relativelayout"
+        android:cacheColorHint="#00000000"
+        android:divider="@drawable/set_line" >
+    </ListView>
+
+</RelativeLayout>

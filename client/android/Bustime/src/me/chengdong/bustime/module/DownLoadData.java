@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.chengdong.bustime.activity.SingleLineActivity;
-import me.chengdong.bustime.activity.StationInfoActivity;
+import me.chengdong.bustime.activity.StationActivity;
 import me.chengdong.bustime.http.HttpClientUtil;
 import me.chengdong.bustime.http.HttpResult;
 import me.chengdong.bustime.model.Line;
@@ -140,7 +140,7 @@ public class DownLoadData {
 		return lines;
 	}
 
-	public List<Station> getStation(StationInfoActivity context,
+	public List<Station> getStation(StationActivity context,
 			String stationName) {
 		List<Station> lines = new ArrayList<Station>();
 		if (!NetworkUtil.isNetworkAvailable(context)) {

@@ -8,30 +8,32 @@
 
     <RelativeLayout
         android:id="@+id/layout_search"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" >
+        android:background="@drawable/top_bg" >
 
         <EditText
             android:id="@+id/stationName"
             style="@style/stationName"
             android:layout_width="120dip"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
+            android:layout_centerInParent="true"
             android:hint="@string/stationName"
+            android:text="海悦花园"
             android:textColorHint="#afafaf"
             android:textSize="14.7sp" />
 
         <Button
             android:id="@+id/searchByStationName"
+            style="@style/titlebtnfont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:layout_toRightOf="@+id/stationName"
-            android:text="@string/queryStation"
-            android:textColor="#ffffff"
-            android:textSize="14.7sp" />
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10.7dip"
+            android:background="@drawable/top_btn"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/queryStation" />
     </RelativeLayout>
 
     <ListView

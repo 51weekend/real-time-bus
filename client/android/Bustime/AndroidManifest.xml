@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LineInfoActivity"
+            android:name=".LineActivity"
             android:label="@string/title_line_info"
             android:screenOrientation="portrait" >
         </activity>
@@ -35,9 +35,18 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".StationInfoActivity"
+            android:name=".StationActivity"
             android:label="@string/title_activity_station_info"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".StationBusActivity"
+            android:label="@string/title_activity_station_bus" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

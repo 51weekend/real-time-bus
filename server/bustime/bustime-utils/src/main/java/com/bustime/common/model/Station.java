@@ -24,6 +24,7 @@ public class Station {
     private String area;
     private String trend;
     private String link;
+    private String lines;
 
     @JsonIgnore
     public String getLink() {
@@ -80,6 +81,14 @@ public class Station {
 
     public void setTrend(String trend) {
         this.trend = trend;
+    }
+
+    public String getLines() {
+        return lines;
+    }
+
+    public void setLines(String lines) {
+        this.lines = lines;
     }
 
     public String toString() {

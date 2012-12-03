@@ -25,10 +25,10 @@ import android.widget.Toast;
 
 import com.google.inject.Inject;
 
-public class LineInfoActivity extends BaseActivity implements
+public class LineActivity extends BaseActivity implements
 		OnItemClickListener {
 
-	private final static String TAG = LineInfoActivity.class.getSimpleName();
+	private final static String TAG = LineActivity.class.getSimpleName();
 
 	@InjectView(R.id.searchByLine)
 	Button mQueryLineBtn;
@@ -51,7 +51,7 @@ public class LineInfoActivity extends BaseActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		LogUtil.d(TAG, "onCreate");
-		setContentView(R.layout.line_info);
+		setContentView(R.layout.line);
 
 		mQueryLineBtn.setOnClickListener(this);
 
@@ -62,7 +62,7 @@ public class LineInfoActivity extends BaseActivity implements
 
 		mLoadDialog = new ProgressDialog(this);
 		mLoadDialog.setMessage("正在查询车次信息...");
-		mLineAdapter = new LineInfoAdapter(LineInfoActivity.this, mLineList);
+		mLineAdapter = new LineInfoAdapter(LineActivity.this, mLineList);
 		lineListView.setAdapter(mLineAdapter);
 		lineListView.setOnItemClickListener(this);
 
@@ -90,7 +90,7 @@ public class LineInfoActivity extends BaseActivity implements
 		switch (v.getId()) {
 		case R.id.searchByLine:
 			if (StringUtil.isEmpty(mLineEdittext.getText().toString())) {
-				Toast.makeText(LineInfoActivity.this, R.string.line_required,
+				Toast.makeText(LineActivity.this, R.string.line_required,
 						Toast.LENGTH_SHORT).show();
 				break;
 			}
@@ -137,7 +137,7 @@ public class LineInfoActivity extends BaseActivity implements
 					return null;
 				}
 				String name = URLEncoder.encode(lineNumber, "utf-8");
-				List<Line> temps = downLoadData.getLine(LineInfoActivity.this,
+				List<Line> temps = downLoadData.getLine(LineActivity.this,
 						URLEncoder.encode(name, "utf-8"));
 				mLineList.clear();
 				mLineList.addAll(temps);

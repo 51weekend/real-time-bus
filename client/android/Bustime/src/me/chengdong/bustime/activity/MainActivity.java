@@ -21,8 +21,8 @@ public class MainActivity extends TabActivity {
 	}
 
 	private void setTabs() {
-		addTab("车次查询", R.drawable.tab_home, LineInfoActivity.class);
-		addTab("站台查询", R.drawable.tab_search, StationInfoActivity.class);
+		addTab("车次查询", R.drawable.tab_home, LineActivity.class);
+		addTab("站台查询", R.drawable.tab_search, StationActivity.class);
 	}
 
 	private void addTab(String labelId, int drawableId, Class<?> c) {

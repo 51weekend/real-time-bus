@@ -129,13 +129,13 @@
 	</insert>
 
 	<select id="queryStationByCode" parameterType="String"
-		resultType="com.bustime.common.model.StationBus">
-		select * from station_bus where standCode = #{standCode}
+		resultType="com.bustime.common.model.Station">
+		select * from station where standCode = #{standCode}
 	</select>
 
 	<select id="queryStationByName" parameterType="String"
-		resultType="com.bustime.common.model.StationBus">
-		select * from station_bus where standName = #{standName}
+		resultType="com.bustime.common.model.Station">
+		select * from station where standName = #{standName}
 	</select>
 
 
