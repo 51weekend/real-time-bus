@@ -13,6 +13,7 @@ import me.chengdong.bustime.activity.R;
 import me.chengdong.bustime.model.StationBus;
 import me.chengdong.bustime.utils.StringUtil;
 import android.app.Activity;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,7 @@ public class StationBusAdapter extends BaseAdapter {
         }
 
         StationBus stationBus = items.get(position);
-        holder.tvLineNumber.setText(stationBus.getLineNumber());
+        holder.tvLineNumber.setText(Html.fromHtml("<u>" + stationBus.getLineNumber() + "</u>"));
         holder.tvStandNum.setText(stationBus.getStandNum());
 
         if (StringUtil.isNumeric(stationBus.getStandNum())) {

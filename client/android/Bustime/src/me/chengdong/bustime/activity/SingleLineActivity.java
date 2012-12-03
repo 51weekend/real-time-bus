@@ -23,6 +23,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class SingleLineActivity extends BaseActivity implements OnItemClickListener {
 
@@ -34,6 +35,9 @@ public class SingleLineActivity extends BaseActivity implements OnItemClickListe
 
     @InjectView(R.id.single_line_listview)
     ListView singleLineListView;
+
+    @InjectView(R.id.title_textview)
+    TextView mTitle;
 
     @InjectView(R.id.iv_refresh)
     ImageView mFrefreshBtn;
@@ -53,6 +57,7 @@ public class SingleLineActivity extends BaseActivity implements OnItemClickListe
 
         Intent intent = getIntent();
         lineGuid = intent.getStringExtra(ParamUtil.LINE_GUID);
+        mTitle.setText(intent.getStringExtra(ParamUtil.LINE_NUMBER));
 
         mFrefreshBtn.setOnClickListener(this);
         mBackBtn.setOnClickListener(this);

@@ -73,6 +73,7 @@ public class StationBus {
         this.time = time;
     }
 
+    @JsonIgnore
     public String getStandCode() {
         return standCode;
     }

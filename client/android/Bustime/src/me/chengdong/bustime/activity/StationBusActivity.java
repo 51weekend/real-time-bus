@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.inject.Inject;
 
@@ -40,6 +41,9 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
     @InjectView(R.id.back_btn)
     Button mBackBtn;
 
+    @InjectView(R.id.title_textview)
+    TextView mTitle;
+
     final List<StationBus> mStationBusList = new ArrayList<StationBus>(0);
 
     @Inject
@@ -54,8 +58,8 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
         mBackBtn.setOnClickListener(this);
 
         Intent intent = getIntent();
-        stationCode = intent.getExtras().get(ParamUtil.STATION_CODE).toString();
-        intent.getExtras().get(ParamUtil.STATION_NAME);
+        stationCode = intent.getStringExtra(ParamUtil.STATION_CODE);
+        mTitle.setText(intent.getStringExtra(ParamUtil.STATION_NAME));
 
         mLoadDialog = new ProgressDialog(this);
         mLoadDialog.setMessage("正在查询站台车辆信息...");
@@ -106,6 +110,7 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
         Intent intent = new Intent();
         intent.setClass(this, SingleLineActivity.class);
         intent.putExtra(ParamUtil.LINE_GUID, stationBus.getLineGuid());
+        intent.putExtra(ParamUtil.LINE_NUMBER, stationBus.getLineNumber());
         startActivity(intent);
 
     }

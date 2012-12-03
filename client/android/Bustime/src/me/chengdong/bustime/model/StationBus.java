@@ -16,7 +16,6 @@ import org.json.JSONObject;
 public class StationBus {
 
     private String lineGuid;
-    private String standCode;
     private String standNum;
     private String time;
     private String lineNumber;
@@ -45,14 +44,6 @@ public class StationBus {
         this.time = time;
     }
 
-    public String getStandCode() {
-        return standCode;
-    }
-
-    public void setStandCode(String standCode) {
-        this.standCode = standCode;
-    }
-
     public String getLineNumber() {
         return lineNumber;
     }
@@ -63,7 +54,6 @@ public class StationBus {
 
     public void deserialize(JSONObject json) {
         lineGuid = json.optString("lineGuid", "");
-        standCode = json.optString("standCode", "");
         standNum = json.optString("standNum", "");
         time = json.optString("time", "");
         lineNumber = json.optString("lineNumber", "");

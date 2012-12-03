@@ -35,6 +35,7 @@ public class Line {
         this.lineGuid = lineGuid;
     }
 
+    @JsonIgnore
     public String getLineInfo() {
         return lineInfo;
     }

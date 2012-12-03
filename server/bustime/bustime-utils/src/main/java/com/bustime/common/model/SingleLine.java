@@ -58,6 +58,7 @@ public class SingleLine {
         this.time = time;
     }
 
+    @JsonIgnore
     public String getLineGuid() {
         return lineGuid;
     }

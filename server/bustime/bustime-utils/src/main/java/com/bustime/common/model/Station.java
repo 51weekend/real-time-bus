@@ -51,6 +51,7 @@ public class Station {
         this.standName = standName;
     }
 
+    @JsonIgnore
     public String getArea() {
         return area;
     }
@@ -67,6 +68,7 @@ public class Station {
         this.road = road;
     }
 
+    @JsonIgnore
     public String getRoadSection() {
         return roadSection;
     }

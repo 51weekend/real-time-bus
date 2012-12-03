@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="42dip"
+    android:layout_marginTop="5dip"
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
@@ -20,7 +21,7 @@
             android:gravity="center_horizontal"
             android:singleLine="true"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </RelativeLayout>
 
@@ -37,7 +38,7 @@
             android:layout_centerVertical="true"
             android:text="@string/name_next_bus"
             android:textColor="#000000"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_standNum"
@@ -47,7 +48,7 @@
             android:layout_marginLeft="5dip"
             android:layout_toRightOf="@+id/tv_next_bus"
             android:textColor="@color/green"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/station_tag"
@@ -59,7 +60,7 @@
             android:singleLine="true"
             android:text="@string/name_station"
             android:textColor="#000000"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
     </RelativeLayout>
 
 </RelativeLayout>

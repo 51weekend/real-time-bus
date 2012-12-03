@@ -113,6 +113,7 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
         Intent intent = new Intent();
         intent.setClass(this, SingleLineActivity.class);
         intent.putExtra(ParamUtil.LINE_GUID, line.getLineGuid());
+        intent.putExtra(ParamUtil.LINE_NUMBER, line.getLineNumber());
         startActivity(intent);
     }
 

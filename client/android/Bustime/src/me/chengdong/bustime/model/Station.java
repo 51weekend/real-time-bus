@@ -18,8 +18,6 @@ public class Station {
     private String standCode;
     private String standName;
     private String road;
-    private String roadSection;
-    private String area;
     private String trend;
     private String lines;
 
@@ -39,28 +37,12 @@ public class Station {
         this.standName = standName;
     }
 
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
     public String getRoad() {
         return road;
     }
 
     public void setRoad(String road) {
         this.road = road;
-    }
-
-    public String getRoadSection() {
-        return roadSection;
-    }
-
-    public void setRoadSection(String roadSection) {
-        this.roadSection = roadSection;
     }
 
     public String getTrend() {
@@ -83,8 +65,6 @@ public class Station {
         standCode = json.optString("standCode", "");
         standName = json.optString("standName", "");
         road = json.optString("road", "");
-        roadSection = json.optString("roadSection", "");
-        area = json.optString("area", "");
         trend = json.optString("trend", "");
         lines = json.optString("lines", "");
     }

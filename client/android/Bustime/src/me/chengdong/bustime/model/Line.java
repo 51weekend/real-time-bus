@@ -17,7 +17,6 @@ public class Line {
 
     private String lineGuid;
     private String lineNumber;
-    private String lineInfo;
     private int totalStation;
     private String runTime;
     private String startStation;
@@ -29,14 +28,6 @@ public class Line {
 
     public void setLineGuid(String lineGuid) {
         this.lineGuid = lineGuid;
-    }
-
-    public String getLineInfo() {
-        return lineInfo;
-    }
-
-    public void setLineInfo(String lineInfo) {
-        this.lineInfo = lineInfo;
     }
 
     public String getLineNumber() {
@@ -82,7 +73,6 @@ public class Line {
     public void deserialize(JSONObject json) {
         lineNumber = json.optString("lineNumber", "");
         lineGuid = json.optString("lineGuid", "");
-        lineInfo = json.optString("lineInfo", "");
         startStation = json.optString("startStation", "");
         endStation = json.optString("endStation", "");
         totalStation = json.optInt("totalStation", 0);
