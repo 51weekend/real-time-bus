@@ -4,6 +4,7 @@
     android:layout_width="120dip"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
+    android:layout_gravity="center_vertical"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -17,7 +18,7 @@
 
         <TextView
             android:id="@+id/tv_stationName"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center_horizontal"

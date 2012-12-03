@@ -14,6 +14,8 @@
     <string name="name_start">始发:</string>
     <string name="name_end">终点:</string>
     <string name="name_run_time">首末班:</string>
+    <string name="name_next_bus">下趟车</string>
+    <string name="name_station">站</string>
     <string name="arrive_station_time">进站时间:</string>
     <string name="name_position">位于</string>
     <string name="line_required">请输入公交线路!</string>

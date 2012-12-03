@@ -6,6 +6,8 @@
 
 package me.chengdong.bustime.model;
 
+import org.json.JSONObject;
+
 /**
  * TODO.
  *
@@ -15,21 +17,9 @@ public class StationBus {
 
     private String lineGuid;
     private String standCode;
-    private String busNumber;
     private String standNum;
     private String time;
     private String lineNumber;
-
-    // private String lineInfo;
-    // private String trend;
-
-    public String getBusNumber() {
-        return busNumber;
-    }
-
-    public void setBusNumber(String busNumber) {
-        this.busNumber = busNumber;
-    }
 
     public String getLineGuid() {
         return lineGuid;
@@ -61,6 +51,22 @@ public class StationBus {
 
     public void setStandCode(String standCode) {
         this.standCode = standCode;
+    }
+
+    public String getLineNumber() {
+        return lineNumber;
+    }
+
+    public void setLineNumber(String lineNumber) {
+        this.lineNumber = lineNumber;
+    }
+
+    public void deserialize(JSONObject json) {
+        lineGuid = json.optString("lineGuid", "");
+        standCode = json.optString("standCode", "");
+        standNum = json.optString("standNum", "");
+        time = json.optString("time", "");
+        lineNumber = json.optString("lineNumber", "");
     }
 
 }

@@ -69,9 +69,9 @@ public final class R {
         public static final int top_icon_message_point=0x7f02001f;
     }
     public static final class id {
-        public static final int add_page=0x7f0a0027;
+        public static final int add_page=0x7f0a002d;
         public static final int back_btn=0x7f0a0010;
-        public static final int icon=0x7f0a0023;
+        public static final int icon=0x7f0a0029;
         public static final int inner_content=0x7f0a000f;
         public static final int iv_refresh=0x7f0a0012;
         public static final int layout_line_detail_end=0x7f0a000c;
@@ -80,19 +80,23 @@ public final class R {
         public static final int layout_search=0x7f0a0019;
         public static final int layout_single_line_detail=0x7f0a0014;
         public static final int layout_single_line_detail_current=0x7f0a0016;
-        public static final int layout_station_name=0x7f0a001d;
-        public static final int layout_station_position=0x7f0a001e;
+        public static final int layout_station_bus=0x7f0a001e;
+        public static final int layout_station_lines=0x7f0a001f;
+        public static final int layout_station_name=0x7f0a0023;
+        public static final int layout_station_position=0x7f0a0024;
         public static final int line=0x7f0a0001;
         public static final int line_info_listview=0x7f0a0003;
-        public static final int menu_settings=0x7f0a0025;
-        public static final int random=0x7f0a0026;
-        public static final int remove_page=0x7f0a0028;
+        public static final int menu_settings=0x7f0a002b;
+        public static final int random=0x7f0a002c;
+        public static final int remove_page=0x7f0a002e;
         public static final int searchByLine=0x7f0a0002;
         public static final int searchByStationName=0x7f0a001b;
         public static final int single_line_listview=0x7f0a0013;
         public static final int stationName=0x7f0a001a;
+        public static final int station_bus_listview=0x7f0a001d;
         public static final int station_info_listview=0x7f0a001c;
-        public static final int title=0x7f0a0024;
+        public static final int station_tag=0x7f0a0022;
+        public static final int title=0x7f0a002a;
         public static final int title_textview=0x7f0a0011;
         public static final int top_relativelayout=0x7f0a0000;
         public static final int tv_current_stationName=0x7f0a0017;
@@ -100,16 +104,18 @@ public final class R {
         public static final int tv_endStation=0x7f0a000e;
         public static final int tv_lineNumber=0x7f0a0005;
         public static final int tv_lineTotalStation=0x7f0a0006;
-        public static final int tv_lines=0x7f0a0022;
-        public static final int tv_position=0x7f0a001f;
-        public static final int tv_road=0x7f0a0020;
+        public static final int tv_lines=0x7f0a0028;
+        public static final int tv_next_bus=0x7f0a0020;
+        public static final int tv_position=0x7f0a0025;
+        public static final int tv_road=0x7f0a0026;
         public static final int tv_run_time=0x7f0a000b;
+        public static final int tv_standNum=0x7f0a0021;
         public static final int tv_start=0x7f0a0008;
         public static final int tv_startStation=0x7f0a0009;
         public static final int tv_stationName=0x7f0a0015;
         public static final int tv_time=0x7f0a000a;
         public static final int tv_time_tips=0x7f0a0018;
-        public static final int tv_trend=0x7f0a0021;
+        public static final int tv_trend=0x7f0a0027;
     }
     public static final class layout {
         public static final int line=0x7f030000;
@@ -119,8 +125,9 @@ public final class R {
         public static final int single_line_item=0x7f030004;
         public static final int station=0x7f030005;
         public static final int station_bus=0x7f030006;
-        public static final int station_item=0x7f030007;
-        public static final int tab_indicator=0x7f030008;
+        public static final int station_bus_item=0x7f030007;
+        public static final int station_item=0x7f030008;
+        public static final int tab_indicator=0x7f030009;
     }
     public static final class menu {
         public static final int bustime=0x7f090000;
@@ -132,28 +139,30 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f070000;
-        public static final int arrive_station_time=0x7f07000e;
+        public static final int arrive_station_time=0x7f070010;
         public static final int back=0x7f070008;
         public static final int hello_world=0x7f070001;
         public static final int lineName=0x7f070004;
-        public static final int line_required=0x7f070010;
+        public static final int line_required=0x7f070012;
         public static final int logout=0x7f070009;
         public static final int menu_settings=0x7f070002;
         public static final int name_end=0x7f07000c;
-        public static final int name_position=0x7f07000f;
+        public static final int name_next_bus=0x7f07000e;
+        public static final int name_position=0x7f070011;
         public static final int name_run_time=0x7f07000d;
         public static final int name_start=0x7f07000b;
+        public static final int name_station=0x7f07000f;
         public static final int queryLine=0x7f070007;
         public static final int queryStation=0x7f070006;
         public static final int refresh=0x7f07000a;
         public static final int search=0x7f070005;
         public static final int stationName=0x7f070003;
-        public static final int station_required=0x7f070011;
-        public static final int title_activity_station_bus=0x7f070016;
-        public static final int title_activity_station_info=0x7f070015;
-        public static final int title_bustime=0x7f070012;
-        public static final int title_line_info=0x7f070013;
-        public static final int title_single_line=0x7f070014;
+        public static final int station_required=0x7f070013;
+        public static final int title_activity_station_bus=0x7f070018;
+        public static final int title_activity_station_info=0x7f070017;
+        public static final int title_bustime=0x7f070014;
+        public static final int title_line_info=0x7f070015;
+        public static final int title_single_line=0x7f070016;
     }
     public static final class style {
         public static final int app_theme=0x7f080000;

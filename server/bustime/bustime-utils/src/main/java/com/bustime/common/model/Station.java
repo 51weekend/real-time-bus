@@ -84,6 +84,9 @@ public class Station {
     }
 
     public String getLines() {
+        if (lines == null) {
+            return "";
+        }
         return lines;
     }
 

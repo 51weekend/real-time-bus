@@ -9,13 +9,14 @@ package me.chengdong.bustime.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.chengdong.bustime.activity.R;
 import me.chengdong.bustime.model.StationBus;
-
+import me.chengdong.bustime.utils.StringUtil;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -27,6 +28,11 @@ public class StationBusAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private List<StationBus> items = new ArrayList<StationBus>();
+
+    public StationBusAdapter(Activity context, List<StationBus> items) {
+        this.inflater = LayoutInflater.from(context);
+        this.items = items;
+    }
 
     @Override
     public int getCount() {
@@ -45,13 +51,40 @@ public class StationBusAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        return null;
+        ViewHolder holder;
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.station_bus_item, null);
+            holder = new ViewHolder();
+
+            holder.tvLineNumber = (TextView) convertView.findViewById(R.id.tv_lineNumber);
+            holder.tvStandNum = (TextView) convertView.findViewById(R.id.tv_standNum);
+            holder.tvStationTag = (TextView) convertView.findViewById(R.id.station_tag);
+
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        StationBus stationBus = items.get(position);
+        holder.tvLineNumber.setText(stationBus.getLineNumber());
+        holder.tvStandNum.setText(stationBus.getStandNum());
+
+        if (StringUtil.isNumeric(stationBus.getStandNum())) {
+            holder.tvStationTag.setVisibility(View.VISIBLE);
+        } else {
+            holder.tvStationTag.setVisibility(View.GONE);
+            if ("无车".equals(stationBus.getStandNum())) {
+                holder.tvStandNum.setText("待发");
+            }
+        }
+
+        return convertView;
     }
 
     class ViewHolder {
         TextView tvLineNumber;
         TextView tvStandNum;
+        TextView tvStationTag;
     }
 
 }
