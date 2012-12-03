@@ -25,9 +25,12 @@ public class StationBus {
     private String standNum;
     private String time;
 
-    // private String lineInfo;
+    private String lineInfo;
+    private String lineNumber;
+
     // private String trend;
 
+    @JsonIgnore
     public String getBusNumber() {
         return busNumber;
     }
@@ -61,6 +64,7 @@ public class StationBus {
         this.standNum = standNum;
     }
 
+    @JsonIgnore
     public String getTime() {
         return time;
     }
@@ -75,6 +79,30 @@ public class StationBus {
 
     public void setStandCode(String standCode) {
         this.standCode = standCode;
+    }
+
+    @JsonIgnore
+    public String getLineInfo() {
+        return lineInfo;
+    }
+
+    public void setLineInfo(String lineInfo) {
+        if (lineInfo != null) {
+            this.lineNumber = lineInfo.split("\\(")[0];
+        }
+        this.lineInfo = lineInfo;
+    }
+
+    public String getLineNumber() {
+        return lineNumber;
+    }
+
+    public void setLineNumber(String lineNumber) {
+        if (lineNumber != null) {
+            this.lineNumber = lineNumber.split("\\(")[0];
+            return;
+        }
+        this.lineNumber = lineNumber;
     }
 
     public String toString() {

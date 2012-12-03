@@ -8,9 +8,11 @@ import me.chengdong.bustime.adapter.StationAdapter;
 import me.chengdong.bustime.model.Station;
 import me.chengdong.bustime.module.DownLoadData;
 import me.chengdong.bustime.utils.LogUtil;
+import me.chengdong.bustime.utils.ParamUtil;
 import me.chengdong.bustime.utils.StringUtil;
 import roboguice.inject.InjectView;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -104,6 +106,23 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
 
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View convertView, int position, long id) {
+
+        Station station = this.mStationList.get((int) id);
+        if (station == null) {
+            LogUtil.e(TAG, "station info is null ");
+            return;
+        }
+
+        Intent intent = new Intent();
+        intent.setClass(this, StationBusActivity.class);
+        intent.putExtra(ParamUtil.STATION_CODE, station.getStandCode());
+        intent.putExtra(ParamUtil.STATION_NAME, station.getStandName());
+        startActivity(intent);
+
+    }
+
     private class QueryStationTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -140,9 +159,4 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
         }
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-        // TODO Auto-generated method stub
-
-    }
 }

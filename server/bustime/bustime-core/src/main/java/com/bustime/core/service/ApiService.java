@@ -183,6 +183,9 @@ public class ApiService {
      */
     public List<StationBus> queryStationBus(final String stationCode) {
         final List<StationBus> stationBus = stationBusParser.getData(stationCode);
+        // for (StationBus sBus : stationBus) {
+        // sBus.setLineInfo(sBus.getLineInfo());
+        // }
         executor.execute(new Runnable() {
             @Override
             public void run() {

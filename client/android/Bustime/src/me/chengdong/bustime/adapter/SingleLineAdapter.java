@@ -29,7 +29,7 @@ import android.widget.TextView;
 public class SingleLineAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
-    private List<SingleLine> items = new ArrayList<SingleLine>();
+    private List<SingleLine> items = new ArrayList<SingleLine>(0);
 
     public SingleLineAdapter(SingleLineActivity context, List<SingleLine> items) {
         this.inflater = LayoutInflater.from(context);

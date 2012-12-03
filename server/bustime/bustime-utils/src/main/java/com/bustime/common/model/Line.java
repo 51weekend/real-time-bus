@@ -100,6 +100,7 @@ public class Line {
     public void setLineNumber(String lineNumber) {
         if (lineNumber != null) {
             this.lineNumber = lineNumber.split("\\(")[0];
+            return;
         }
         this.lineNumber = lineNumber;
     }

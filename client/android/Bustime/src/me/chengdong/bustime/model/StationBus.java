@@ -15,10 +15,10 @@ public class StationBus {
 
     private String lineGuid;
     private String standCode;
-    // 下面三个字段不持久化
     private String busNumber;
     private String standNum;
     private String time;
+    private String lineNumber;
 
     // private String lineInfo;
     // private String trend;
