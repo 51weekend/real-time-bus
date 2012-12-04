@@ -37,7 +37,6 @@ public class HttpClientUtil {
         if (httpResult == null) {
             return new HttpResult(ErrorCode.HTTP_EXCEPTION, "resp null");
         }
-        LogUtil.i(TAG, "[" + host + path + "?" + req + "] return[" + httpResult + "]");
         return httpResult;
     }
 
@@ -53,7 +52,6 @@ public class HttpClientUtil {
         if (httpResult == null) {
             return new HttpResult(ErrorCode.HTTP_EXCEPTION, "resp null");
         }
-        LogUtil.i(TAG, "" + url + ", params[" + paramsMap + "] return[" + httpResult + "]");
         return httpResult;
     }
 }

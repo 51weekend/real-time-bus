@@ -3,15 +3,12 @@ package me.chengdong.bustime.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import roboguice.inject.InjectView;
-
-import com.google.inject.Inject;
-
 import me.chengdong.bustime.adapter.SingleLineAdapter;
 import me.chengdong.bustime.model.SingleLine;
 import me.chengdong.bustime.module.DownLoadData;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.ParamUtil;
+import roboguice.inject.InjectView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -24,6 +21,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.inject.Inject;
 
 public class SingleLineActivity extends BaseActivity implements OnItemClickListener {
 
@@ -55,10 +54,6 @@ public class SingleLineActivity extends BaseActivity implements OnItemClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_line);
 
-        Intent intent = getIntent();
-        lineGuid = intent.getStringExtra(ParamUtil.LINE_GUID);
-        mTitle.setText(intent.getStringExtra(ParamUtil.LINE_NUMBER));
-
         mFrefreshBtn.setOnClickListener(this);
         mBackBtn.setOnClickListener(this);
 
@@ -74,9 +69,11 @@ public class SingleLineActivity extends BaseActivity implements OnItemClickListe
     @Override
     public void onResume() {
         super.onResume();
+        Intent intent = this.getIntent();
+        lineGuid = intent.getStringExtra(ParamUtil.LINE_GUID);
+        mTitle.setText(intent.getStringExtra(ParamUtil.LINE_NUMBER));
         openProgressDialog();
         new QuerySingleLineTask().execute();
-        LogUtil.d(TAG, "onResume");
     }
 
     @Override

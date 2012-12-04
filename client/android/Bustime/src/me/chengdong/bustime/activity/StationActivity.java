@@ -15,12 +15,15 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -33,11 +36,14 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
     @InjectView(R.id.stationName)
     EditText mStationEditText;
 
-    @InjectView(R.id.searchByStationName)
-    Button mSearchBtn;
+    @InjectView(R.id.iv_search)
+    ImageView mSearch;
 
     @InjectView(R.id.station_info_listview)
     ListView stationListView;
+
+    @InjectView(R.id.btn_logout)
+    Button mLogoutBtn;
 
     @Inject
     DownLoadData downLoadData;
@@ -53,10 +59,31 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.station);
 
-        mSearchBtn.setOnClickListener(this);
+        mSearch.setOnClickListener(this);
+        mLogoutBtn.setOnClickListener(this);
 
         mStationEditText.setSingleLine(true);
         mStationEditText.clearFocus();
+
+        mStationEditText.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                if (StringUtil.isEmpty(mStationEditText.getText().toString())) {
+                    mSearch.setVisibility(View.GONE);
+                } else {
+                    mSearch.setVisibility(View.VISIBLE);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+        });
 
         mLoadDialog = new ProgressDialog(this);
         mLoadDialog.setMessage("正在查询车次信息...");
@@ -74,12 +101,13 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
         if (mStationList != null && mStationList.size() > 0) {
             return;
         }
-        if (StringUtil.isEmpty(stationName)) {
+        if (StringUtil.isEmpty(mStationEditText.getText().toString())) {
             return;
+        } else {
+            mSearch.setVisibility(View.VISIBLE);
         }
         openProgressDialog();
         new QueryStationTask().execute();
-        LogUtil.d(TAG, "onResume");
     }
 
     @Override
@@ -91,7 +119,7 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-        case R.id.searchByStationName:
+        case R.id.iv_search:
             if (StringUtil.isEmpty(mStationEditText.getText().toString())) {
                 Toast.makeText(StationActivity.this, R.string.line_required, Toast.LENGTH_SHORT).show();
                 break;
@@ -99,6 +127,9 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
 
             stationName = mStationEditText.getText().toString();
             new QueryStationTask().execute();
+            break;
+        case R.id.btn_logout:
+            this.finish();
             break;
         default:
             break;

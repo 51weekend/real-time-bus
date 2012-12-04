@@ -90,11 +90,9 @@ public class HttpClientTools {
         }
 
         String url = chkReplaceHostServer(ctx, protocolHostPort, cmnet) + path + "?" + req;
-        LogUtil.i(TAG, "URL:" + url);
         try {
             HttpResult httpResult = requestGetData(ctx, url, isHttps, hostPort, encoding, cmnet, timeoutMillisecond);
 
-            LogUtil.i(TAG, "code=" + httpResult.getCode() + ", http_response = " + httpResult.getResponse() + " ");
             return httpResult;
         } catch (Exception e) {
             LogUtil.e(TAG, "error: ", e);
@@ -259,9 +257,7 @@ public class HttpClientTools {
             if (httpResponse != null && httpResponse.getStatusLine() != null) {
                 code = httpResponse.getStatusLine().getStatusCode();
             }
-            LogUtil.i(TAG, "HTTP Code :" + code);
             if (code == 200) {
-                LogUtil.i(TAG, "数据接收完毕");
                 return new HttpResult(ErrorCode.SUCCESS, getResponseString(httpResponse, encoding));
             } else {
                 LogUtil.i(TAG, "访问失败");
@@ -285,7 +281,7 @@ public class HttpClientTools {
                 try {
                     http.abort();
                 } catch (Exception e) {
-                    LogUtil.i(TAG, "发生异常：", e);
+                    LogUtil.e(TAG, "发生异常：", e);
                 }
             http = null;
         }

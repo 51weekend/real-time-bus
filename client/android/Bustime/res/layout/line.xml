@@ -12,34 +12,66 @@
         android:layout_height="wrap_content"
         android:background="@drawable/top_bg" >
 
-        <EditText
-            android:id="@+id/line"
-            style="@style/stationName"
-            android:layout_width="120dip"
+        <TextView
+            android:id="@+id/title_textview"
+            style="@style/titlefont"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:hint="@string/lineName"
-            android:textColorHint="#afafaf"
-            android:textSize="14.7sp" />
+            android:text="@string/title_bustime" />
 
         <Button
-            android:id="@+id/searchByLine"
+            android:id="@+id/btn_logout"
             style="@style/titlebtnfont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10.7dip"
-            android:background="@drawable/top_btn"
+            android:background="@drawable/btn_top_red"
             android:gravity="center_vertical|center_horizontal"
-            android:text="@string/queryLine" />
+            android:text="@string/logout" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/line_search_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_relativelayout"
+        android:background="@drawable/search_bar_bg" >
+
+        <EditText
+            android:id="@+id/line"
+            style="@style/stationName"
+            android:layout_width="fill_parent"
+            android:layout_height="35dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dip"
+            android:layout_marginRight="50dip"
+            android:background="@drawable/search_bar_edit_normal"
+            android:hint="@string/lineName"
+            android:paddingLeft="20dip"
+            android:paddingRight="30dip"
+            android:textColorHint="#afafaf"
+            android:textSize="14.7sp" />
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="60dip"
+            android:background="@drawable/search_bar_icon_normal"
+            android:contentDescription="@string/refresh"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <ListView
         android:id="@+id/line_info_listview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/top_relativelayout"
+        android:layout_below="@+id/line_search_layout"
         android:cacheColorHint="#00000000"
         android:divider="@drawable/set_line" >
     </ListView>

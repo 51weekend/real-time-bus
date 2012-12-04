@@ -17,7 +17,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_bustime"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,21 +28,25 @@
         <activity
             android:name=".LineActivity"
             android:label="@string/title_line_info"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".SingleLineActivity"
             android:label="@string/title_single_line"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".StationActivity"
             android:label="@string/title_activity_station_info"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".StationBusActivity"
             android:label="@string/title_activity_station_bus"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait" >
         </activity>
     </application>

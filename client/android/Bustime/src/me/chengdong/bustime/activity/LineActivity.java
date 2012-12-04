@@ -15,11 +15,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,8 +32,11 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 
     private final static String TAG = LineActivity.class.getSimpleName();
 
-    @InjectView(R.id.searchByLine)
-    Button mQueryLineBtn;
+    @InjectView(R.id.btn_logout)
+    Button mLogoutBtn;
+
+    @InjectView(R.id.iv_search)
+    ImageView mSearch;
 
     @InjectView(R.id.line)
     EditText mLineEdittext;
@@ -49,13 +55,34 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LogUtil.d(TAG, "onCreate");
         setContentView(R.layout.line);
 
-        mQueryLineBtn.setOnClickListener(this);
+        mLogoutBtn.setOnClickListener(this);
+
+        mSearch.setOnClickListener(this);
 
         mLineEdittext.setSingleLine(true);
         mLineEdittext.clearFocus();
+
+        mLineEdittext.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                if (StringUtil.isEmpty(mLineEdittext.getText().toString())) {
+                    mSearch.setVisibility(View.GONE);
+                } else {
+                    mSearch.setVisibility(View.VISIBLE);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+        });
 
         lineListView.setCacheColorHint(0);
 
@@ -80,14 +107,13 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
         }
         openProgressDialog();
         new QueryLineTask().execute();
-        LogUtil.d(TAG, "onResume");
     }
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
-        case R.id.searchByLine:
+        case R.id.iv_search:
             if (StringUtil.isEmpty(mLineEdittext.getText().toString())) {
                 Toast.makeText(LineActivity.this, R.string.line_required, Toast.LENGTH_SHORT).show();
                 break;
@@ -95,6 +121,9 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 
             lineNumber = mLineEdittext.getText().toString();
             new QueryLineTask().execute();
+            break;
+        case R.id.btn_logout:
+            this.finish();
             break;
         default:
             break;
@@ -114,6 +143,7 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
         intent.setClass(this, SingleLineActivity.class);
         intent.putExtra(ParamUtil.LINE_GUID, line.getLineGuid());
         intent.putExtra(ParamUtil.LINE_NUMBER, line.getLineNumber());
+        setIntent(intent);
         startActivity(intent);
     }
 

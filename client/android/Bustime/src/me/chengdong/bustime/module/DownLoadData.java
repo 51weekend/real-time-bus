@@ -67,7 +67,6 @@ public class DownLoadData {
                 return lines;
             }
             String jsonStr = httpResult.getResponse();
-            LogUtil.d(TAG, jsonStr);
             JSONObject jsonObj = new JSONObject(jsonStr);
             int resultCode = jsonObj.optInt("resultCode", -1);
             if (resultCode != 0) {
@@ -112,7 +111,6 @@ public class DownLoadData {
                 return lines;
             }
             String jsonStr = httpResult.getResponse();
-            LogUtil.d(TAG, jsonStr);
             JSONObject jsonObj = new JSONObject(jsonStr);
             int resultCode = jsonObj.optInt("resultCode", -1);
             if (resultCode != 0) {
@@ -156,7 +154,6 @@ public class DownLoadData {
                 return stations;
             }
             String jsonStr = httpResult.getResponse();
-            LogUtil.d(TAG, jsonStr);
             JSONObject jsonObj = new JSONObject(jsonStr);
             int resultCode = jsonObj.optInt("resultCode", -1);
             if (resultCode != 0) {
@@ -200,7 +197,6 @@ public class DownLoadData {
                 return stationBuses;
             }
             String jsonStr = httpResult.getResponse();
-            LogUtil.d(TAG, jsonStr);
             JSONObject jsonObj = new JSONObject(jsonStr);
             int resultCode = jsonObj.optInt("resultCode", -1);
             if (resultCode != 0) {

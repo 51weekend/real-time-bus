@@ -57,10 +57,6 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
         mFrefreshBtn.setOnClickListener(this);
         mBackBtn.setOnClickListener(this);
 
-        Intent intent = getIntent();
-        stationCode = intent.getStringExtra(ParamUtil.STATION_CODE);
-        mTitle.setText(intent.getStringExtra(ParamUtil.STATION_NAME));
-
         mLoadDialog = new ProgressDialog(this);
         mLoadDialog.setMessage("正在查询站台车辆信息...");
         mAdapter = new StationBusAdapter(StationBusActivity.this, mStationBusList);
@@ -73,9 +69,13 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
     @Override
     public void onResume() {
         super.onResume();
+
+        Intent intent = getIntent();
+        stationCode = intent.getStringExtra(ParamUtil.STATION_CODE);
+        mTitle.setText(intent.getStringExtra(ParamUtil.STATION_NAME));
+
         openProgressDialog();
         new QueryStationBusTask().execute();
-        LogUtil.d(TAG, "onResume");
     }
 
     @Override
