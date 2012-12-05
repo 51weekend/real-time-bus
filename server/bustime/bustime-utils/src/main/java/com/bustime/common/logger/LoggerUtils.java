@@ -18,6 +18,7 @@ public class LoggerUtils {
 
     private static final Logger error = LoggerFactory.getLogger("com.snda.family.server.looger.error");
     private static final Logger alarm = LoggerFactory.getLogger("com.snda.family.server.looger.alarm");
+    private static final Logger info = LoggerFactory.getLogger("com.snda.family.server.looger.info");
 
     public static void error(String errorMessage, Throwable e) {
         e.printStackTrace();
@@ -26,6 +27,10 @@ public class LoggerUtils {
 
     public static void error(String errorMessage) {
         error.error(errorMessage);
+    }
+
+    public static void info(String infoMessage) {
+        info.info(infoMessage);
     }
 
     public static void alarm(String string) {

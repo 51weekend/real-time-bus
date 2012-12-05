@@ -35,7 +35,7 @@ public class StationBusParser extends BaseParser<StationBus> {
         String url = StationBusUrl.getUrl() + standCode;
         Parser parser = new Parser(url);
         parser.setEncoding(UTF8.getEncode());
-        List<Map<String, String>> data = parserSpanTable(parser);
+        List<Map<String, String>> data = parserSpanTable(parser, 1);
         return JSON.toJSONString(data);
     }
 

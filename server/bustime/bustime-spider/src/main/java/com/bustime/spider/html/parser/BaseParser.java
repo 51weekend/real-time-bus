@@ -40,7 +40,7 @@ public abstract class BaseParser<T> {
 
     protected Map<Integer, String> colMap = new HashMap<Integer, String>();
 
-    public List<Map<String, String>> parserSpanTable(Parser parser) throws ParserException {
+    public List<Map<String, String>> parserSpanTable(Parser parser, int startRow) throws ParserException {
         TagNameFilter aFilter = new TagNameFilter("span");
         HasChildFilter aChildFilter = new HasChildFilter(new TagNameFilter("table"));
         AndFilter aAndFilter = new AndFilter(aFilter, aChildFilter);
@@ -59,7 +59,7 @@ public abstract class BaseParser<T> {
             }
             NodeList tableRows = node.getChildren();
 
-            for (int j = 1; j < tableRows.size(); j++) {
+            for (int j = startRow; j < tableRows.size(); j++) {
                 TableRow row = (TableRow) tableRows.elementAt(j);
                 TableColumn[] cols = row.getColumns();
                 Map<String, String> rowData = new HashMap<String, String>();

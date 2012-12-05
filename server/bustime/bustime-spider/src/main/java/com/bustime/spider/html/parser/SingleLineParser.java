@@ -46,7 +46,7 @@ public class SingleLineParser extends BaseParser<SingleLine> {
     public String parser(String lineGuid) throws Exception {
         Parser parser = new Parser(SingleLineUrl.getUrl() + lineGuid);
         parser.setEncoding(UTF8.getEncode());
-        List<Map<String, String>> data = parserSpanTable(parser);
+        List<Map<String, String>> data = parserSpanTable(parser, 1);
 
         return JSON.toJSONString(data);
     }

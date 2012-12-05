@@ -22,6 +22,8 @@
     <string name="station_required">请输入站台名称!</string>
     <string name="title_bustime">苏州实时公交查询</string>
     <string name="title_line_info">线路信息</string>
+    <string name="title_line">线路查询</string>
+    <string name="title_station">站台查询</string>
     <string name="title_single_line">车辆运行动态信息</string>
     <string name="search_clear">清除</string>
 

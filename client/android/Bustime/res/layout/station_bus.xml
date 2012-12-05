@@ -44,8 +44,9 @@
         android:id="@+id/station_bus_listview"
         android:layout_width="200dip"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/top_relativelayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dip"
+        android:layout_marginTop="20dip"
         android:cacheColorHint="#00000000"
         android:divider="@color/white" >
     </ListView>

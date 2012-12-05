@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.LineInfoAdapter;
 import me.chengdong.bustime.model.Line;
 import me.chengdong.bustime.module.DownLoadData;
@@ -20,7 +21,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -31,9 +31,6 @@ import com.google.inject.Inject;
 public class LineActivity extends BaseActivity implements OnItemClickListener {
 
     private final static String TAG = LineActivity.class.getSimpleName();
-
-    @InjectView(R.id.btn_logout)
-    Button mLogoutBtn;
 
     @InjectView(R.id.iv_search)
     ImageView mSearch;
@@ -56,8 +53,6 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.line);
-
-        mLogoutBtn.setOnClickListener(this);
 
         mSearch.setOnClickListener(this);
 
@@ -121,9 +116,6 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 
             lineNumber = mLineEdittext.getText().toString();
             new QueryLineTask().execute();
-            break;
-        case R.id.btn_logout:
-            this.finish();
             break;
         default:
             break;

@@ -122,5 +122,10 @@
 			<artifactId>aspectjweaver</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>opensymphony</groupId>
+			<artifactId>quartz</artifactId>
+		</dependency>
+
 	</dependencies>
 </project>

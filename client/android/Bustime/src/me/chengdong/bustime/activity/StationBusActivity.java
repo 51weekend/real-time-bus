@@ -3,6 +3,7 @@ package me.chengdong.bustime.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.StationBusAdapter;
 import me.chengdong.bustime.model.StationBus;
 import me.chengdong.bustime.module.DownLoadData;

@@ -6,6 +6,9 @@
 
 package me.chengdong.bustime.activity;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
+import me.chengdong.bustime.R;
 import roboguice.activity.RoboActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -25,6 +28,18 @@ public abstract class BaseActivity extends RoboActivity implements OnClickListen
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         this.setIntent(intent);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     /**

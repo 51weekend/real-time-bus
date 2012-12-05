@@ -9,8 +9,8 @@ package me.chengdong.bustime.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.chengdong.bustime.R;
 import me.chengdong.bustime.activity.LineActivity;
-import me.chengdong.bustime.activity.R;
 import me.chengdong.bustime.model.Line;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,8 +69,9 @@ public class LineInfoAdapter extends BaseAdapter {
         Line line = items.get(position);
         holder.tvLineNumber.setText(line.getLineNumber());
         holder.tvLineTotalStation.setText("("
-                + (line.getTotalStation() == 0 ? "" : String.valueOf(line.getTotalStation())) + "站)");
+                + (line.getTotalStation() == 0 ? "" : String.valueOf(line.getTotalStation()) + "站)"));
         holder.tvStartStation.setText(line.getStartStation());
+
         holder.tvRunTime.setText(line.getRunTime());
         holder.tvEndStation.setText(line.getEndStation());
 

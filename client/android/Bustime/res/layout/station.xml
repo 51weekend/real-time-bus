@@ -18,19 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/title_bustime" />
-
-        <Button
-            android:id="@+id/btn_logout"
-            style="@style/titlebtnfont"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10.7dip"
-            android:background="@drawable/btn_top_red"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="@string/logout" />
+            android:text="@string/title_station" />
     </RelativeLayout>
 
     <RelativeLayout

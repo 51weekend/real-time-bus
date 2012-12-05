@@ -55,7 +55,7 @@ public class LineParser extends BaseParser<Line> {
         String path = url.toString() + URLEncoder.encode(line, UTF8.getEncode());
         Parser parser = new Parser(path);
         parser.setEncoding(UTF8.getEncode());
-        List<Map<String, String>> data = parserSpanTable(parser);
+        List<Map<String, String>> data = parserSpanTable(parser, 1);
 
         return JSON.toJSONString(data);
     }

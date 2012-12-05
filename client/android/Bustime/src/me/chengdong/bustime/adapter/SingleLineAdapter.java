@@ -9,7 +9,7 @@ package me.chengdong.bustime.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.chengdong.bustime.activity.R;
+import me.chengdong.bustime.R;
 import me.chengdong.bustime.activity.SingleLineActivity;
 import me.chengdong.bustime.model.SingleLine;
 import me.chengdong.bustime.utils.StringUtil;

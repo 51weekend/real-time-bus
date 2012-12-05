@@ -3,6 +3,7 @@ package me.chengdong.bustime.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.SingleLineAdapter;
 import me.chengdong.bustime.model.SingleLine;
 import me.chengdong.bustime.module.DownLoadData;

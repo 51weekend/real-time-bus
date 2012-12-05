@@ -89,11 +89,6 @@ public class Line {
         return false;
     }
 
-    public static void main(String[] args) {
-        System.out.println("开始->结束".split("-")[0]);
-
-    }
-
     public String getLineNumber() {
         return lineNumber;
     }

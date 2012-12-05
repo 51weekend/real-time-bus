@@ -2,61 +2,86 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bustime">
 
-	<select id="queryLine" parameterType="String"
+	<select id="queryLine" parameterType="hashmap"
 		resultType="com.bustime.common.model.Line">
 		select lineGuid, lineNumber, lineInfo, link,
 		startStation,endStation,runTime,totalStation ,status
 		from line
-		where status = 'enable'
-		and lineNumber = #{lineNumber}
+		where
+		status = 'enable'
+		<if test="lineNumber !=null">
+			and lineNumber = #{lineNumber}
+		</if>
+
 	</select>
-	
+
 	<select id="queryLineByGuid" parameterType="String"
 		resultType="com.bustime.common.model.Line">
 		select lineGuid, lineNumber, lineInfo, link,
 		startStation,endStation,runTime,totalStation ,status
 		from line
-		where status = 'enable'
+		where
+		status = 'enable'
 		and lineGuid = #{lineGuid}
+	</select>
+
+	<select id="queryNoRunTimeLine" resultType="com.bustime.common.model.Line">
+		select lineGuid,
+		lineNumber, lineInfo, link,
+		startStation,endStation,runTime,totalStation ,status
+		from line
+		where
+		runTime is null
 	</select>
 
 	<insert id="saveLine" parameterType="com.bustime.common.model.Line">
 
 		INSERT INTO line
-		  (lineGuid,
-		   lineNumber,
-		   lineInfo,
-		   link, 
-		   <if test="startStation !=null">
-		   startStation, 
-		   </if>
-		   <if test="endStation !=null">
-		   endStation, 
-		   </if>
-		   status)
+		(lineGuid,
+		lineNumber,
+		lineInfo,
+		link,
+		<if test="startStation !=null">
+			startStation,
+		</if>
+		<if test="endStation !=null">
+			endStation,
+		</if>
+		status)
 		VALUES
-		  (#{lineGuid},
-		   #{lineNumber}, 
-		   #{lineInfo}, 
-		   #{link}, 
-		   <if test="startStation !=null">
-		   #{startStation},
-		   </if> 
-		   <if test="endStation !=null">
-		   #{endStation}, 
-		   </if>
-		   'enable')
+		(#{lineGuid},
+		#{lineNumber},
+		#{lineInfo},
+		#{link},
+		<if test="startStation !=null">
+			#{startStation},
+		</if>
+		<if test="endStation !=null">
+			#{endStation},
+		</if>
+		'enable')
 	</insert>
-	
-	 <update id="updateLine" parameterType="hashmap">
-        update line
-          set 
-	        startStation = #{startStation},
-	        endStation = #{endStation},
-	        totalStation = #{totalStation},
-            modify_time = CURRENT_TIMESTAMP
-          where lineGuid = #{lineGuid}
-    </update>
+
+	<update id="updateLine" parameterType="hashmap">
+		update line
+		set
+		startStation = #{startStation},
+		endStation = #{endStation},
+		totalStation = #{totalStation},
+		modify_time = CURRENT_TIMESTAMP
+		where
+		lineGuid = #{lineGuid}
+	</update>
+
+	<update id="updateLineRunTime" parameterType="com.bustime.common.model.BusTime">
+		update line
+		set
+		runTime = #{ftime},
+		modify_time = CURRENT_TIMESTAMP
+		where lineGuid =
+		#{dataGuid}
+	</update>
+
 
 	<select id="querySingleLine" parameterType="String"
 		resultType="com.bustime.common.model.SingleLine">
@@ -105,7 +130,7 @@
 
 	<select id="queryStationBus" parameterType="com.bustime.common.model.StationBus"
 		resultType="com.bustime.common.model.StationBus">
-		select * from station_bus where lineGuid = #{lineCode} and
+		select * from station_bus where lineGuid = #{lineGuid} and
 		standCode = #{standCode}
 	</select>
 

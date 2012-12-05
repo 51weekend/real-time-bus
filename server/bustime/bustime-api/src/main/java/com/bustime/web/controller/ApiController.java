@@ -24,6 +24,7 @@ import com.bustime.common.logger.LoggerUtils;
 import com.bustime.common.model.Station;
 import com.bustime.common.utils.ResultModel;
 import com.bustime.core.service.ApiService;
+import com.bustime.core.service.RefreshDataService;
 
 /**
  * TODO.
@@ -81,7 +82,6 @@ public class ApiController {
         }
         try {
             List<Station> list = apiService.queryStation(URLDecoder.decode(stationName, "UTF-8"));
-            System.out.println(list);
             result.setData(list);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -104,6 +104,21 @@ public class ApiController {
             return result;
         }
         result.setData(apiService.queryStationBus(stationCode));
+        return result;
+    }
+
+    @Autowired
+    RefreshDataService refreshService;
+
+    @RequestMapping
+    @ResponseBody
+    public ResultModel refreshData(@RequestParam(value = "user", required = false) String user,
+            @RequestParam(value = "password", required = false) String password) {
+        // TODO 加权限控制
+        ResultModel result = new ResultModel();
+        if ("chengdong".equals(user) && "jsjs".equals(password)) {
+            refreshService.refresh();
+        }
         return result;
     }
 

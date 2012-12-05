@@ -76,6 +76,7 @@ public class Line {
         startStation = json.optString("startStation", "");
         endStation = json.optString("endStation", "");
         totalStation = json.optInt("totalStation", 0);
+        runTime = json.optString("runTime", "");
     }
 
 }

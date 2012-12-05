@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import me.chengdong.bustime.R;
 
 @SuppressWarnings("deprecation")
 public class MainActivity extends TabActivity {

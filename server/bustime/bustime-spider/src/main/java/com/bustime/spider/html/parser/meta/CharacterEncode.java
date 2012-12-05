@@ -7,7 +7,7 @@ package com.bustime.spider.html.parser.meta;
  */
 public enum CharacterEncode {
 
-    UTF8("utf-8");
+    UTF8("utf-8"), GB2312("gb2312"), GBK("GBK");
 
     private String encode;
 

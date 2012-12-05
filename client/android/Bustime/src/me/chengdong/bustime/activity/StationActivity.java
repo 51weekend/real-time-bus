@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.StationAdapter;
 import me.chengdong.bustime.model.Station;
 import me.chengdong.bustime.module.DownLoadData;
@@ -21,7 +22,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -42,9 +42,6 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
     @InjectView(R.id.station_info_listview)
     ListView stationListView;
 
-    @InjectView(R.id.btn_logout)
-    Button mLogoutBtn;
-
     @Inject
     DownLoadData downLoadData;
 
@@ -60,7 +57,6 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
         setContentView(R.layout.station);
 
         mSearch.setOnClickListener(this);
-        mLogoutBtn.setOnClickListener(this);
 
         mStationEditText.setSingleLine(true);
         mStationEditText.clearFocus();
@@ -127,9 +123,6 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
 
             stationName = mStationEditText.getText().toString();
             new QueryStationTask().execute();
-            break;
-        case R.id.btn_logout:
-            this.finish();
             break;
         default:
             break;

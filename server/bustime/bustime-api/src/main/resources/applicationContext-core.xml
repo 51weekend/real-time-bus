@@ -12,8 +12,8 @@
            ">
 
 	<context:annotation-config />
-	
-	
+
+
 	<aop:aspectj-autoproxy />
 	<!-- 扫描指定package下所有带有如@controller,@services,@resource,并把所注释的注册为Spring Beans -->
 	<context:component-scan base-package="com.bustime" />
@@ -52,7 +52,13 @@
 		</property>
 	</bean>
 
-	<!-- Configure the multipart resolver 
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />-->
+	<!-- Configure the multipart resolver <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" 
+		/> -->
+	<!-- <bean id="jobConfigService" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> 
+		<property name="targetObject" ref="refreshDataService" /> <property name="targetMethod" 
+		value="refresh" /> </bean> <bean id="triggerConfigService" class="org.springframework.scheduling.quartz.CronTriggerBean"> 
+		<property name="jobDetail" ref="jobConfigService" /> <property name="cronExpression" 
+		value="0 0/5 * * * ?" /> </bean> <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> 
+		<property name="triggers"> <list> <ref bean="triggerConfigService" /> </list> 
+		</property> </bean> -->
 </beans>  

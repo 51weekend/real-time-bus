@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -27,6 +28,7 @@ import com.bustime.common.model.SingleLine;
 import com.bustime.common.model.Station;
 import com.bustime.common.model.StationBus;
 import com.bustime.core.dao.MybatisBaseDao;
+import com.bustime.spider.html.parser.BusTimeParser;
 import com.bustime.spider.html.parser.LineParser;
 import com.bustime.spider.html.parser.SingleLineParser;
 import com.bustime.spider.html.parser.StationBusParser;
@@ -64,6 +66,9 @@ public class ApiService {
     @Autowired
     private MybatisBaseDao<Station> stationDao;
 
+    @Autowired
+    BusTimeParser busTimeParser;
+
     private ThreadPoolExecutor executor;
 
     private int threads = 4;
@@ -84,7 +89,9 @@ public class ApiService {
      * @return
      */
     public List<Line> queryLine(String lineNumber) {
-        List<Line> lines = lineDao.selectList("queryLine", lineNumber);
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("lineNumber", lineNumber);
+        List<Line> lines = lineDao.selectList("queryLine", parameters);
         if (!CollectionUtils.isEmpty(lines)) {
             return lines;
         }
@@ -105,6 +112,7 @@ public class ApiService {
                         if (CollectionUtils.isEmpty(exist)) {
                             lineDao.save("saveLine", line);
                         }
+
                     }
                 } catch (Exception e) {
                     LoggerUtils.error("save line error", e);
@@ -145,6 +153,9 @@ public class ApiService {
                     List<SingleLine> dbData = singleLineDao.selectList("querySingleLine", lineCode);
                     if (CollectionUtils.isEmpty(dbData)) {
                         for (SingleLine single : data) {
+                            if (StringUtils.isEmpty(single.getStandCode())) {
+                                continue;
+                            }
                             singleLineDao.save("saveSingleLine", single);
                         }
                     }
@@ -183,22 +194,26 @@ public class ApiService {
      */
     public List<StationBus> queryStationBus(final String stationCode) {
         final List<StationBus> stationBus = stationBusParser.getData(stationCode);
-        // for (StationBus sBus : stationBus) {
-        // sBus.setLineInfo(sBus.getLineInfo());
-        // }
+
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                try {
-                    List<StationBus> dbData = stationBusDao.selectList("queryStationBus", stationCode);
-                    if (CollectionUtils.isEmpty(dbData)) {
-                        for (StationBus staBus : stationBus) {
+                StringBuilder sb = new StringBuilder();
+                for (StationBus staBus : stationBus) {
+                    sb.append(staBus.getLineNumber()).append(",");
+                    try {
+                        List<StationBus> dbData = stationBusDao.selectList("queryStationBus", staBus);
+                        if (CollectionUtils.isEmpty(dbData)) {
                             stationBusDao.save("saveStationBus", staBus);
                         }
+                    } catch (Exception e) {
+                        LoggerUtils.error("save stationBus error lineGuid:" + staBus.getLineGuid()
+                                + "*****  standCode:" + staBus.getStandCode() + "*****", e);
                     }
-                } catch (Exception e) {
-                    LoggerUtils.error("save stationBus error", e);
                 }
+                // TODO 更新该站台经过的车辆、只在正常时间段内 如 10:00 到下午6：00
+                // stationDao.update("", parameter)
+
             }
         });
         return stationBus;
