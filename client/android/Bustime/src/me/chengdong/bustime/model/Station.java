@@ -66,7 +66,7 @@ public class Station {
         standName = json.optString("standName", "");
         road = json.optString("road", "");
         trend = json.optString("trend", "");
-        lines = json.optString("lines", "");
+        lines = json.optString("bus", "");
     }
 
 }

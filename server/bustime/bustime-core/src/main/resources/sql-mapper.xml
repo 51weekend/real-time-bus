@@ -164,5 +164,22 @@
 	</select>
 
 
+	<update id="updateStationLines" parameterType="hashmap">
+		update station
+		set
+		bus = #{bus},modify_time = CURRENT_TIMESTAMP
+		where standCode =
+		#{standCode}
+	</update>
+
+
+	<select id="queryConfig" parameterType="String"
+		resultType="com.bustime.common.model.Config">
+		select configKey,configValue from config where configKey = #{configKey}
+	</select>
+
+
+
+
 
 </mapper>

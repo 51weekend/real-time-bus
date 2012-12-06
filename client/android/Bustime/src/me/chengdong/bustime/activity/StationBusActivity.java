@@ -5,6 +5,7 @@ import java.util.List;
 
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.StationBusAdapter;
+import me.chengdong.bustime.model.ResultData;
 import me.chengdong.bustime.model.StationBus;
 import me.chengdong.bustime.module.DownLoadData;
 import me.chengdong.bustime.utils.LogUtil;
@@ -125,12 +126,14 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
 
         @Override
         protected Void doInBackground(Void... params) {
-            try {
-                List<StationBus> temps = downloadData.getStationBus(StationBusActivity.this, stationCode);
+            ResultData result = downloadData.getStationBus(StationBusActivity.this, stationCode);
+            if (result.isSuccess()) {
+                @SuppressWarnings("unchecked")
+                List<StationBus> temps = (List<StationBus>) result.getData();
                 mStationBusList.clear();
                 mStationBusList.addAll(temps);
-            } catch (Exception e) {
-                LogUtil.e(TAG, "获取stationBus 数据出错", e);
+            } else {
+                // TODO 进行错误提示
             }
             return null;
         }

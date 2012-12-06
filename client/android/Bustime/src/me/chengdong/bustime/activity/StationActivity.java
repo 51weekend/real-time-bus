@@ -6,6 +6,7 @@ import java.util.List;
 
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.StationAdapter;
+import me.chengdong.bustime.model.ResultData;
 import me.chengdong.bustime.model.Station;
 import me.chengdong.bustime.module.DownLoadData;
 import me.chengdong.bustime.utils.LogUtil;
@@ -165,12 +166,18 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
                     return null;
                 }
                 String name = URLEncoder.encode(stationName, "utf-8");
-                List<Station> temps = downLoadData.getStation(StationActivity.this, URLEncoder.encode(name, "utf-8"));
-                mStationList.clear();
-                mStationList.addAll(temps);
+                ResultData result = downLoadData.getStation(StationActivity.this, URLEncoder.encode(name, "utf-8"));
+                if (result.isSuccess()) {
+                    @SuppressWarnings("unchecked")
+                    List<Station> temps = (List<Station>) result.getData();
+                    mStationList.clear();
+                    mStationList.addAll(temps);
+                } else {
+                    // TODO 进行错误提示
+                }
 
             } catch (Exception e) {
-                LogUtil.e(TAG, "获取数据出错", e);
+                LogUtil.e(TAG, "decode error", e);
             }
 
             return null;

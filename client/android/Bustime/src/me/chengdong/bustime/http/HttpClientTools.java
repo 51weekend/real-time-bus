@@ -9,7 +9,7 @@ import java.util.Map;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 
-import me.chengdong.bustime.utils.ErrorCode;
+import me.chengdong.bustime.model.ResultData;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.NetworkUtil;
 import me.chengdong.bustime.utils.StringUtil;
@@ -96,7 +96,7 @@ public class HttpClientTools {
             return httpResult;
         } catch (Exception e) {
             LogUtil.e(TAG, "error: ", e);
-            return new HttpResult(ErrorCode.HTTP_EXCEPTION, e.getMessage());
+            return new HttpResult(ResultData.HTTP_EXCEPTION, e.getMessage());
         }
     }
 
@@ -121,46 +121,49 @@ public class HttpClientTools {
         try {
             ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
-            if (netInfo != null && netInfo.isAvailable()) {
-                String typeName = netInfo.getTypeName();
-                String extra = netInfo.getExtraInfo();
-                if (typeName.equalsIgnoreCase("MOBILE")) {
-                    if (extra == null) {
-                        apnType = "unknown";
-                    } else {
-                        apnType = extra;
-                    }
-                    if (extra != null) {
-                        if (extra.toLowerCase().startsWith("cmwap") || extra.toLowerCase().startsWith("uniwap")
-                                || extra.toLowerCase().startsWith("3gwap")) {
-                            protocolHostPort = (cmwapDoCmnet) ? protocolHostPort : "http://10.0.0.172:80";
-                            cmnet = false;
-                            LogUtil.i(TAG, "切换到cmwap/uniwap/3gwap网络");
-                        } else if (extra.startsWith("#777")) {
-                            Uri apn_uri = Uri.parse("content://telephony/carriers/preferapn");
-                            Cursor c = ctx.getContentResolver().query(apn_uri, null, null, null, null);
-                            if (c.getCount() > 0) {
-                                c.moveToFirst();
-                                String ctapn = c.getString(c.getColumnIndex("user"));
-                                if (ctapn != null && !ctapn.equals("")) {
-                                    if (ctapn.startsWith("ctwap")) {
-                                        protocolHostPort = (cmwapDoCmnet) ? protocolHostPort : "http://10.0.0.200:80";
-                                        cmnet = false;
-                                        LogUtil.i(TAG, "切换到ctwap网络");
-                                    } else if (ctapn.toLowerCase().startsWith("wap")) {
-                                        protocolHostPort = (cmwapDoCmnet) ? protocolHostPort : "http://10.0.0.200:80";
-                                        cmnet = false;
-                                        LogUtil.i(TAG, "切换到ctwap网络");
-                                    } else if (ctapn.startsWith("ctnet")) {
-                                    } else if (ctapn.toLowerCase().startsWith("card")) {
-                                    }
-                                }
+
+            if (netInfo == null || !netInfo.isAvailable()) {
+                return protocolHostPort;
+            }
+            String typeName = netInfo.getTypeName();
+            String extra = netInfo.getExtraInfo();
+            if (typeName.equalsIgnoreCase("MOBILE")) {
+                if (extra == null) {
+                    apnType = "unknown";
+                } else {
+                    apnType = extra;
+                }
+                if (extra == null) {
+                    return protocolHostPort;
+                }
+                if (extra.toLowerCase().startsWith("cmwap") || extra.toLowerCase().startsWith("uniwap")
+                        || extra.toLowerCase().startsWith("3gwap")) {
+                    protocolHostPort = (cmwapDoCmnet) ? protocolHostPort : "http://10.0.0.172:80";
+                    cmnet = false;
+                    LogUtil.i(TAG, "切换到cmwap/uniwap/3gwap网络");
+                } else if (extra.startsWith("#777")) {
+                    Uri apn_uri = Uri.parse("content://telephony/carriers/preferapn");
+                    Cursor c = ctx.getContentResolver().query(apn_uri, null, null, null, null);
+                    if (c.getCount() > 0) {
+                        c.moveToFirst();
+                        String ctapn = c.getString(c.getColumnIndex("user"));
+                        if (ctapn != null && !ctapn.equals("")) {
+                            if (ctapn.startsWith("ctwap")) {
+                                protocolHostPort = (cmwapDoCmnet) ? protocolHostPort : "http://10.0.0.200:80";
+                                cmnet = false;
+                                LogUtil.i(TAG, "切换到ctwap网络");
+                            } else if (ctapn.toLowerCase().startsWith("wap")) {
+                                protocolHostPort = (cmwapDoCmnet) ? protocolHostPort : "http://10.0.0.200:80";
+                                cmnet = false;
+                                LogUtil.i(TAG, "切换到ctwap网络");
+                            } else if (ctapn.startsWith("ctnet")) {
+                            } else if (ctapn.toLowerCase().startsWith("card")) {
                             }
                         }
                     }
-                } else if (typeName.equalsIgnoreCase("WIFI") || typeName.equalsIgnoreCase("WI FI")) {
-                    apnType = "wifi";
                 }
+            } else if (typeName.equalsIgnoreCase("WIFI") || typeName.equalsIgnoreCase("WI FI")) {
+                apnType = "wifi";
             }
         } catch (Exception e) {
             LogUtil.e(TAG, "error", e);
@@ -258,13 +261,13 @@ public class HttpClientTools {
                 code = httpResponse.getStatusLine().getStatusCode();
             }
             if (code == 200) {
-                return new HttpResult(ErrorCode.SUCCESS, getResponseString(httpResponse, encoding));
+                return new HttpResult(ResultData.SUCCESS, getResponseString(httpResponse, encoding));
             } else {
                 LogUtil.i(TAG, "访问失败");
                 if (code == 499 && !cmnet && !cmwapDoCmnet) {
                     cmwapDoCmnet = true;
                 }
-                return new HttpResult(ErrorCode.HTTP_CODE_ERROR, "http_code_" + code + "_resp_"
+                return new HttpResult(ResultData.HTTP_CODE_ERROR, "http_code_" + code + "_resp_"
                         + getResponseString(httpResponse, encoding));
             }
         } catch (IOException e) {
@@ -272,10 +275,10 @@ public class HttpClientTools {
                 cmwapDoCmnet = false;
             }
             LogUtil.e(TAG, "联网发生异常:", e);
-            return new HttpResult(ErrorCode.HTTP_SOCKET_FAIL, e.getMessage());
+            return new HttpResult(ResultData.HTTP_SOCKET_FAIL, e.getMessage());
         } catch (Exception e) {
             LogUtil.e(TAG, "发生异常:", e);
-            return new HttpResult(ErrorCode.HTTP_EXCEPTION, e.getMessage());
+            return new HttpResult(ResultData.HTTP_EXCEPTION, e.getMessage());
         } finally {
             if (http != null)
                 try {
@@ -313,9 +316,9 @@ public class HttpClientTools {
         if (ctx != null) {
             if (StringUtil.isBlank(NetworkUtil.getNetworkType(ctx))) {
                 if (NetworkUtil.isAirplaneModeOn(ctx)) {
-                    return new HttpResult(ErrorCode.HTTP_AIRPLANE_MODE);
+                    return new HttpResult(ResultData.HTTP_AIRPLANE_MODE);
                 }
-                return new HttpResult(ErrorCode.ERR_CODE_NO_NET);
+                return new HttpResult(ResultData.ERR_CODE_NO_NET);
             }
         }
 
@@ -344,13 +347,13 @@ public class HttpClientTools {
                         sb.append(tempLine);
                     }
                 }
-                return new HttpResult(ErrorCode.SUCCESS, sb.toString());
+                return new HttpResult(ResultData.SUCCESS, sb.toString());
             }
             post.abort();
         } catch (Exception e) {
             LogUtil.e(TAG, "http post error: ", e);
         }
-        return new HttpResult(ErrorCode.HTTP_CODE_ERROR, sb.toString());
+        return new HttpResult(ResultData.HTTP_CODE_ERROR, sb.toString());
     }
 
 }

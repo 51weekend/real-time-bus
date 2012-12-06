@@ -6,13 +6,12 @@
 
 package me.chengdong.bustime.activity;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
-import me.chengdong.bustime.R;
 import roboguice.activity.RoboActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.view.View.OnClickListener;
+
+import com.google.analytics.tracking.android.EasyTracker;
 
 /**
  * TODO.

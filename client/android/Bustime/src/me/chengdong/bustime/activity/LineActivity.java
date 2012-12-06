@@ -7,6 +7,7 @@ import java.util.List;
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.LineInfoAdapter;
 import me.chengdong.bustime.model.Line;
+import me.chengdong.bustime.model.ResultData;
 import me.chengdong.bustime.module.DownLoadData;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.ParamUtil;
@@ -157,9 +158,15 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
                     return null;
                 }
                 String name = URLEncoder.encode(lineNumber, "utf-8");
-                List<Line> temps = downLoadData.getLine(LineActivity.this, URLEncoder.encode(name, "utf-8"));
-                mLineList.clear();
-                mLineList.addAll(temps);
+                ResultData result = downLoadData.getLine(LineActivity.this, URLEncoder.encode(name, "utf-8"));
+                if (result.isSuccess()) {
+                    @SuppressWarnings("unchecked")
+                    List<Line> temps = (List<Line>) result.getData();
+                    mLineList.clear();
+                    mLineList.addAll(temps);
+                } else {
+                    // TODO 进行错误提示
+                }
 
             } catch (Exception e) {
                 LogUtil.e(TAG, "获取数据出错", e);

@@ -6,12 +6,18 @@
 
 package me.chengdong.bustime.module;
 
+import static me.chengdong.bustime.model.ResultData.DECODE_JSON_ERROR;
+import static me.chengdong.bustime.model.ResultData.NETWORK_DISABLED;
+import static me.chengdong.bustime.model.ResultData.NO_DATA;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import me.chengdong.bustime.http.HttpClientUtil;
 import me.chengdong.bustime.http.HttpResult;
+import me.chengdong.bustime.model.Config;
 import me.chengdong.bustime.model.Line;
+import me.chengdong.bustime.model.ResultData;
 import me.chengdong.bustime.model.SingleLine;
 import me.chengdong.bustime.model.Station;
 import me.chengdong.bustime.model.StationBus;
@@ -19,6 +25,7 @@ import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.NetworkUtil;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -36,10 +43,11 @@ public class DownLoadData {
     public static final String SERVER_HOST = "http://dev.ll.sdo.com";
 
     public static final String SERVER_CONTEXT = "/api";
-    public static final String QUERY_LINE_PATH = "/api/queryLine";
-    public static final String QUERY_SINGLE_LINE_PATH = "/api/querySingleLine";
-    public static final String QUERY_STATION_PATH = "/api/queryStation";
-    public static final String QUERY_STATION_BUS_PATH = "/api/queryStationBus";
+    public static final String QUERY_LINE_PATH = SERVER_CONTEXT + "/api/queryLine";
+    public static final String QUERY_SINGLE_LINE_PATH = SERVER_CONTEXT + "/api/querySingleLine";
+    public static final String QUERY_STATION_PATH = SERVER_CONTEXT + "/api/queryStation";
+    public static final String QUERY_STATION_BUS_PATH = SERVER_CONTEXT + "/api/queryStationBus";
+    public static final String QUERY_CONFIG_PATH = SERVER_CONTEXT + "/api/queryConfig";
 
     /**
      * 获取车次信息
@@ -48,177 +56,156 @@ public class DownLoadData {
      * @param lineNumber
      * @return
      */
-    public List<Line> getLine(Context context, String lineNumber) {
+    public ResultData getLine(Context context, String lineNumber) {
 
-        List<Line> lines = new ArrayList<Line>();
-        if (!NetworkUtil.isNetworkAvailable(context)) {
-            // TODO 提示用户、网络不可用+
-            return lines;
+        ResultData result = getDataFromRemote(context, QUERY_LINE_PATH, "lineNumber=" + lineNumber);
+        if (result.isFailed()) {
+            return result;
         }
+        List<Line> lines = new ArrayList<Line>();
 
         try {
-            String path = SERVER_CONTEXT + QUERY_LINE_PATH;
-
-            String req = "lineNumber=" + lineNumber;
-
-            HttpResult httpResult = HttpClientUtil.callServer(context, SERVER_HOST, false, path, req, "UTF-8");
-
-            if ((httpResult == null) || !httpResult.isSuccess()) {
-                return lines;
-            }
-            String jsonStr = httpResult.getResponse();
-            JSONObject jsonObj = new JSONObject(jsonStr);
-            int resultCode = jsonObj.optInt("resultCode", -1);
-            if (resultCode != 0) {
-                // TODO 按错误提示用户
-                return lines;
-            }
-
-            JSONArray records = (JSONArray) jsonObj.get("data");
-
-            if (records == null || records.length() == 0) {
-                return lines;
-            }
+            JSONArray records = (JSONArray) result.getData();
             for (int i = 0, len = records.length(); i < len; i++) {
                 Line line = new Line();
                 line.deserialize(records.getJSONObject(i));
                 lines.add(line);
             }
-
-        } catch (Exception e) {
-            LogUtil.e(TAG, "从服务器端获取车次信息发生异常:", e);
+        } catch (JSONException e) {
+            result.setResultCode(DECODE_JSON_ERROR);
+            return result;
         }
 
-        return lines;
+        result.setData(lines);
+        return result;
 
     }
 
-    public List<SingleLine> getSingleLine(Activity context, String lineGuid) {
-        List<SingleLine> lines = new ArrayList<SingleLine>();
-        if (!NetworkUtil.isNetworkAvailable(context)) {
-            // TODO 提示用户、网络不可用+
-            return lines;
+    public ResultData getSingleLine(Activity context, String lineGuid) {
+
+        ResultData result = getDataFromRemote(context, QUERY_SINGLE_LINE_PATH, "lineCode=" + lineGuid);
+        if (result.isFailed()) {
+            return result;
         }
-
+        List<SingleLine> lines = new ArrayList<SingleLine>();
         try {
-            String path = SERVER_CONTEXT + QUERY_SINGLE_LINE_PATH;
-
-            String req = "lineCode=" + lineGuid;
-
-            HttpResult httpResult = HttpClientUtil.callServer(context, SERVER_HOST, false, path, req, "UTF-8");
-
-            if ((httpResult == null) || !httpResult.isSuccess()) {
-                return lines;
-            }
-            String jsonStr = httpResult.getResponse();
-            JSONObject jsonObj = new JSONObject(jsonStr);
-            int resultCode = jsonObj.optInt("resultCode", -1);
-            if (resultCode != 0) {
-                return lines;
-            }
-
-            JSONArray records = (JSONArray) jsonObj.get("data");
-
-            if (records == null || records.length() == 0) {
-                return lines;
-            }
+            JSONArray records = (JSONArray) result.getData();
             for (int i = 0, len = records.length(); i < len; i++) {
                 SingleLine singleLine = new SingleLine();
                 singleLine.deserialize(records.getJSONObject(i));
                 lines.add(singleLine);
 
             }
-
         } catch (Exception e) {
-            LogUtil.e(TAG, "从服务器获取车次运行信息异常:", e);
+            result.setResultCode(DECODE_JSON_ERROR);
+            return result;
         }
 
-        return lines;
+        result.setData(lines);
+
+        return result;
+
     }
 
-    public List<Station> getStation(Activity context, String stationName) {
-        List<Station> stations = new ArrayList<Station>();
-        if (!NetworkUtil.isNetworkAvailable(context)) {
-            // TODO 提示用户、网络不可用+
-            return stations;
+    public ResultData getStation(Activity context, String stationName) {
+
+        ResultData result = getDataFromRemote(context, QUERY_STATION_PATH, "stationName=" + stationName);
+        if (result.isFailed()) {
+            return result;
         }
-
+        List<Station> stations = new ArrayList<Station>();
         try {
-            String path = SERVER_CONTEXT + QUERY_STATION_PATH;
+            JSONArray records = (JSONArray) result.getData();
 
-            String req = "stationName=" + stationName;
-
-            HttpResult httpResult = HttpClientUtil.callServer(context, SERVER_HOST, false, path, req, "UTF-8");
-
-            if ((httpResult == null) || !httpResult.isSuccess()) {
-                return stations;
-            }
-            String jsonStr = httpResult.getResponse();
-            JSONObject jsonObj = new JSONObject(jsonStr);
-            int resultCode = jsonObj.optInt("resultCode", -1);
-            if (resultCode != 0) {
-                return stations;
-            }
-
-            JSONArray records = (JSONArray) jsonObj.get("data");
-
-            if (records == null || records.length() == 0) {
-                return stations;
-            }
             for (int i = 0, len = records.length(); i < len; i++) {
                 Station station = new Station();
                 station.deserialize(records.getJSONObject(i));
                 stations.add(station);
 
             }
-
         } catch (Exception e) {
-            LogUtil.e(TAG, "从服务器获取站台信息异常:", e);
+            result.setResultCode(DECODE_JSON_ERROR);
+            return result;
         }
+        result.setData(stations);
 
-        return stations;
+        return result;
     }
 
-    public List<StationBus> getStationBus(Activity context, String stationCode) {
+    public ResultData getStationBus(Activity context, String stationCode) {
+
         List<StationBus> stationBuses = new ArrayList<StationBus>();
-        if (!NetworkUtil.isNetworkAvailable(context)) {
-            // TODO 提示用户、网络不可用+
-            return stationBuses;
+        ResultData result = getDataFromRemote(context, QUERY_STATION_BUS_PATH, "stationCode=" + stationCode);
+        if (result.isFailed()) {
+            return result;
         }
 
         try {
-            String path = SERVER_CONTEXT + QUERY_STATION_BUS_PATH;
-
-            String req = "stationCode=" + stationCode;
-
-            HttpResult httpResult = HttpClientUtil.callServer(context, SERVER_HOST, false, path, req, "UTF-8");
-
-            if ((httpResult == null) || !httpResult.isSuccess()) {
-                return stationBuses;
-            }
-            String jsonStr = httpResult.getResponse();
-            JSONObject jsonObj = new JSONObject(jsonStr);
-            int resultCode = jsonObj.optInt("resultCode", -1);
-            if (resultCode != 0) {
-                return stationBuses;
-            }
-
-            JSONArray records = (JSONArray) jsonObj.get("data");
-
-            if (records == null || records.length() == 0) {
-                return stationBuses;
-            }
+            JSONArray records = (JSONArray) result.getData();
             for (int i = 0, len = records.length(); i < len; i++) {
                 StationBus station = new StationBus();
                 station.deserialize(records.getJSONObject(i));
                 stationBuses.add(station);
-
             }
-
         } catch (Exception e) {
-            LogUtil.e(TAG, "从服务器获取站台信息异常:", e);
+            result.setResultCode(DECODE_JSON_ERROR);
+            return result;
+        }
+        result.setData(stationBuses);
+        return result;
+    }
+
+    public static ResultData queryConfig(Context context, String key) {
+
+        ResultData result = getDataFromRemote(context, QUERY_CONFIG_PATH, "key=" + key);
+        if (result.isFailed()) {
+            return result;
+        }
+        JSONObject json = (JSONObject) result.getData();
+
+        Config config = new Config();
+        config.deserialize(json);
+        result.setData(config);
+        return result;
+
+    }
+
+    private static ResultData getDataFromRemote(Context context, String path, String req) {
+        ResultData result = new ResultData();
+        if (!NetworkUtil.isNetworkAvailable(context)) {
+            result.setResultCode(NETWORK_DISABLED);
         }
 
-        return stationBuses;
+        HttpResult httpResult = HttpClientUtil.callServer(context, SERVER_HOST, false, path, req, "UTF-8");
+
+        if (!httpResult.isSuccess()) {
+            result.setResultCode(httpResult.getCode());
+            return result;
+        }
+        String jsonStr = httpResult.getResponse();
+        try {
+
+            JSONObject jsonObj = new JSONObject(jsonStr);
+            int resultCode = jsonObj.optInt("resultCode", -1);
+            if (resultCode != 0) {
+                result.setResultCode(resultCode);
+                return result;
+            }
+            if (jsonObj.get("data") == null) {
+                result.setResultCode(NO_DATA);
+                return result;
+            }
+            if ("null".equals(jsonObj.get("data"))) {
+                result.setResultCode(NO_DATA);
+                return result;
+            } else {
+                result.setData(jsonObj.get("data"));
+            }
+        } catch (Exception e) {
+            result.setResultCode(DECODE_JSON_ERROR);
+            LogUtil.e(TAG, "json error", e);
+        }
+
+        return result;
     }
 }

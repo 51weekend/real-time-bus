@@ -122,4 +122,12 @@ public class ApiController {
         return result;
     }
 
+    @RequestMapping
+    @ResponseBody
+    public ResultModel queryConfig(@RequestParam(value = "key", required = false) String key) {
+        ResultModel result = new ResultModel();
+        result.setData(apiService.queryConfig(key));
+        return result;
+    }
+
 }

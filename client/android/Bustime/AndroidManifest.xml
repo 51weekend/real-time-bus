@@ -68,6 +68,12 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".activity.UpdateVersionActivity"
+            android:label="@string/title_activity_update_version"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <!-- Required -->
         <service
@@ -115,13 +121,13 @@
             android:enabled="true" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
- 				<!-- Required  用户注册SDK的权限 -->
+                <!-- Required  用户注册SDK的权限 -->
                 <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
- 				<!-- Required  用户接收SDK消息的权限 -->
+                <!-- Required  用户接收SDK消息的权限 -->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
- 				<!-- Required  用户接收SDK通知栏信息的权限 -->
+                <!-- Required  用户接收SDK通知栏信息的权限 -->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
- 				<!-- Required  用户打开自定义通知栏的权限 -->
+                <!-- Required  用户打开自定义通知栏的权限 -->
                 <category android:name="me.chengdong.bustime" />
             </intent-filter>
         </receiver>

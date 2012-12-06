@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.bustime.common.logger.LoggerUtils;
+import com.bustime.common.model.Config;
 import com.bustime.common.model.Line;
 import com.bustime.common.model.SingleLine;
 import com.bustime.common.model.Station;
@@ -53,6 +54,9 @@ public class ApiService {
 
     @Autowired
     private StationParser stationParser;
+
+    @Autowired
+    private MybatisBaseDao<Config> configDao;
 
     @Autowired
     private MybatisBaseDao<Line> lineDao;
@@ -212,7 +216,14 @@ public class ApiService {
                     }
                 }
                 // TODO 更新该站台经过的车辆、只在正常时间段内 如 10:00 到下午6：00
-                // stationDao.update("", parameter)
+                String lines = sb.toString();
+                if (StringUtils.isEmpty(lines)) {
+                    return;
+                }
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put("standCode", stationCode);
+                parameters.put("bus", lines.substring(0, lines.length() - 1));
+                stationDao.update("updateStationLines", parameters);
 
             }
         });
@@ -249,6 +260,10 @@ public class ApiService {
             }
         });
         return parserStations;
+    }
+
+    public Config queryConfig(String key) {
+        return configDao.selectOne("queryConfig", key);
     }
 
 }

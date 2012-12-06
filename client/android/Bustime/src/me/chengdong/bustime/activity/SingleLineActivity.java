@@ -5,6 +5,7 @@ import java.util.List;
 
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.SingleLineAdapter;
+import me.chengdong.bustime.model.ResultData;
 import me.chengdong.bustime.model.SingleLine;
 import me.chengdong.bustime.module.DownLoadData;
 import me.chengdong.bustime.utils.LogUtil;
@@ -127,9 +128,15 @@ public class SingleLineActivity extends BaseActivity implements OnItemClickListe
         protected Void doInBackground(Void... params) {
 
             try {
-                List<SingleLine> temps = downLoadData.getSingleLine(SingleLineActivity.this, lineGuid);
-                mSingleLineList.clear();
-                mSingleLineList.addAll(temps);
+                ResultData result = downLoadData.getSingleLine(SingleLineActivity.this, lineGuid);
+                if (result.isSuccess()) {
+                    @SuppressWarnings("unchecked")
+                    List<SingleLine> temps = (List<SingleLine>) result.getData();
+                    mSingleLineList.clear();
+                    mSingleLineList.addAll(temps);
+                } else {
+                    // TODO 提示错误给用户
+                }
 
             } catch (Exception e) {
                 LogUtil.e(TAG, "获取数据出错", e);
