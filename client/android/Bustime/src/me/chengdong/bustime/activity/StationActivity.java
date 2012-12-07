@@ -6,6 +6,7 @@ import java.util.List;
 
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.StationAdapter;
+import me.chengdong.bustime.db.TbStationHandler;
 import me.chengdong.bustime.model.ResultData;
 import me.chengdong.bustime.model.Station;
 import me.chengdong.bustime.module.DownLoadData;
@@ -123,6 +124,12 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
             }
 
             stationName = mStationEditText.getText().toString();
+
+            TbStationHandler stationHandler = new TbStationHandler(StationActivity.this);
+            List<Station> stations = stationHandler.selectList(stationName);
+            for (Station station : stations) {
+                LogUtil.i(TAG, station.getStandCode() + " " + station.getStandName());
+            }
             new QueryStationTask().execute();
             break;
         default:

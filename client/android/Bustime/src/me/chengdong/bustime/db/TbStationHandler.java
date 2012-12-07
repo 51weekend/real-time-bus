@@ -87,9 +87,9 @@ public class TbStationHandler {
         Cursor oCursor = null;
         try {
             m_oData = this.mSQLite.getReadableDatabase();
-            String sql = "SELECT * FROM " + TABLE + " WHERE " + COLUMN_NAME + " LIKE %?%";
+            String sql = "SELECT * FROM " + TABLE + " WHERE " + COLUMN_NAME + " LIKE ?";
             LogUtil.i(TAG, "sql：" + sql);
-            oCursor = m_oData.rawQuery(sql, new String[]{stationName});
+            oCursor = m_oData.rawQuery(sql, new String[]{"%" + stationName + "%"});
             if (oCursor.moveToNext()) {
                 stations.add(getStationFromCursor(oCursor));
             }
