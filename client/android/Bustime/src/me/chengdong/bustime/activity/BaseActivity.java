@@ -23,6 +23,8 @@ public abstract class BaseActivity extends RoboActivity implements OnClickListen
     // 在子类中初始化
     protected ProgressDialog mLoadDialog;
 
+    protected EasyTracker easyTracker = EasyTracker.getInstance();
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -32,13 +34,13 @@ public abstract class BaseActivity extends RoboActivity implements OnClickListen
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getInstance().activityStart(this);
+        easyTracker.activityStart(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        EasyTracker.getInstance().activityStop(this);
+        easyTracker.activityStop(this);
     }
 
     /**

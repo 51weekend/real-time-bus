@@ -35,7 +35,7 @@ public class Config {
     }
 
     public void deserialize(JSONObject json) {
-        this.configKey = json.optString("configValue", "");
+        this.configKey = json.optString("configKey", "");
         this.configValue = json.optString("configValue", "");
 
     }

@@ -159,7 +159,7 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
                 }
                 String name = URLEncoder.encode(lineNumber, "utf-8");
                 ResultData result = downLoadData.getLine(LineActivity.this, URLEncoder.encode(name, "utf-8"));
-                if (result.isSuccess()) {
+                if (result.success()) {
                     @SuppressWarnings("unchecked")
                     List<Line> temps = (List<Line>) result.getData();
                     mLineList.clear();

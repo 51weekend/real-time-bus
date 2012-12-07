@@ -7,6 +7,9 @@
 package me.chengdong.bustime.task;
 
 import static me.chengdong.bustime.utils.CfgConstant.UPDATE_NOTIFY_ID;
+
+import java.util.List;
+
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.activity.UpdateVersionActivity;
 import me.chengdong.bustime.model.Config;
@@ -14,6 +17,7 @@ import me.chengdong.bustime.model.ResultData;
 import me.chengdong.bustime.module.DownLoadData;
 import me.chengdong.bustime.utils.AppUtil;
 import me.chengdong.bustime.utils.ParamUtil;
+import me.chengdong.bustime.utils.StringUtil;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -37,13 +41,37 @@ public class CheckVersionTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... arg0) {
-        ResultData result = DownLoadData.queryConfig(context, "versionCode");
-        if (result.isSuccess()) {
-            Config config = result.getData() == null ? null : (Config) result.getData();
-            if (config != null && Integer.valueOf(config.getConfigValue()) > AppUtil.getVersionCode(context)) {
-                // TODO 在服务器上保存apk 文件名、修改读取配置的接口、一次将相关配置全部读到本地
-                sendAppUpdateNotification(context, "bustime.apk");
+        ResultData result = DownLoadData.queryConfigByKey(context, "versionCode");
+        if (result.failed()) {
+            return null;
+        }
+        Config config = result.getData() == null ? null : (Config) result.getData();
+        if (config == null || AppUtil.getVersionCode(context) >= Integer.valueOf(config.getConfigValue())) {
+            return null;
+        }
+        result = DownLoadData.queryConfigByType(context, "appVersion");
+        if (result.failed()) {
+            return null;
+        }
+        @SuppressWarnings("unchecked")
+        List<Config> configs = (List<Config>) result.getData();
+        String versionName = "";
+        String versionIntro = "";
+        String apkName = "";
+        for (Config conf : configs) {
+            if (conf.getConfigKey().equals("versionName")) {
+                versionName = conf.getConfigValue();
             }
+            if (conf.getConfigKey().equals("versionIntro")) {
+                versionIntro = conf.getConfigValue();
+            }
+            if (conf.getConfigKey().equals("apkName")) {
+                apkName = conf.getConfigValue();
+            }
+
+        }
+        if (StringUtil.isNotEmpty(versionName) && StringUtil.isNotEmpty(versionIntro) && StringUtil.isNotEmpty(apkName)) {
+            sendAppUpdateNotification(context, apkName, versionName, versionIntro);
         }
         return null;
     }
@@ -52,19 +80,22 @@ public class CheckVersionTask extends AsyncTask<Void, Void, Void> {
      * 发送App更新通知
      * @param context
      */
-    private static void sendAppUpdateNotification(Context context, String apkName) {
+    private static void sendAppUpdateNotification(Context context, String apkName, String versionName,
+            String versionIntro) {
         NotificationManager mNotificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         int icon = R.drawable.ic_launcher;
-        CharSequence tickerText = "APP更新通知";
+        CharSequence tickerText = "苏州实时公交更新通知";
         long when = System.currentTimeMillis();
         Notification notification = new Notification(icon, tickerText, when);
-        CharSequence contentTitle = "APP更新通知";
-        CharSequence contentText = "发现新版本,请及时更新!";
+        CharSequence contentTitle = "苏州实时公交更新通知";
+        CharSequence contentText = "发现新版本" + versionName + ",请更新!";
         notification.flags = Notification.FLAG_ONLY_ALERT_ONCE;
         Intent notificationIntent = new Intent(context, UpdateVersionActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString(ParamUtil.BUNDLE_KEY_APP_APK_NAME, apkName);
+        bundle.putString(ParamUtil.BUNDLE_VERSION_INTRO, versionIntro);
+        bundle.putString(ParamUtil.BUNDLE_VERSION_NAME, versionName);
+        bundle.putString(ParamUtil.BUNDLE_APK_NAME, apkName);
         notificationIntent.putExtras(bundle);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
                 PendingIntent.FLAG_ONE_SHOT);

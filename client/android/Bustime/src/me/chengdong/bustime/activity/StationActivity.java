@@ -167,7 +167,7 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
                 }
                 String name = URLEncoder.encode(stationName, "utf-8");
                 ResultData result = downLoadData.getStation(StationActivity.this, URLEncoder.encode(name, "utf-8"));
-                if (result.isSuccess()) {
+                if (result.success()) {
                     @SuppressWarnings("unchecked")
                     List<Station> temps = (List<Station>) result.getData();
                     mStationList.clear();

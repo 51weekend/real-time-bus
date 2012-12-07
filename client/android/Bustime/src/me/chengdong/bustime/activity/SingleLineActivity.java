@@ -129,7 +129,7 @@ public class SingleLineActivity extends BaseActivity implements OnItemClickListe
 
             try {
                 ResultData result = downLoadData.getSingleLine(SingleLineActivity.this, lineGuid);
-                if (result.isSuccess()) {
+                if (result.success()) {
                     @SuppressWarnings("unchecked")
                     List<SingleLine> temps = (List<SingleLine>) result.getData();
                     mSingleLineList.clear();

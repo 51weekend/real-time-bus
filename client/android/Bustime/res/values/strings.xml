@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">Bustime</string>
+    <string name="app_name">苏州实时公交</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="stationName">站台,如:观前街</string>
@@ -20,12 +20,16 @@
     <string name="name_position">位于</string>
     <string name="line_required">请输入公交线路!</string>
     <string name="station_required">请输入站台名称!</string>
-    <string name="title_bustime">苏州实时公交查询</string>
+    <string name="title_bustime">苏州实时公交</string>
     <string name="title_line_info">线路信息</string>
     <string name="title_line">线路查询</string>
     <string name="title_station">站台查询</string>
     <string name="title_single_line">车辆运行动态信息</string>
+    <string name="title_update_version">新版本功能说明</string>
+    <string name="version_name">版本号:</string>
     <string name="search_clear">清除</string>
+    <string name="update_download">更新</string>
+    <string name="update_cancel">取消</string>
 
     <string-array name="Spinner_Content">
         <item>One</item>

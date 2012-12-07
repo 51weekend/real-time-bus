@@ -127,7 +127,7 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
         @Override
         protected Void doInBackground(Void... params) {
             ResultData result = downloadData.getStationBus(StationBusActivity.this, stationCode);
-            if (result.isSuccess()) {
+            if (result.success()) {
                 @SuppressWarnings("unchecked")
                 List<StationBus> temps = (List<StationBus>) result.getData();
                 mStationBusList.clear();
