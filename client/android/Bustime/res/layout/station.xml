@@ -40,7 +40,6 @@
             android:hint="@string/stationName"
             android:paddingLeft="20dip"
             android:paddingRight="30dip"
-            android:text="海悦花园"
             android:textSize="14.7sp" />
 
         <ImageView

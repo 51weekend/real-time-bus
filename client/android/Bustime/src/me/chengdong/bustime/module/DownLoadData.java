@@ -13,6 +13,9 @@ import static me.chengdong.bustime.model.ResultData.NO_DATA;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.chengdong.bustime.db.TbConfigHandler;
+import me.chengdong.bustime.db.TbLineHandler;
+import me.chengdong.bustime.db.TbStationHandler;
 import me.chengdong.bustime.http.HttpClientUtil;
 import me.chengdong.bustime.http.HttpResult;
 import me.chengdong.bustime.model.Config;
@@ -48,6 +51,8 @@ public class DownLoadData {
     public static final String QUERY_STATION_PATH = SERVER_CONTEXT + "/api/queryStation";
     public static final String QUERY_STATION_BUS_PATH = SERVER_CONTEXT + "/api/queryStationBus";
     public static final String QUERY_CONFIG_PATH = SERVER_CONTEXT + "/api/queryConfig";
+    public static final String DOWNLOAD_STATION_PATH = SERVER_CONTEXT + "/api/downloadStation";
+    public static final String DOWNLOAD_LINE_PATH = SERVER_CONTEXT + "/api/downloadLine";
 
     /**
      * 获取车次信息
@@ -59,7 +64,7 @@ public class DownLoadData {
     public ResultData getLine(Context context, String lineNumber) {
 
         ResultData result = getDataFromRemote(context, QUERY_LINE_PATH, "lineNumber=" + lineNumber);
-        if (result.isFailed()) {
+        if (result.failed()) {
             return result;
         }
         List<Line> lines = new ArrayList<Line>();
@@ -84,7 +89,7 @@ public class DownLoadData {
     public ResultData getSingleLine(Activity context, String lineGuid) {
 
         ResultData result = getDataFromRemote(context, QUERY_SINGLE_LINE_PATH, "lineCode=" + lineGuid);
-        if (result.isFailed()) {
+        if (result.failed()) {
             return result;
         }
         List<SingleLine> lines = new ArrayList<SingleLine>();
@@ -110,7 +115,7 @@ public class DownLoadData {
     public ResultData getStation(Activity context, String stationName) {
 
         ResultData result = getDataFromRemote(context, QUERY_STATION_PATH, "stationName=" + stationName);
-        if (result.isFailed()) {
+        if (result.failed()) {
             return result;
         }
         List<Station> stations = new ArrayList<Station>();
@@ -132,11 +137,55 @@ public class DownLoadData {
         return result;
     }
 
+    public static void downloadStation(Context context) {
+
+        ResultData result = getDataFromRemote(context, DOWNLOAD_STATION_PATH, "");
+        if (result.failed()) {
+            return;
+        }
+        try {
+            TbStationHandler tbStationHandler = new TbStationHandler(context);
+            TbConfigHandler tbConfigHandler = new TbConfigHandler(context);
+            String records = result.getData().toString();
+            String[] stationArray = records.split("\\$");
+            for (String stationString : stationArray) {
+                String[] sta = stationString.split("^");
+                tbStationHandler.saveOrUpdate(sta[0], sta[1]);
+            }
+            tbConfigHandler.saveStationData();
+        } catch (Exception e) {
+            LogUtil.e(TAG, "download station data error", e);
+        }
+
+    }
+
+    public static void downloadLine(Context context) {
+
+        ResultData result = getDataFromRemote(context, DOWNLOAD_LINE_PATH, "");
+        if (result.failed()) {
+            return;
+        }
+        try {
+            TbLineHandler tbLineHandler = new TbLineHandler(context);
+            TbConfigHandler tbConfigHandler = new TbConfigHandler(context);
+            String records = result.getData().toString();
+            String[] lineArray = records.split("\\$");
+            for (String lineString : lineArray) {
+                String[] line = lineString.split("^");
+                tbLineHandler.saveOrUpdate(line[0], line[1]);
+            }
+            tbConfigHandler.saveLineData();
+        } catch (Exception e) {
+            LogUtil.e(TAG, "download line data error", e);
+        }
+
+    }
+
     public ResultData getStationBus(Activity context, String stationCode) {
 
         List<StationBus> stationBuses = new ArrayList<StationBus>();
         ResultData result = getDataFromRemote(context, QUERY_STATION_BUS_PATH, "stationCode=" + stationCode);
-        if (result.isFailed()) {
+        if (result.failed()) {
             return result;
         }
 
@@ -155,10 +204,10 @@ public class DownLoadData {
         return result;
     }
 
-    public static ResultData queryConfig(Context context, String key) {
+    public static ResultData queryConfigByKey(Context context, String key) {
 
         ResultData result = getDataFromRemote(context, QUERY_CONFIG_PATH, "key=" + key);
-        if (result.isFailed()) {
+        if (result.failed()) {
             return result;
         }
         JSONObject json = (JSONObject) result.getData();
@@ -166,6 +215,30 @@ public class DownLoadData {
         Config config = new Config();
         config.deserialize(json);
         result.setData(config);
+        return result;
+
+    }
+
+    public static ResultData queryConfigByType(Context context, String type) {
+
+        ResultData result = getDataFromRemote(context, QUERY_CONFIG_PATH, "type=" + type);
+        if (result.failed()) {
+            return result;
+        }
+
+        List<Config> configs = new ArrayList<Config>();
+        try {
+            JSONArray records = (JSONArray) result.getData();
+            for (int i = 0, len = records.length(); i < len; i++) {
+                Config station = new Config();
+                station.deserialize(records.getJSONObject(i));
+                configs.add(station);
+            }
+        } catch (Exception e) {
+            result.setResultCode(DECODE_JSON_ERROR);
+            return result;
+        }
+        result.setData(configs);
         return result;
 
     }

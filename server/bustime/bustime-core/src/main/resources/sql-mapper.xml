@@ -163,6 +163,10 @@
 		select * from station where standName = #{standName}
 	</select>
 
+	<select id="queryAllStation" resultType="com.bustime.common.model.Station">
+		select * from station
+	</select>
+
 
 	<update id="updateStationLines" parameterType="hashmap">
 		update station
@@ -173,9 +177,15 @@
 	</update>
 
 
-	<select id="queryConfig" parameterType="String"
+	<select id="queryConfig" parameterType="hashmap"
 		resultType="com.bustime.common.model.Config">
-		select configKey,configValue from config where configKey = #{configKey}
+		select configKey,configValue from config where 1=1
+		<if test="key !=null">
+			and configKey = #{key}
+		</if>
+		<if test="type !=null">
+			and type = #{type}
+		</if>
 	</select>
 
 

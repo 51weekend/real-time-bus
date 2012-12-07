@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bustime.common.logger.LoggerUtils;
+import com.bustime.common.model.Line;
 import com.bustime.common.model.Station;
 import com.bustime.common.utils.ResultModel;
 import com.bustime.core.service.ApiService;
@@ -55,6 +56,28 @@ public class ApiController {
         return result;
     }
 
+    @RequestMapping
+    @ResponseBody
+    public ResultModel downloadLine(@RequestParam(value = "user", required = false) String user,
+            @RequestParam(value = "password", required = false) String password) {
+
+        ResultModel result = new ResultModel();
+
+        // TODO 加权限控制
+        List<Line> lineList = apiService.queryLine(null);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0, n = lineList.size(); i < n; i++) {
+            Line line = lineList.get(i);
+            sb.append(line.getLineGuid()).append("^").append(line.getLineNumber());
+            if (i < n - 1) {
+                sb.append("$");
+            }
+
+        }
+        result.setData(sb.toString());
+        return result;
+    }
+
     /**
      * 站点信息做缓存、不用每次都返回给客户端、节省流量、只返回车辆所在站台及进站时间
      * @param lineCode
@@ -86,6 +109,28 @@ public class ApiController {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+        return result;
+    }
+
+    @RequestMapping
+    @ResponseBody
+    public ResultModel downloadStation(@RequestParam(value = "user", required = false) String user,
+            @RequestParam(value = "password", required = false) String password) {
+
+        ResultModel result = new ResultModel();
+
+        // TODO 加权限控制
+        List<Station> list = apiService.queryAllStation();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0, n = list.size(); i < n; i++) {
+            Station station = list.get(i);
+            sb.append(station.getStandCode()).append("^").append(station.getStandName());
+            if (i < n - 1) {
+                sb.append("$");
+            }
+
+        }
+        result.setData(sb.toString());
         return result;
     }
 
@@ -124,9 +169,18 @@ public class ApiController {
 
     @RequestMapping
     @ResponseBody
-    public ResultModel queryConfig(@RequestParam(value = "key", required = false) String key) {
+    public ResultModel queryConfig(@RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "type", required = false) String type) {
         ResultModel result = new ResultModel();
-        result.setData(apiService.queryConfig(key));
+        if (StringUtils.isEmpty(key) && StringUtils.isEmpty(type)) {
+            result.setResultCode(PARAMETER_ERROR);
+            return result;
+        }
+        if (StringUtils.isNotEmpty(key)) {
+            result.setData(apiService.queryConfigByKey(key));
+        } else if (StringUtils.isNotEmpty(type)) {
+            result.setData(apiService.queryConfigByType(type));
+        }
         return result;
     }
 

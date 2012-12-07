@@ -262,8 +262,22 @@ public class ApiService {
         return parserStations;
     }
 
-    public Config queryConfig(String key) {
-        return configDao.selectOne("queryConfig", key);
+    public List<Station> queryAllStation() {
+        // TODO 数据以后存在内存中、直接从内存读取
+        return stationDao.selectList("queryAllStation", null);
+
+    }
+
+    public Config queryConfigByKey(String key) {
+        Map<String, String> parameter = new HashMap<String, String>();
+        parameter.put("key", key);
+        return configDao.selectOne("queryConfig", parameter);
+    }
+
+    public List<Config> queryConfigByType(String type) {
+        Map<String, String> parameter = new HashMap<String, String>();
+        parameter.put("type", type);
+        return configDao.selectList("queryConfig", parameter);
     }
 
 }

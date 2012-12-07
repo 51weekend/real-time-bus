@@ -1,6 +1,5 @@
 package me.chengdong.bustime.utils;
 
-
 import android.util.Log;
 
 /**
@@ -12,26 +11,25 @@ import android.util.Log;
  */
 public class LogUtil {
     private static boolean showLog = true;
-    
-	public static int v(String tag, String msg) {
-	    if(showLog){
-    	    Log.v("Total", tag + " -- " + msg);
-    		return Log.v(tag, msg);
-	    }else{
-	        return 0;
-	    }
-	}
 
-	
-	public static int v(String tag, String msg, Throwable tr) {
-	    if(showLog){
-	        Log.v("Total", tag + " -- " + msg, tr);
-	        return Log.v(tag, msg, tr);
-        }else{
+    public static int v(String tag, String msg) {
+        if (showLog) {
+            Log.v("Total", tag + " -- " + msg);
+            return Log.v(tag, msg);
+        } else {
             return 0;
         }
-	}
-	
+    }
+
+    public static int v(String tag, String msg, Throwable tr) {
+        if (showLog) {
+            Log.v("Total", tag + " -- " + msg, tr);
+            return Log.v(tag, msg, tr);
+        } else {
+            return 0;
+        }
+    }
+
     public static int d(String tag, String msg) {
         if (showLog) {
             Log.d("Total", tag + " -- " + msg);

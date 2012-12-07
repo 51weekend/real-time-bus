@@ -42,12 +42,12 @@ public class ResultData {
     @SuppressLint("UseSparseArrays")
     private static Map<Integer, String> MAP_ERROR_CODE = new HashMap<Integer, String>();
 
-    public boolean isSuccess() {
+    public boolean success() {
         return 0 == code;
     }
 
-    public boolean isFailed() {
-        return !isSuccess();
+    public boolean failed() {
+        return !success();
     }
 
     public void setResultCode(int code) {
