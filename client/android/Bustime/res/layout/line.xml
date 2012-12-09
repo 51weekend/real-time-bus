@@ -38,7 +38,7 @@
             android:layout_marginRight="50dip"
             android:background="@drawable/search_bar_edit_normal"
             android:hint="@string/lineName"
-            android:paddingLeft="20dip"
+            android:paddingLeft="30dip"
             android:paddingRight="30dip"
             android:textColorHint="#afafaf"
             android:textSize="14.7sp" />
@@ -47,11 +47,21 @@
             android:id="@+id/iv_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="60dip"
+            android:background="@drawable/search_bar_icon_normal"
+            android:contentDescription="@string/search" />
+
+        <ImageView
+            android:id="@+id/iv_search_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="60dip"
-            android:background="@drawable/search_bar_icon_normal"
-            android:contentDescription="@string/refresh"
+            android:background="@drawable/btn_search_clear"
+            android:contentDescription="@string/search_clear"
             android:visibility="gone" />
     </RelativeLayout>
 

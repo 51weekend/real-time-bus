@@ -92,9 +92,10 @@ public final class R {
         public static final int inner_content=0x7f0c0011;
         public static final int iv_refresh=0x7f0c0013;
         public static final int iv_search=0x7f0c0004;
+        public static final int iv_search_clear=0x7f0c0005;
         public static final int layout_line_detail_end=0x7f0c000e;
         public static final int layout_line_detail_start=0x7f0c0009;
-        public static final int layout_line_total=0x7f0c0006;
+        public static final int layout_line_total=0x7f0c0007;
         public static final int layout_single_line_detail=0x7f0c0015;
         public static final int layout_single_line_detail_current=0x7f0c0017;
         public static final int layout_station_bus=0x7f0c001e;
@@ -105,7 +106,7 @@ public final class R {
         public static final int layout_version=0x7f0c002b;
         public static final int layout_version_intro=0x7f0c002e;
         public static final int line=0x7f0c0003;
-        public static final int line_info_listview=0x7f0c0005;
+        public static final int line_info_listview=0x7f0c0006;
         public static final int line_search_layout=0x7f0c0002;
         public static final int menu_settings=0x7f0c0034;
         public static final int random=0x7f0c0035;
@@ -122,8 +123,7 @@ public final class R {
         public static final int tv_current_stationName=0x7f0c0018;
         public static final int tv_end=0x7f0c000f;
         public static final int tv_endStation=0x7f0c0010;
-        public static final int tv_lineNumber=0x7f0c0007;
-        public static final int tv_lineTotalStation=0x7f0c0008;
+        public static final int tv_lineNumber=0x7f0c0008;
         public static final int tv_lines=0x7f0c0028;
         public static final int tv_next_bus=0x7f0c0020;
         public static final int tv_position=0x7f0c0025;

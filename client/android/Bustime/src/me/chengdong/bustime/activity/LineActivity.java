@@ -24,7 +24,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.inject.Inject;
 
@@ -32,8 +31,8 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 
 	private final static String TAG = LineActivity.class.getSimpleName();
 
-	@InjectView(R.id.iv_search)
-	ImageView mSearch;
+	@InjectView(R.id.iv_search_clear)
+	ImageView mSearchClear;
 
 	@InjectView(R.id.line)
 	EditText mLineEdittext;
@@ -54,7 +53,7 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.line);
 
-		mSearch.setOnClickListener(this);
+		mSearchClear.setOnClickListener(this);
 
 		mLineEdittext.setSingleLine(true);
 		mLineEdittext.clearFocus();
@@ -63,9 +62,15 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 
 			public void afterTextChanged(Editable s) {
 				if (StringUtil.isEmpty(mLineEdittext.getText().toString())) {
-					mSearch.setVisibility(View.GONE);
+					mSearchClear.setVisibility(View.GONE);
 				} else {
-					mSearch.setVisibility(View.VISIBLE);
+					if (StringUtil.isEmpty(mLineEdittext.getText().toString())) {
+						return;
+					}
+
+					lineNumber = mLineEdittext.getText().toString();
+					new QueryLineTask().execute();
+					mSearchClear.setVisibility(View.VISIBLE);
 				}
 			}
 
@@ -110,15 +115,8 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 	public void onClick(View v) {
 
 		switch (v.getId()) {
-		case R.id.iv_search:
-			if (StringUtil.isEmpty(mLineEdittext.getText().toString())) {
-				Toast.makeText(LineActivity.this, R.string.line_required,
-						Toast.LENGTH_SHORT).show();
-				break;
-			}
-
-			lineNumber = mLineEdittext.getText().toString();
-			new QueryLineTask().execute();
+		case R.id.iv_search_clear:
+			mLineEdittext.setText("");
 			break;
 		default:
 			break;
