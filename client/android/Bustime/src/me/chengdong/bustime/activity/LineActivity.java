@@ -5,6 +5,7 @@ import java.util.List;
 
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.LineInfoAdapter;
+import me.chengdong.bustime.db.TbConfigHandler;
 import me.chengdong.bustime.db.TbLineHandler;
 import me.chengdong.bustime.model.Line;
 import me.chengdong.bustime.module.DownLoadData;
@@ -42,6 +43,8 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 
 	@Inject
 	DownLoadData downLoadData;
+
+	TbConfigHandler tbConfigHandler = new TbConfigHandler(LineActivity.this);
 
 	private String lineNumber;
 
@@ -94,8 +97,6 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 		lineListView.setAdapter(mLineAdapter);
 		lineListView.setOnItemClickListener(this);
 
-		mLineAdapter.notifyDataSetChanged();
-
 	}
 
 	@Override
@@ -104,11 +105,29 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 		if (mLineList != null && mLineList.size() > 0) {
 			return;
 		}
+		String savedLineEditData = tbConfigHandler.getLineNumber();
+		if (StringUtil.isEmpty(lineNumber)
+				&& !StringUtil.isEmpty(savedLineEditData)) {
+			lineNumber = savedLineEditData;
+			mLineEdittext.setText(lineNumber);
+			mLineEdittext.clearFocus();
+		}
 		if (StringUtil.isEmpty(lineNumber)) {
 			return;
 		}
-		openProgressDialog();
+
+		// openProgressDialog();
 		new QueryLineTask().execute();
+	}
+
+	public void onPause() {
+		super.onPause();
+		if (StringUtil.isEmpty(mLineEdittext.getText().toString())) {
+			return;
+		}
+
+		tbConfigHandler.saveOrUpdateLineNumber(mLineEdittext.getText()
+				.toString());
 	}
 
 	@Override
@@ -148,7 +167,7 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 			if (StringUtil.isEmpty(lineNumber)) {
 				return;
 			}
-			openProgressDialog();
+			// openProgressDialog();
 		}
 
 		@Override
@@ -187,7 +206,7 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 
 		@Override
 		protected void onPostExecute(Void result) {
-			closeProgressDialog();
+			// closeProgressDialog();
 			mLineAdapter.notifyDataSetChanged();
 		}
 	}

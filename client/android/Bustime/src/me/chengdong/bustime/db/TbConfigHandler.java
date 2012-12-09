@@ -16,134 +16,154 @@ import android.database.sqlite.SQLiteDatabase;
 
 /**
  * TODO.
- *
+ * 
  * @author chengdong
  */
 public class TbConfigHandler {
-    private static final String TAG = TbConfigHandler.class.getSimpleName();
+	private static final String TAG = TbConfigHandler.class.getSimpleName();
 
-    public static final String TABLE = "tb_config";
+	public static final String TABLE = "tb_config";
 
-    private MainSQLiteOpenHelper mSQLite = null;
+	private MainSQLiteOpenHelper mSQLite = null;
 
-    private static final String HAS_STATION_DATA = "station_data";
-    private static final String HAS_LINE_DATA = "station_line";
+	private static final String HAS_STATION_DATA = "station_data";
+	private static final String HAS_LINE_DATA = "station_line";
+	private static final String LINE_NUMBER_EDIT_VALUE = "line_number_edit_value";
 
-    private static final String COLUMN_KEY = "key";
-    private static final String COLUMN_VAL = "value";
+	private static final String COLUMN_KEY = "key";
+	private static final String COLUMN_VAL = "value";
 
-    public static final String CREATE_TABLE_SQL = " CREATE TABLE " + TABLE + " (" + COLUMN_KEY + " TEXT PRIMARY KEY, "
-            + COLUMN_VAL + " TEXT);";
-    public static final String DROP_TABLE_SQL = "DROP TABLE IF EXISTS " + TABLE;
+	public static final String CREATE_TABLE_SQL = " CREATE TABLE " + TABLE
+			+ " (" + COLUMN_KEY + " TEXT PRIMARY KEY, " + COLUMN_VAL
+			+ " TEXT);";
+	public static final String DROP_TABLE_SQL = "DROP TABLE IF EXISTS " + TABLE;
 
-    public TbConfigHandler(Context context) {
-        mSQLite = new MainSQLiteOpenHelper(context);
-    }
+	public TbConfigHandler(Context context) {
+		mSQLite = new MainSQLiteOpenHelper(context);
+	}
 
-    public void save(String key, String val) {
-        if (StringUtil.isBlank(key)) {
-            return;
-        }
+	public void saveOrUpdate(String key, String val) {
+		if (StringUtil.isBlank(key)) {
+			return;
+		}
 
-        SQLiteDatabase m_oData = null;
-        Cursor oCursor = null;
-        try {
-            m_oData = this.mSQLite.getWritableDatabase();
+		SQLiteDatabase m_oData = null;
+		Cursor oCursor = null;
+		try {
+			m_oData = this.mSQLite.getWritableDatabase();
 
-            String sql = "SELECT * FROM " + TABLE + " WHERE " + COLUMN_KEY + "=? ";
-            oCursor = m_oData.rawQuery(sql, new String[]{key});
-            if (oCursor.moveToFirst()) {
-                sql = "update " + TABLE + " set " + COLUMN_VAL + "=? where " + COLUMN_KEY + "=? ";
-                Object[] paramsValue = new Object[]{val, key};
-                m_oData.execSQL(sql, paramsValue);
-            } else {
-                sql = "INSERT INTO " + TABLE + " (" + COLUMN_KEY + ", " + COLUMN_VAL + ") VALUES(?, ?)";
-                Object[] paramsValue = new Object[]{key, val};
-                m_oData.execSQL(sql, paramsValue);
-            }
-        } catch (Exception e) {
-            LogUtil.e(TAG, "save config error：", e);
-        } finally {
-            if (oCursor != null) {
-                oCursor.close();
-                oCursor = null;
-            }
-            if (m_oData != null) {
-                m_oData.close();
-                m_oData = null;
-            }
-        }
-    }
+			String sql = "SELECT * FROM " + TABLE + " WHERE " + COLUMN_KEY
+					+ "=? ";
+			oCursor = m_oData.rawQuery(sql, new String[] { key });
+			if (oCursor.moveToFirst()) {
+				sql = "update " + TABLE + " set " + COLUMN_VAL + "=? where "
+						+ COLUMN_KEY + "=? ";
+				Object[] paramsValue = new Object[] { val, key };
+				m_oData.execSQL(sql, paramsValue);
+			} else {
+				sql = "INSERT INTO " + TABLE + " (" + COLUMN_KEY + ", "
+						+ COLUMN_VAL + ") VALUES(?, ?)";
+				Object[] paramsValue = new Object[] { key, val };
+				m_oData.execSQL(sql, paramsValue);
+			}
+		} catch (Exception e) {
+			LogUtil.e(TAG, "save config error：", e);
+		} finally {
+			if (oCursor != null) {
+				oCursor.close();
+				oCursor = null;
+			}
+			if (m_oData != null) {
+				m_oData.close();
+				m_oData = null;
+			}
+		}
+	}
 
-    public boolean hasStationData() {
-        Config config = selectOne(HAS_STATION_DATA);
-        if (config == null || !HAS_STATION_DATA.equals(config.getConfigValue())) {
-            return false;
-        }
-        return true;
-    }
+	public boolean hasStationData() {
+		Config config = selectOne(HAS_STATION_DATA);
+		if (config == null || !HAS_STATION_DATA.equals(config.getConfigValue())) {
+			return false;
+		}
+		return true;
+	}
 
-    public void saveStationData() {
-        save(HAS_STATION_DATA, HAS_STATION_DATA);
-    }
+	public void saveStationData() {
+		saveOrUpdate(HAS_STATION_DATA, HAS_STATION_DATA);
+	}
 
-    public boolean hasLineData() {
-        Config config = selectOne(HAS_LINE_DATA);
-        if (config == null || !HAS_LINE_DATA.equals(config.getConfigValue())) {
-            return false;
-        }
-        return true;
-    }
+	public boolean hasLineData() {
+		Config config = selectOne(HAS_LINE_DATA);
+		if (config == null || !HAS_LINE_DATA.equals(config.getConfigValue())) {
+			return false;
+		}
+		return true;
+	}
 
-    public void saveLineData() {
-        save(HAS_LINE_DATA, HAS_LINE_DATA);
-    }
+	public void saveOrUpdateLineNumber(String editValue) {
+		this.saveOrUpdate(LINE_NUMBER_EDIT_VALUE, editValue);
+	}
 
-    public Config selectOne(String key) {
-        Config config = new Config();
-        if (StringUtil.isEmpty(key)) {
-            return config;
-        }
+	public String getLineNumber() {
+		Config config = this.selectOne(LINE_NUMBER_EDIT_VALUE);
+		if (config == null || StringUtil.isEmpty(config.getConfigValue())){
+			return "";
+		}
+		return config.getConfigValue();
+	}
 
-        SQLiteDatabase m_oData = null;
-        Cursor oCursor = null;
-        try {
-            m_oData = this.mSQLite.getReadableDatabase();
-            String sql = "SELECT * FROM " + TABLE + " WHERE " + COLUMN_KEY + " =?";
-            LogUtil.i(TAG, "sql：" + sql);
-            oCursor = m_oData.rawQuery(sql, new String[]{key});
-            if (oCursor.moveToNext()) {
-                return getConfigFromCursor(oCursor);
-            }
-        } catch (Exception e) {
-            LogUtil.e(TAG, "select config error", e);
-        } finally {
-            if (oCursor != null) {
-                oCursor.close();
-                oCursor = null;
-            }
-            if (m_oData != null) {
-                m_oData.close();
-                m_oData = null;
-            }
-        }
-        return config;
-    }
+	public void saveLineData() {
+		saveOrUpdate(HAS_LINE_DATA, HAS_LINE_DATA);
+	}
 
-    private Config getConfigFromCursor(Cursor oCursor) {
-        Config config = new Config();
-        try {
-            config.setConfigKey(oCursor.getString(oCursor.getColumnIndex(COLUMN_KEY)));
-        } catch (Exception e) {
-        }
+	public Config selectOne(String key) {
+		Config config = new Config();
+		if (StringUtil.isEmpty(key)) {
+			return config;
+		}
 
-        try {
-            config.setConfigValue(oCursor.getString(oCursor.getColumnIndex(COLUMN_VAL)));
-        } catch (Exception e) {
-        }
+		SQLiteDatabase m_oData = null;
+		Cursor oCursor = null;
+		try {
+			m_oData = this.mSQLite.getReadableDatabase();
+			String sql = "SELECT * FROM " + TABLE + " WHERE " + COLUMN_KEY
+					+ " =?";
+			LogUtil.i(TAG, "sql：" + sql);
+			oCursor = m_oData.rawQuery(sql, new String[] { key });
+			if (oCursor.moveToNext()) {
+				return getConfigFromCursor(oCursor);
+			}
+		} catch (Exception e) {
+			LogUtil.e(TAG, "select config error", e);
+		} finally {
+			if (oCursor != null) {
+				oCursor.close();
+				oCursor = null;
+			}
+			if (m_oData != null) {
+				m_oData.close();
+				m_oData = null;
+			}
+		}
+		return config;
+	}
 
-        return config;
+	private Config getConfigFromCursor(Cursor oCursor) {
+		Config config = new Config();
+		try {
+			config.setConfigKey(oCursor.getString(oCursor
+					.getColumnIndex(COLUMN_KEY)));
+		} catch (Exception e) {
+		}
 
-    }
+		try {
+			config.setConfigValue(oCursor.getString(oCursor
+					.getColumnIndex(COLUMN_VAL)));
+		} catch (Exception e) {
+		}
+
+		return config;
+
+	}
 
 }
