@@ -2,7 +2,7 @@ package me.chengdong.bustime.activity;
 
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.task.CheckVersionTask;
-import me.chengdong.bustime.task.DownloadDataTask;
+import me.chengdong.bustime.task.LoadDataTask;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +26,7 @@ public class MainActivity extends TabActivity {
     public void onResume() {
         super.onResume();
         new CheckVersionTask(MainActivity.this).execute();
-        new DownloadDataTask(MainActivity.this).execute();
+        new LoadDataTask(MainActivity.this).execute();
     }
 
     private void setTabs() {

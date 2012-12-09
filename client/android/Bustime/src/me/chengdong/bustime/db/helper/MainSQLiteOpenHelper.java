@@ -6,6 +6,7 @@
 package me.chengdong.bustime.db.helper;
 
 import me.chengdong.bustime.db.TbConfigHandler;
+import me.chengdong.bustime.db.TbLineHandler;
 import me.chengdong.bustime.db.TbStationHandler;
 import me.chengdong.bustime.utils.LogUtil;
 import android.content.Context;
@@ -19,38 +20,43 @@ import android.database.sqlite.SQLiteOpenHelper;
  * @author chengdong
  */
 public class MainSQLiteOpenHelper extends SQLiteOpenHelper {
-    private static final String TAG = MainSQLiteOpenHelper.class.getSimpleName();
+	private static final String TAG = MainSQLiteOpenHelper.class
+			.getSimpleName();
 
-    private static final int VERSION = 1;
+	private static final int VERSION = 2;
 
-    private static final String DB_NAME = "bustime.db";
+	private static final String DB_NAME = "bustime.db";
 
-    public MainSQLiteOpenHelper(Context context) {
-        super(context, DB_NAME, null, VERSION);
-    }
+	public MainSQLiteOpenHelper(Context context) {
+		super(context, DB_NAME, null, VERSION);
+	}
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        // 配置
-        db.execSQL(TbConfigHandler.CREATE_TABLE_SQL);
+	@Override
+	public void onCreate(SQLiteDatabase db) {
+		// 配置
+		db.execSQL(TbConfigHandler.CREATE_TABLE_SQL);
 
-        db.execSQL(TbStationHandler.CREATE_TABLE_SQL);
+		db.execSQL(TbStationHandler.CREATE_TABLE_SQL);
 
-        LogUtil.d(TAG, " database created.");
-    }
+		db.execSQL(TbLineHandler.CREATE_TABLE_SQL);
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion <= 0) {
-            // TODO 这里重新做、不用删除
-            db.execSQL(TbConfigHandler.DROP_TABLE_SQL);
-            db.execSQL(TbConfigHandler.CREATE_TABLE_SQL);
+		LogUtil.d(TAG, " database created.");
+	}
 
-            db.execSQL(TbStationHandler.DROP_TABLE_SQL);
-            db.execSQL(TbStationHandler.CREATE_TABLE_SQL);
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		if (oldVersion <= VERSION - 1) {
+			// TODO 这里重新做、不用删除
+			db.execSQL(TbConfigHandler.DROP_TABLE_SQL);
+			db.execSQL(TbConfigHandler.CREATE_TABLE_SQL);
 
-        }
+			db.execSQL(TbStationHandler.DROP_TABLE_SQL);
+			db.execSQL(TbStationHandler.CREATE_TABLE_SQL);
 
-        LogUtil.d(TAG, " database upgraded.");
-    }
+			db.execSQL(TbConfigHandler.DROP_TABLE_SQL);
+			db.execSQL(TbLineHandler.CREATE_TABLE_SQL);
+		}
+
+		LogUtil.d(TAG, " database upgraded.");
+	}
 }

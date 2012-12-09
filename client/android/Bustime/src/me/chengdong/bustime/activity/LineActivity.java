@@ -1,13 +1,12 @@
 package me.chengdong.bustime.activity;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.LineInfoAdapter;
+import me.chengdong.bustime.db.TbLineHandler;
 import me.chengdong.bustime.model.Line;
-import me.chengdong.bustime.model.ResultData;
 import me.chengdong.bustime.module.DownLoadData;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.ParamUtil;
@@ -31,155 +30,168 @@ import com.google.inject.Inject;
 
 public class LineActivity extends BaseActivity implements OnItemClickListener {
 
-    private final static String TAG = LineActivity.class.getSimpleName();
+	private final static String TAG = LineActivity.class.getSimpleName();
 
-    @InjectView(R.id.iv_search)
-    ImageView mSearch;
+	@InjectView(R.id.iv_search)
+	ImageView mSearch;
 
-    @InjectView(R.id.line)
-    EditText mLineEdittext;
+	@InjectView(R.id.line)
+	EditText mLineEdittext;
 
-    @InjectView(R.id.line_info_listview)
-    private ListView lineListView;
+	@InjectView(R.id.line_info_listview)
+	private ListView lineListView;
 
-    @Inject
-    DownLoadData downLoadData;
+	@Inject
+	DownLoadData downLoadData;
 
-    private String lineNumber;
+	private String lineNumber;
 
-    private LineInfoAdapter mLineAdapter;
-    private final List<Line> mLineList = new ArrayList<Line>(0);
+	private LineInfoAdapter mLineAdapter;
+	private final List<Line> mLineList = new ArrayList<Line>(0);
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.line);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.line);
 
-        mSearch.setOnClickListener(this);
+		mSearch.setOnClickListener(this);
 
-        mLineEdittext.setSingleLine(true);
-        mLineEdittext.clearFocus();
+		mLineEdittext.setSingleLine(true);
+		mLineEdittext.clearFocus();
 
-        mLineEdittext.addTextChangedListener(new TextWatcher() {
+		mLineEdittext.addTextChangedListener(new TextWatcher() {
 
-            public void afterTextChanged(Editable s) {
-                if (StringUtil.isEmpty(mLineEdittext.getText().toString())) {
-                    mSearch.setVisibility(View.GONE);
-                } else {
-                    mSearch.setVisibility(View.VISIBLE);
-                }
-            }
+			public void afterTextChanged(Editable s) {
+				if (StringUtil.isEmpty(mLineEdittext.getText().toString())) {
+					mSearch.setVisibility(View.GONE);
+				} else {
+					mSearch.setVisibility(View.VISIBLE);
+				}
+			}
 
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 
-            }
+			}
 
-        });
+		});
 
-        lineListView.setCacheColorHint(0);
+		lineListView.setCacheColorHint(0);
 
-        mLoadDialog = new ProgressDialog(this);
-        mLoadDialog.setMessage("正在查询车次信息...");
-        mLineAdapter = new LineInfoAdapter(LineActivity.this, mLineList);
-        lineListView.setAdapter(mLineAdapter);
-        lineListView.setOnItemClickListener(this);
+		mLoadDialog = new ProgressDialog(this);
+		mLoadDialog.setMessage("正在查询车次信息...");
+		mLineAdapter = new LineInfoAdapter(LineActivity.this, mLineList);
+		lineListView.setAdapter(mLineAdapter);
+		lineListView.setOnItemClickListener(this);
 
-        mLineAdapter.notifyDataSetChanged();
+		mLineAdapter.notifyDataSetChanged();
 
-    }
+	}
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mLineList != null && mLineList.size() > 0) {
-            return;
-        }
-        if (StringUtil.isEmpty(lineNumber)) {
-            return;
-        }
-        openProgressDialog();
-        new QueryLineTask().execute();
-    }
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (mLineList != null && mLineList.size() > 0) {
+			return;
+		}
+		if (StringUtil.isEmpty(lineNumber)) {
+			return;
+		}
+		openProgressDialog();
+		new QueryLineTask().execute();
+	}
 
-    @Override
-    public void onClick(View v) {
+	@Override
+	public void onClick(View v) {
 
-        switch (v.getId()) {
-        case R.id.iv_search:
-            if (StringUtil.isEmpty(mLineEdittext.getText().toString())) {
-                Toast.makeText(LineActivity.this, R.string.line_required, Toast.LENGTH_SHORT).show();
-                break;
-            }
+		switch (v.getId()) {
+		case R.id.iv_search:
+			if (StringUtil.isEmpty(mLineEdittext.getText().toString())) {
+				Toast.makeText(LineActivity.this, R.string.line_required,
+						Toast.LENGTH_SHORT).show();
+				break;
+			}
 
-            lineNumber = mLineEdittext.getText().toString();
-            new QueryLineTask().execute();
-            break;
-        default:
-            break;
-        }
-    }
+			lineNumber = mLineEdittext.getText().toString();
+			new QueryLineTask().execute();
+			break;
+		default:
+			break;
+		}
+	}
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View convertView, int position, long id) {
+	@Override
+	public void onItemClick(AdapterView<?> parent, View convertView,
+			int position, long id) {
 
-        Line line = this.mLineList.get((int) id);
-        if (line == null) {
-            LogUtil.d(TAG, "line info is null ");
-            return;
-        }
+		Line line = this.mLineList.get((int) id);
+		if (line == null) {
+			LogUtil.d(TAG, "line info is null ");
+			return;
+		}
 
-        Intent intent = new Intent();
-        intent.setClass(this, SingleLineActivity.class);
-        intent.putExtra(ParamUtil.LINE_GUID, line.getLineGuid());
-        intent.putExtra(ParamUtil.LINE_NUMBER, line.getLineNumber());
-        setIntent(intent);
-        startActivity(intent);
-    }
+		Intent intent = new Intent();
+		intent.setClass(this, SingleLineActivity.class);
+		intent.putExtra(ParamUtil.LINE_GUID, line.getLineGuid());
+		intent.putExtra(ParamUtil.LINE_NUMBER, line.getLineNumber());
+		setIntent(intent);
+		startActivity(intent);
+	}
 
-    private class QueryLineTask extends AsyncTask<Void, Void, Void> {
+	private class QueryLineTask extends AsyncTask<Void, Void, Void> {
 
-        @Override
-        public void onPreExecute() {
-            if (StringUtil.isEmpty(lineNumber)) {
-                return;
-            }
-            openProgressDialog();
-        }
+		@Override
+		public void onPreExecute() {
+			if (StringUtil.isEmpty(lineNumber)) {
+				return;
+			}
+			openProgressDialog();
+		}
 
-        @Override
-        protected Void doInBackground(Void... params) {
+		@Override
+		protected Void doInBackground(Void... params) {
 
-            try {
-                if (StringUtil.isEmpty(lineNumber)) {
-                    return null;
-                }
-                String name = URLEncoder.encode(lineNumber, "utf-8");
-                ResultData result = downLoadData.getLine(LineActivity.this, URLEncoder.encode(name, "utf-8"));
-                if (result.success()) {
-                    @SuppressWarnings("unchecked")
-                    List<Line> temps = (List<Line>) result.getData();
-                    mLineList.clear();
-                    mLineList.addAll(temps);
-                } else {
-                    // TODO 进行错误提示
-                }
+			try {
+				if (StringUtil.isEmpty(lineNumber)) {
+					return null;
+				}
 
-            } catch (Exception e) {
-                LogUtil.e(TAG, "获取数据出错", e);
-            }
+				TbLineHandler lineHandler = new TbLineHandler(LineActivity.this);
+				List<Line> lines = lineHandler.selectList(mLineEdittext
+						.getText().toString());
 
-            return null;
-        }
+				mLineList.clear();
+				mLineList.addAll(lines);
 
-        @Override
-        protected void onPostExecute(Void result) {
-            closeProgressDialog();
-            mLineAdapter.notifyDataSetChanged();
-        }
-    }
+				// String name = URLEncoder.encode(lineNumber, "utf-8");
+				// ResultData result = downLoadData.getLine(LineActivity.this,
+				// URLEncoder.encode(name, "utf-8"));
+				// if (result.success()) {
+				// @SuppressWarnings("unchecked")
+				// List<Line> temps = (List<Line>) result.getData();
+				// mLineList.clear();
+				// mLineList.addAll(temps);
+				// } else {
+				// // TODO 进行错误提示
+				// }
+
+			} catch (Exception e) {
+				LogUtil.e(TAG, "获取数据出错", e);
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			closeProgressDialog();
+			mLineAdapter.notifyDataSetChanged();
+		}
+	}
 
 }
