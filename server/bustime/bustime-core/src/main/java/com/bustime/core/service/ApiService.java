@@ -147,8 +147,10 @@ public class ApiService {
      * @return
      */
     public List<SingleLine> querySingleLine(final String lineCode) {
-        // 可以考虑后台定时(30s)对所有线路运行车辆的实时信息爬取一次、有变更的话、服务端push给客户端、或者客户端从服务端读取.
+        return singleLineParser.getData(lineCode);
+    }
 
+    public List<SingleLine> downloadSingleLine(final String lineCode) {
         final List<SingleLine> data = singleLineParser.getData(lineCode);
         executor.execute(new Runnable() {
             @Override
@@ -169,7 +171,6 @@ public class ApiService {
                 }
             }
         });
-
         return data;
     }
 
@@ -236,10 +237,16 @@ public class ApiService {
      * @return
      */
     public List<Station> queryStation(String stationName) {
-        List<Station> stations = stationDao.selectList("queryStationByName", stationName);
+        List<Station> stations = stationDao.selectList("queryStationByName", "%" + stationName + "%");
         if (!CollectionUtils.isEmpty(stations)) {
             return stations;
         }
+
+        return new ArrayList<Station>();
+
+    }
+
+    public void downloadStation(String stationName) {
         final List<Station> parserStations = stationParser.getData(stationName);
         executor.execute(new Runnable() {
             @Override
@@ -259,7 +266,6 @@ public class ApiService {
                 }
             }
         });
-        return parserStations;
     }
 
     public List<Station> queryAllStation() {

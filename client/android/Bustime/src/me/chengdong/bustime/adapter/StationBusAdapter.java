@@ -60,6 +60,8 @@ public class StationBusAdapter extends BaseAdapter {
             holder.tvLineNumber = (TextView) convertView.findViewById(R.id.tv_lineNumber);
             holder.tvStandNum = (TextView) convertView.findViewById(R.id.tv_standNum);
             holder.tvStationTag = (TextView) convertView.findViewById(R.id.station_tag);
+            holder.tvStartStation = (TextView) convertView.findViewById(R.id.tv_startStation);
+            holder.tvEndStation = (TextView) convertView.findViewById(R.id.tv_endStation);
 
             convertView.setTag(holder);
         } else {
@@ -69,6 +71,8 @@ public class StationBusAdapter extends BaseAdapter {
         StationBus stationBus = items.get(position);
         holder.tvLineNumber.setText(Html.fromHtml("<u>" + stationBus.getLineNumber() + "</u>"));
         holder.tvStandNum.setText(stationBus.getStandNum());
+        holder.tvStartStation.setText(stationBus.getStartStation());
+        holder.tvEndStation.setText(stationBus.getEndStation());
 
         if (StringUtil.isNumeric(stationBus.getStandNum())) {
             holder.tvStationTag.setVisibility(View.VISIBLE);
@@ -86,6 +90,9 @@ public class StationBusAdapter extends BaseAdapter {
         TextView tvLineNumber;
         TextView tvStandNum;
         TextView tvStationTag;
+        TextView tvStartStation;
+        TextView tvEndStation;
+
     }
 
 }

@@ -38,11 +38,12 @@
             android:layout_marginRight="50dip"
             android:background="@drawable/search_bar_edit_normal"
             android:hint="@string/lineName"
-            android:paddingLeft="30dip"
+            android:paddingLeft="20dip"
             android:paddingRight="30dip"
             android:textColorHint="#afafaf"
             android:textSize="14.7sp" />
 
+        <!--
         <ImageView
             android:id="@+id/iv_search"
             android:layout_width="wrap_content"
@@ -51,7 +52,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="60dip"
             android:background="@drawable/search_bar_icon_normal"
-            android:contentDescription="@string/search" />
+            android:contentDescription="@string/search" />
+        -->
 
         <ImageView
             android:id="@+id/iv_search_clear"

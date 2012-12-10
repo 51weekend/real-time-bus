@@ -20,6 +20,7 @@ public class Station {
     private String road;
     private String trend;
     private String lines;
+    private String area;
 
     public String getStandCode() {
         return standCode;
@@ -61,12 +62,21 @@ public class Station {
         this.lines = lines;
     }
 
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
     public void deserialize(JSONObject json) {
         standCode = json.optString("standCode", "");
         standName = json.optString("standName", "");
         road = json.optString("road", "");
         trend = json.optString("trend", "");
         lines = json.optString("bus", "");
+        area = json.optString("area", "");
     }
 
 }

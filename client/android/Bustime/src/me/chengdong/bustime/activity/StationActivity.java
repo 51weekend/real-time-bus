@@ -6,14 +6,14 @@ import java.util.List;
 
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.StationAdapter;
+import me.chengdong.bustime.db.TbConfigHandler;
 import me.chengdong.bustime.db.TbStationHandler;
 import me.chengdong.bustime.model.ResultData;
 import me.chengdong.bustime.model.Station;
-import me.chengdong.bustime.module.DownLoadData;
+import me.chengdong.bustime.module.DownloadData;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.ParamUtil;
 import me.chengdong.bustime.utils.StringUtil;
-import roboguice.inject.InjectView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -27,27 +27,22 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import com.google.inject.Inject;
 
 public class StationActivity extends BaseActivity implements OnItemClickListener {
 
     static final String TAG = StationActivity.class.getSimpleName();
 
-    @InjectView(R.id.stationName)
     EditText mStationEditText;
 
-    @InjectView(R.id.iv_search)
+    ImageView mSearchClear;
+
     ImageView mSearch;
 
-    @InjectView(R.id.station_info_listview)
     ListView stationListView;
 
-    @Inject
-    DownLoadData downLoadData;
-
     List<Station> mStationList = new ArrayList<Station>(0);
+
+    TbConfigHandler tbConfigHandler = new TbConfigHandler(StationActivity.this);
 
     StationAdapter mAdapter;
 
@@ -58,6 +53,15 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.station);
 
+        mStationEditText = (EditText) this.findViewById(R.id.stationName);
+
+        mSearchClear = (ImageView) this.findViewById(R.id.iv_search_clear);
+
+        mSearch = (ImageView) this.findViewById(R.id.iv_search);
+
+        stationListView = (ListView) this.findViewById(R.id.station_info_listview);
+
+        mSearchClear.setOnClickListener(this);
         mSearch.setOnClickListener(this);
 
         mStationEditText.setSingleLine(true);
@@ -67,9 +71,11 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
 
             public void afterTextChanged(Editable s) {
                 if (StringUtil.isEmpty(mStationEditText.getText().toString())) {
-                    mSearch.setVisibility(View.GONE);
+                    mSearchClear.setVisibility(View.GONE);
                 } else {
-                    mSearch.setVisibility(View.VISIBLE);
+                    stationName = mStationEditText.getText().toString();
+                    new QueryStationFromLocalTask().execute();
+                    mSearchClear.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -96,16 +102,28 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
     @Override
     public void onResume() {
         super.onResume();
-        if (mStationList != null && mStationList.size() > 0) {
-            return;
+
+        String savedLineEditData = tbConfigHandler.getStationName();
+        if (StringUtil.isEmpty(stationName) && !StringUtil.isEmpty(savedLineEditData)) {
+            stationName = savedLineEditData;
+            mStationEditText.setText(stationName);
+            mStationEditText.clearFocus();
         }
         if (StringUtil.isEmpty(mStationEditText.getText().toString())) {
             return;
         } else {
-            mSearch.setVisibility(View.VISIBLE);
+            mSearchClear.setVisibility(View.VISIBLE);
         }
-        openProgressDialog();
-        new QueryStationTask().execute();
+        new QueryStationFromLocalTask().execute();
+    }
+
+    public void onPause() {
+        super.onPause();
+        if (StringUtil.isEmpty(mStationEditText.getText().toString())) {
+            return;
+        }
+
+        tbConfigHandler.saveStationName(mStationEditText.getText().toString());
     }
 
     @Override
@@ -117,20 +135,11 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+        case R.id.iv_search_clear:
+            mStationEditText.setText("");
+            break;
         case R.id.iv_search:
-            if (StringUtil.isEmpty(mStationEditText.getText().toString())) {
-                Toast.makeText(StationActivity.this, R.string.line_required, Toast.LENGTH_SHORT).show();
-                break;
-            }
-
-            stationName = mStationEditText.getText().toString();
-
-            TbStationHandler stationHandler = new TbStationHandler(StationActivity.this);
-            List<Station> stations = stationHandler.selectList(stationName);
-            for (Station station : stations) {
-                LogUtil.i(TAG, station.getStandCode() + " " + station.getStandName());
-            }
-            new QueryStationTask().execute();
+            new QueryStationFromServerTask().execute();
             break;
         default:
             break;
@@ -155,7 +164,7 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
 
     }
 
-    private class QueryStationTask extends AsyncTask<Void, Void, Void> {
+    private class QueryStationFromServerTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         public void onPreExecute() {
@@ -173,12 +182,17 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
                     return null;
                 }
                 String name = URLEncoder.encode(stationName, "utf-8");
-                ResultData result = downLoadData.getStation(StationActivity.this, URLEncoder.encode(name, "utf-8"));
+                ResultData result = DownloadData.getStation(StationActivity.this, URLEncoder.encode(name, "utf-8"));
                 if (result.success()) {
                     @SuppressWarnings("unchecked")
                     List<Station> temps = (List<Station>) result.getData();
                     mStationList.clear();
                     mStationList.addAll(temps);
+
+                    TbStationHandler tbStationHandler = new TbStationHandler(StationActivity.this);
+                    for (Station station : temps) {
+                        tbStationHandler.saveOrUpdate(station);
+                    }
                 } else {
                     // TODO 进行错误提示
                 }
@@ -193,6 +207,41 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
         @Override
         protected void onPostExecute(Void result) {
             closeProgressDialog();
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private class QueryStationFromLocalTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        public void onPreExecute() {
+            if (StringUtil.isEmpty(stationName)) {
+                return;
+            }
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            try {
+                if (StringUtil.isEmpty(stationName)) {
+                    return null;
+                }
+
+                TbStationHandler stationHandler = new TbStationHandler(StationActivity.this);
+                List<Station> stations = stationHandler.selectList(stationName);
+                mStationList.clear();
+                mStationList.addAll(stations);
+
+            } catch (Exception e) {
+                LogUtil.e(TAG, "获取数据出错", e);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
             mAdapter.notifyDataSetChanged();
         }
     }

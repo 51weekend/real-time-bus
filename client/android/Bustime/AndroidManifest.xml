@@ -66,13 +66,13 @@
         <activity
             android:name=".activity.StationBusActivity"
             android:label="@string/title_activity_station_bus"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.UpdateVersionActivity"
             android:label="@string/title_activity_update_version"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
 

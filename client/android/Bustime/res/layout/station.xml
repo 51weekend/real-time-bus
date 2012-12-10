@@ -43,15 +43,25 @@
             android:textSize="14.7sp" />
 
         <ImageView
-            android:id="@+id/iv_search"
+            android:id="@+id/iv_search_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="60dip"
-            android:background="@drawable/search_bar_icon_normal"
-            android:contentDescription="@string/refresh"
+            android:background="@drawable/btn_search_clear"
+            android:contentDescription="@string/search_clear"
             android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/search_bar_icon_normal"
+            android:contentDescription="@string/search" />
     </RelativeLayout>
 
     <ListView

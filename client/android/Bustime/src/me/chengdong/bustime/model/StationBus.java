@@ -19,6 +19,8 @@ public class StationBus {
     private String standNum;
     private String time;
     private String lineNumber;
+    private String startStation;
+    private String endStation;
 
     public String getLineGuid() {
         return lineGuid;
@@ -50,6 +52,22 @@ public class StationBus {
 
     public void setLineNumber(String lineNumber) {
         this.lineNumber = lineNumber;
+    }
+
+    public String getStartStation() {
+        return startStation;
+    }
+
+    public void setStartStation(String startStation) {
+        this.startStation = startStation;
+    }
+
+    public String getEndStation() {
+        return endStation;
+    }
+
+    public void setEndStation(String endStation) {
+        this.endStation = endStation;
     }
 
     public void deserialize(JSONObject json) {

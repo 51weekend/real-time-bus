@@ -7,8 +7,9 @@
 package me.chengdong.bustime.task;
 
 import me.chengdong.bustime.db.TbConfigHandler;
-import me.chengdong.bustime.module.DownLoadData;
 import me.chengdong.bustime.module.ReaderFileData;
+import me.chengdong.bustime.utils.LogUtil;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -18,34 +19,61 @@ import android.os.AsyncTask;
  * @author chengdong
  */
 public class LoadDataTask extends AsyncTask<String, String, String> {
-	public static final String TAG = LoadDataTask.class.getSimpleName();
-	private Context ctx;
+    public static final String TAG = LoadDataTask.class.getSimpleName();
+    private Context ctx;
+    TbConfigHandler tbConfigHandler;
+    protected ProgressDialog mLoadDialog;
+    private boolean hasLineData = true;
 
-	public LoadDataTask(Context ctx) {
-		this.ctx = ctx;
-	}
+    /**
+     * 打开加载框
+     */
+    protected void openProgressDialog() {
+        if (!hasLineData && mLoadDialog != null && !mLoadDialog.isShowing()) {
+            mLoadDialog.show();
+        }
+    }
 
-	@Override
-	protected void onPreExecute() {
-		super.onPreExecute();
-	}
+    /**
+     * 关闭加载框
+     */
+    protected void closeProgressDialog() {
+        if (mLoadDialog != null && mLoadDialog.isShowing()) {
+            mLoadDialog.dismiss();
+        }
+    }
 
-	@Override
-	protected String doInBackground(String... params) {
-		TbConfigHandler tbConfigHandler = new TbConfigHandler(ctx);
+    public LoadDataTask(Context ctx) {
+        mLoadDialog = new ProgressDialog(ctx);
+        mLoadDialog.setMessage("从本地导入初始化数据,请稍候...");
+        this.ctx = ctx;
+        tbConfigHandler = new TbConfigHandler(ctx);
+        hasLineData = tbConfigHandler.hasLineData();
+    }
 
-		if (!tbConfigHandler.hasStationData()) {
-			DownLoadData.downloadStation(ctx);
-		}
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        this.openProgressDialog();
+    }
 
-		if (!tbConfigHandler.hasLineData()) {
-			ReaderFileData.readLineFile(ctx);
-		}
+    @Override
+    protected String doInBackground(String... params) {
 
-		return null;
-	}
+        long start = System.currentTimeMillis();
+        if (hasLineData) {
+            return null;
+        }
+        tbConfigHandler.saveLineData();
+        ReaderFileData.readLineFile(ctx);
 
-	@Override
-	protected void onPostExecute(String result) {
-	}
+        LogUtil.i(TAG, "总耗时:" + (System.currentTimeMillis() - start) / 1000);
+
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        this.closeProgressDialog();
+    }
 }

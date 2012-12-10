@@ -3,15 +3,12 @@ package me.chengdong.bustime.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.UpdateIntroAdapter;
 import me.chengdong.bustime.task.UpdateTask;
 import me.chengdong.bustime.utils.CfgConstant;
 import me.chengdong.bustime.utils.ParamUtil;
 import me.chengdong.bustime.utils.StringUtil;
-import roboguice.inject.InjectView;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,23 +18,21 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 public class UpdateVersionActivity extends BaseActivity {
 
-    @InjectView(R.id.app_version_name)
     TextView mVersionName;
 
-    @InjectView(R.id.update_intro_listview)
     ListView mVersionIntro;
+
+    Button mDownload;
+
+    Button mCancel;
 
     UpdateIntroAdapter mAdapter;
 
     final List<String> mUpdateIntroList = new ArrayList<String>(0);
-
-    @InjectView(R.id.update_download)
-    Button mDownload;
-
-    @InjectView(R.id.update_cancel)
-    Button mCancel;
 
     String apkName;
 
@@ -45,6 +40,14 @@ public class UpdateVersionActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_version);
+
+        mVersionName = (TextView) this.findViewById(R.id.app_version_name);
+
+        mVersionIntro = (ListView) this.findViewById(R.id.update_intro_listview);
+
+        mDownload = (Button) this.findViewById(R.id.update_download);
+
+        mCancel = (Button) this.findViewById(R.id.update_cancel);
 
         mAdapter = new UpdateIntroAdapter(UpdateVersionActivity.this, mUpdateIntroList);
         mVersionIntro.setAdapter(mAdapter);

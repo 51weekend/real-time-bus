@@ -5,12 +5,13 @@ import java.util.List;
 
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.StationBusAdapter;
+import me.chengdong.bustime.db.TbLineHandler;
+import me.chengdong.bustime.model.Line;
 import me.chengdong.bustime.model.ResultData;
 import me.chengdong.bustime.model.StationBus;
-import me.chengdong.bustime.module.DownLoadData;
+import me.chengdong.bustime.module.DownloadData;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.ParamUtil;
-import roboguice.inject.InjectView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -24,8 +25,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.inject.Inject;
-
 public class StationBusActivity extends BaseActivity implements OnItemClickListener {
 
     private static final String TAG = StationBusActivity.class.getSimpleName();
@@ -34,27 +33,30 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
 
     StationBusAdapter mAdapter;
 
-    @InjectView(R.id.station_bus_listview)
     ListView stationBusListView;
 
-    @InjectView(R.id.iv_refresh)
     ImageView mFrefreshBtn;
 
-    @InjectView(R.id.back_btn)
     Button mBackBtn;
 
-    @InjectView(R.id.title_textview)
     TextView mTitle;
 
     final List<StationBus> mStationBusList = new ArrayList<StationBus>(0);
 
-    @Inject
-    DownLoadData downloadData;
+    private TbLineHandler tbLineHandler = new TbLineHandler(StationBusActivity.this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.station_bus);
+
+        stationBusListView = (ListView) findViewById(R.id.station_bus_listview);
+
+        mFrefreshBtn = (ImageView) findViewById(R.id.iv_refresh);
+
+        mBackBtn = (Button) findViewById(R.id.back_btn);
+
+        mTitle = (TextView) findViewById(R.id.title_textview);
 
         mFrefreshBtn.setOnClickListener(this);
         mBackBtn.setOnClickListener(this);
@@ -126,10 +128,30 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
 
         @Override
         protected Void doInBackground(Void... params) {
-            ResultData result = downloadData.getStationBus(StationBusActivity.this, stationCode);
+            ResultData result = DownloadData.getStationBus(StationBusActivity.this, stationCode);
             if (result.success()) {
                 @SuppressWarnings("unchecked")
                 List<StationBus> temps = (List<StationBus>) result.getData();
+                StringBuilder sb = new StringBuilder();
+
+                for (int i = 0, n = temps.size(); i < n; i++) {
+                    StationBus stationBus = temps.get(i);
+                    sb.append("'").append(stationBus.getLineGuid()).append("'");
+                    if (i != (n - 1)) {
+                        sb.append(",");
+                    }
+                }
+                LogUtil.i(TAG, sb.toString());
+                List<Line> lines = tbLineHandler.selectListByManyGuid(sb.toString());
+                LogUtil.i(TAG, "线路的大小为:" + lines.size());
+                for (Line line : lines) {
+                    for (StationBus stationBus : temps) {
+                        if (line.getLineGuid().equals(stationBus.getLineGuid())) {
+                            stationBus.setStartStation(line.getStartStation());
+                            stationBus.setEndStation(line.getEndStation());
+                        }
+                    }
+                }
                 mStationBusList.clear();
                 mStationBusList.addAll(temps);
             } else {

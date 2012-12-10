@@ -70,9 +70,9 @@ public class RefreshDataService {
     private void updateAllData() {
         List<Line> lineList = lineDao.selectList("queryLine", null);
         for (Line line : lineList) {
-            List<SingleLine> singleLineList = apiService.querySingleLine(line.getLineGuid());
+            List<SingleLine> singleLineList = apiService.downloadSingleLine(line.getLineGuid());
             for (SingleLine singleLine : singleLineList) {
-                apiService.queryStation(singleLine.getStandName());
+                apiService.downloadStation(singleLine.getStandName());
                 if (StringUtils.isEmpty(singleLine.getStandCode())) {
                     continue;
                 }

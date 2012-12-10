@@ -39,263 +39,244 @@ import android.content.Context;
  * 
  * @author chengdong
  */
-public class DownLoadData {
+public class DownloadData {
 
-	protected static final String TAG = DownLoadData.class.getSimpleName();
+    protected static final String TAG = DownloadData.class.getSimpleName();
 
-	public static final String SERVER_HOST = "http://dev.ll.sdo.com";
+    public static final String SERVER_HOST = "http://dev.ll.sdo.com";
 
-	public static final String SERVER_CONTEXT = "/api";
-	public static final String QUERY_LINE_PATH = SERVER_CONTEXT
-			+ "/api/queryLine";
-	public static final String QUERY_SINGLE_LINE_PATH = SERVER_CONTEXT
-			+ "/api/querySingleLine";
-	public static final String QUERY_STATION_PATH = SERVER_CONTEXT
-			+ "/api/queryStation";
-	public static final String QUERY_STATION_BUS_PATH = SERVER_CONTEXT
-			+ "/api/queryStationBus";
-	public static final String QUERY_CONFIG_PATH = SERVER_CONTEXT
-			+ "/api/queryConfig";
-	public static final String DOWNLOAD_STATION_PATH = SERVER_CONTEXT
-			+ "/api/downloadStation";
-	public static final String DOWNLOAD_LINE_PATH = SERVER_CONTEXT
-			+ "/api/downloadLine";
+    public static final String SERVER_CONTEXT = "/api";
+    public static final String QUERY_LINE_PATH = SERVER_CONTEXT + "/api/queryLine";
+    public static final String QUERY_SINGLE_LINE_PATH = SERVER_CONTEXT + "/api/querySingleLine";
+    public static final String QUERY_STATION_PATH = SERVER_CONTEXT + "/api/queryStation";
+    public static final String QUERY_STATION_BUS_PATH = SERVER_CONTEXT + "/api/queryStationBus";
+    public static final String QUERY_CONFIG_PATH = SERVER_CONTEXT + "/api/queryConfig";
+    public static final String DOWNLOAD_STATION_PATH = SERVER_CONTEXT + "/api/downloadStation";
+    public static final String DOWNLOAD_LINE_PATH = SERVER_CONTEXT + "/api/downloadLine";
 
-	/**
-	 * 获取车次信息
-	 * 
-	 * @param context
-	 * @param lineNumber
-	 * @return
-	 */
-	public ResultData getLine(Context context, String lineNumber) {
+    /**
+     * 获取车次信息
+     * 
+     * @param context
+     * @param lineNumber
+     * @return
+     */
+    public static ResultData getLine(Context context, String lineNumber) {
 
-		ResultData result = getDataFromRemote(context, QUERY_LINE_PATH,
-				"lineNumber=" + lineNumber);
-		if (result.failed()) {
-			return result;
-		}
-		List<Line> lines = new ArrayList<Line>();
+        ResultData result = getDataFromRemote(context, QUERY_LINE_PATH, "lineNumber=" + lineNumber);
+        if (result.failed()) {
+            return result;
+        }
+        List<Line> lines = new ArrayList<Line>();
 
-		try {
-			JSONArray records = (JSONArray) result.getData();
-			for (int i = 0, len = records.length(); i < len; i++) {
-				Line line = new Line();
-				line.deserialize(records.getJSONObject(i));
-				lines.add(line);
-			}
-		} catch (JSONException e) {
-			result.setResultCode(DECODE_JSON_ERROR);
-			return result;
-		}
+        try {
+            JSONArray records = (JSONArray) result.getData();
+            for (int i = 0, len = records.length(); i < len; i++) {
+                Line line = new Line();
+                line.deserialize(records.getJSONObject(i));
+                lines.add(line);
+            }
+        } catch (JSONException e) {
+            result.setResultCode(DECODE_JSON_ERROR);
+            return result;
+        }
 
-		result.setData(lines);
-		return result;
+        result.setData(lines);
+        return result;
 
-	}
+    }
 
-	public ResultData getSingleLine(Activity context, String lineGuid) {
+    public static ResultData getSingleLine(Activity context, String lineGuid) {
 
-		ResultData result = getDataFromRemote(context, QUERY_SINGLE_LINE_PATH,
-				"lineCode=" + lineGuid);
-		if (result.failed()) {
-			return result;
-		}
-		List<SingleLine> lines = new ArrayList<SingleLine>();
-		try {
-			JSONArray records = (JSONArray) result.getData();
-			for (int i = 0, len = records.length(); i < len; i++) {
-				SingleLine singleLine = new SingleLine();
-				singleLine.deserialize(records.getJSONObject(i));
-				lines.add(singleLine);
+        ResultData result = getDataFromRemote(context, QUERY_SINGLE_LINE_PATH, "lineCode=" + lineGuid);
+        if (result.failed()) {
+            return result;
+        }
+        List<SingleLine> lines = new ArrayList<SingleLine>();
+        try {
+            JSONArray records = (JSONArray) result.getData();
+            for (int i = 0, len = records.length(); i < len; i++) {
+                SingleLine singleLine = new SingleLine();
+                singleLine.deserialize(records.getJSONObject(i));
+                lines.add(singleLine);
 
-			}
-		} catch (Exception e) {
-			result.setResultCode(DECODE_JSON_ERROR);
-			return result;
-		}
+            }
+        } catch (Exception e) {
+            result.setResultCode(DECODE_JSON_ERROR);
+            return result;
+        }
 
-		result.setData(lines);
+        result.setData(lines);
 
-		return result;
+        return result;
 
-	}
+    }
 
-	public ResultData getStation(Activity context, String stationName) {
+    public static ResultData getStation(Activity context, String stationName) {
 
-		ResultData result = getDataFromRemote(context, QUERY_STATION_PATH,
-				"stationName=" + stationName);
-		if (result.failed()) {
-			return result;
-		}
-		List<Station> stations = new ArrayList<Station>();
-		try {
-			JSONArray records = (JSONArray) result.getData();
+        ResultData result = getDataFromRemote(context, QUERY_STATION_PATH, "stationName=" + stationName);
+        if (result.failed()) {
+            return result;
+        }
+        List<Station> stations = new ArrayList<Station>();
+        try {
+            JSONArray records = (JSONArray) result.getData();
 
-			for (int i = 0, len = records.length(); i < len; i++) {
-				Station station = new Station();
-				station.deserialize(records.getJSONObject(i));
-				stations.add(station);
+            for (int i = 0, len = records.length(); i < len; i++) {
+                Station station = new Station();
+                station.deserialize(records.getJSONObject(i));
+                stations.add(station);
 
-			}
-		} catch (Exception e) {
-			result.setResultCode(DECODE_JSON_ERROR);
-			return result;
-		}
-		result.setData(stations);
+            }
+        } catch (Exception e) {
+            result.setResultCode(DECODE_JSON_ERROR);
+            return result;
+        }
+        result.setData(stations);
 
-		return result;
-	}
+        return result;
+    }
 
-	public static void downloadStation(Context context) {
+    public static void downloadStation(Context context) {
 
-		ResultData result = getDataFromRemote(context, DOWNLOAD_STATION_PATH,
-				"");
-		if (result.failed()) {
-			return;
-		}
-		try {
-			TbStationHandler tbStationHandler = new TbStationHandler(context);
-			TbConfigHandler tbConfigHandler = new TbConfigHandler(context);
-			String records = result.getData().toString();
-			String[] stationArray = records.split("\\$");
-			for (String stationString : stationArray) {
-				String[] sta = stationString.split("\\^");
-				tbStationHandler.saveOrUpdate(sta[0], sta[1]);
-			}
-			tbConfigHandler.saveStationData();
-		} catch (Exception e) {
-			LogUtil.e(TAG, "download station data error", e);
-		}
+        ResultData result = getDataFromRemote(context, DOWNLOAD_STATION_PATH, "");
+        if (result.failed()) {
+            return;
+        }
+        try {
+            TbStationHandler tbStationHandler = new TbStationHandler(context);
+            TbConfigHandler tbConfigHandler = new TbConfigHandler(context);
+            String records = result.getData().toString();
+            String[] stationArray = records.split("\\$");
+            for (String stationString : stationArray) {
+                tbStationHandler.saveOrUpdate(stationString);
+            }
+            tbConfigHandler.saveStationData();
+        } catch (Exception e) {
+            LogUtil.e(TAG, "download station data error", e);
+        }
 
-	}
+    }
 
-	public static void downloadLine(Context context) {
+    public static void downloadLine(Context context) {
 
-		ResultData result = getDataFromRemote(context, DOWNLOAD_LINE_PATH, "");
-		if (result.failed()) {
-			return;
-		}
-		try {
-			TbLineHandler tbLineHandler = new TbLineHandler(context);
-			TbConfigHandler tbConfigHandler = new TbConfigHandler(context);
-			String records = result.getData().toString();
-			String[] lineArray = records.split("\\$");
-			for (String lineString : lineArray) {
-				String[] line = lineString.split("\\^");
-				tbLineHandler.saveOrUpdate(line[0], line[1], line[2], line[3],
-						line[4]);
-			}
-			tbConfigHandler.saveLineData();
-		} catch (Exception e) {
-			LogUtil.e(TAG, "download line data error", e);
-		}
+        ResultData result = getDataFromRemote(context, DOWNLOAD_LINE_PATH, "");
+        if (result.failed()) {
+            return;
+        }
+        try {
+            TbLineHandler tbLineHandler = new TbLineHandler(context);
+            TbConfigHandler tbConfigHandler = new TbConfigHandler(context);
+            String records = result.getData().toString();
+            String[] lineArray = records.split("\\$");
+            for (String lineString : lineArray) {
+                tbLineHandler.saveOrUpdate(lineString);
+            }
+            tbConfigHandler.saveLineData();
+        } catch (Exception e) {
+            LogUtil.e(TAG, "download line data error", e);
+        }
 
-	}
+    }
 
-	public ResultData getStationBus(Activity context, String stationCode) {
+    public static ResultData getStationBus(Activity context, String stationCode) {
 
-		List<StationBus> stationBuses = new ArrayList<StationBus>();
-		ResultData result = getDataFromRemote(context, QUERY_STATION_BUS_PATH,
-				"stationCode=" + stationCode);
-		if (result.failed()) {
-			return result;
-		}
+        List<StationBus> stationBuses = new ArrayList<StationBus>();
+        ResultData result = getDataFromRemote(context, QUERY_STATION_BUS_PATH, "stationCode=" + stationCode);
+        if (result.failed()) {
+            return result;
+        }
 
-		try {
-			JSONArray records = (JSONArray) result.getData();
-			for (int i = 0, len = records.length(); i < len; i++) {
-				StationBus station = new StationBus();
-				station.deserialize(records.getJSONObject(i));
-				stationBuses.add(station);
-			}
-		} catch (Exception e) {
-			result.setResultCode(DECODE_JSON_ERROR);
-			return result;
-		}
-		result.setData(stationBuses);
-		return result;
-	}
+        try {
+            JSONArray records = (JSONArray) result.getData();
+            for (int i = 0, len = records.length(); i < len; i++) {
+                StationBus station = new StationBus();
+                station.deserialize(records.getJSONObject(i));
+                stationBuses.add(station);
+            }
+        } catch (Exception e) {
+            result.setResultCode(DECODE_JSON_ERROR);
+            return result;
+        }
+        result.setData(stationBuses);
+        return result;
+    }
 
-	public static ResultData queryConfigByKey(Context context, String key) {
+    public static ResultData queryConfigByKey(Context context, String key) {
 
-		ResultData result = getDataFromRemote(context, QUERY_CONFIG_PATH,
-				"key=" + key);
-		if (result.failed()) {
-			return result;
-		}
-		JSONObject json = (JSONObject) result.getData();
+        ResultData result = getDataFromRemote(context, QUERY_CONFIG_PATH, "key=" + key);
+        if (result.failed()) {
+            return result;
+        }
+        JSONObject json = (JSONObject) result.getData();
 
-		Config config = new Config();
-		config.deserialize(json);
-		result.setData(config);
-		return result;
+        Config config = new Config();
+        config.deserialize(json);
+        result.setData(config);
+        return result;
 
-	}
+    }
 
-	public static ResultData queryConfigByType(Context context, String type) {
+    public static ResultData queryConfigByType(Context context, String type) {
 
-		ResultData result = getDataFromRemote(context, QUERY_CONFIG_PATH,
-				"type=" + type);
-		if (result.failed()) {
-			return result;
-		}
+        ResultData result = getDataFromRemote(context, QUERY_CONFIG_PATH, "type=" + type);
+        if (result.failed()) {
+            return result;
+        }
 
-		List<Config> configs = new ArrayList<Config>();
-		try {
-			JSONArray records = (JSONArray) result.getData();
-			for (int i = 0, len = records.length(); i < len; i++) {
-				Config station = new Config();
-				station.deserialize(records.getJSONObject(i));
-				configs.add(station);
-			}
-		} catch (Exception e) {
-			result.setResultCode(DECODE_JSON_ERROR);
-			return result;
-		}
-		result.setData(configs);
-		return result;
+        List<Config> configs = new ArrayList<Config>();
+        try {
+            JSONArray records = (JSONArray) result.getData();
+            for (int i = 0, len = records.length(); i < len; i++) {
+                Config station = new Config();
+                station.deserialize(records.getJSONObject(i));
+                configs.add(station);
+            }
+        } catch (Exception e) {
+            result.setResultCode(DECODE_JSON_ERROR);
+            return result;
+        }
+        result.setData(configs);
+        return result;
 
-	}
+    }
 
-	private static ResultData getDataFromRemote(Context context, String path,
-			String req) {
-		ResultData result = new ResultData();
-		if (!NetworkUtil.isNetworkAvailable(context)) {
-			result.setResultCode(NETWORK_DISABLED);
-		}
+    private static ResultData getDataFromRemote(Context context, String path, String req) {
+        ResultData result = new ResultData();
+        if (!NetworkUtil.isNetworkAvailable(context)) {
+            result.setResultCode(NETWORK_DISABLED);
+        }
 
-		HttpResult httpResult = HttpClientUtil.callServer(context, SERVER_HOST,
-				false, path, req, "UTF-8");
+        HttpResult httpResult = HttpClientUtil.callServer(context, SERVER_HOST, false, path, req, "UTF-8");
 
-		if (!httpResult.isSuccess()) {
-			result.setResultCode(httpResult.getCode());
-			return result;
-		}
-		String jsonStr = httpResult.getResponse();
-		try {
+        if (!httpResult.isSuccess()) {
+            result.setResultCode(httpResult.getCode());
+            return result;
+        }
+        String jsonStr = httpResult.getResponse();
+        try {
 
-			JSONObject jsonObj = new JSONObject(jsonStr);
-			int resultCode = jsonObj.optInt("resultCode", -1);
-			if (resultCode != 0) {
-				result.setResultCode(resultCode);
-				return result;
-			}
-			if (jsonObj.get("data") == null) {
-				result.setResultCode(NO_DATA);
-				return result;
-			}
-			if ("null".equals(jsonObj.get("data"))) {
-				result.setResultCode(NO_DATA);
-				return result;
-			} else {
-				result.setData(jsonObj.get("data"));
-			}
-		} catch (Exception e) {
-			result.setResultCode(DECODE_JSON_ERROR);
-			LogUtil.e(TAG, "json error", e);
-		}
+            JSONObject jsonObj = new JSONObject(jsonStr);
+            int resultCode = jsonObj.optInt("resultCode", -1);
+            if (resultCode != 0) {
+                result.setResultCode(resultCode);
+                return result;
+            }
+            if (jsonObj.get("data") == null) {
+                result.setResultCode(NO_DATA);
+                return result;
+            }
+            if ("null".equals(jsonObj.get("data"))) {
+                result.setResultCode(NO_DATA);
+                return result;
+            } else {
+                result.setData(jsonObj.get("data"));
+            }
+        } catch (Exception e) {
+            result.setResultCode(DECODE_JSON_ERROR);
+            LogUtil.e(TAG, "json error", e);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

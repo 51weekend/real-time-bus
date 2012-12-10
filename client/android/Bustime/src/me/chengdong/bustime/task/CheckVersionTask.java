@@ -14,7 +14,7 @@ import me.chengdong.bustime.R;
 import me.chengdong.bustime.activity.UpdateVersionActivity;
 import me.chengdong.bustime.model.Config;
 import me.chengdong.bustime.model.ResultData;
-import me.chengdong.bustime.module.DownLoadData;
+import me.chengdong.bustime.module.DownloadData;
 import me.chengdong.bustime.utils.AppUtil;
 import me.chengdong.bustime.utils.ParamUtil;
 import me.chengdong.bustime.utils.StringUtil;
@@ -41,7 +41,7 @@ public class CheckVersionTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... arg0) {
-        ResultData result = DownLoadData.queryConfigByKey(context, "versionCode");
+        ResultData result = DownloadData.queryConfigByKey(context, "versionCode");
         if (result.failed()) {
             return null;
         }
@@ -49,7 +49,7 @@ public class CheckVersionTask extends AsyncTask<Void, Void, Void> {
         if (config == null || AppUtil.getVersionCode(context) >= Integer.valueOf(config.getConfigValue())) {
             return null;
         }
-        result = DownLoadData.queryConfigByType(context, "appVersion");
+        result = DownloadData.queryConfigByType(context, "appVersion");
         if (result.failed()) {
             return null;
         }

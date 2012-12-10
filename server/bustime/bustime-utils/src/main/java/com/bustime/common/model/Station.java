@@ -51,7 +51,6 @@ public class Station {
         this.standName = standName;
     }
 
-    @JsonIgnore
     public String getArea() {
         return area;
     }

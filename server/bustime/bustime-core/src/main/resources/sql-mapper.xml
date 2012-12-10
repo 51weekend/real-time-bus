@@ -160,7 +160,7 @@
 
 	<select id="queryStationByName" parameterType="String"
 		resultType="com.bustime.common.model.Station">
-		select * from station where standName = #{standName}
+		select * from station where standName like #{standName}
 	</select>
 
 	<select id="queryAllStation" resultType="com.bustime.common.model.Station">

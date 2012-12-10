@@ -6,7 +6,7 @@
 
 package me.chengdong.bustime.activity;
 
-import roboguice.activity.RoboActivity;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.view.View.OnClickListener;
@@ -18,7 +18,7 @@ import com.google.analytics.tracking.android.EasyTracker;
  * 
  * @author chengdong
  */
-public abstract class BaseActivity extends RoboActivity implements OnClickListener {
+public abstract class BaseActivity extends Activity implements OnClickListener {
 
     // 在子类中初始化
     protected ProgressDialog mLoadDialog;

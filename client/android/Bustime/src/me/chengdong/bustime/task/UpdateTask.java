@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import me.chengdong.bustime.module.DownLoadData;
+import me.chengdong.bustime.module.DownloadData;
 import me.chengdong.bustime.utils.LogUtil;
 
 import org.apache.http.HttpEntity;
@@ -56,7 +56,7 @@ public class UpdateTask extends AsyncTask<String, String, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        String url = DownLoadData.SERVER_HOST + DownLoadData.SERVER_CONTEXT + "/apks/" + this.apkName;
+        String url = DownloadData.SERVER_HOST + DownloadData.SERVER_CONTEXT + "/apks/" + this.apkName;
 
         HttpClient client = new DefaultHttpClient();
         HttpGet get = new HttpGet(url);
