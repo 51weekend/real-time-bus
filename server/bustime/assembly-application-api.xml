@@ -11,7 +11,7 @@
 	<files>
 		<file>
 			<source>bustime-api/target/bustime-api-${project.version}.war</source>
-			<destName>api.war</destName>
+			<destName>bustime.war</destName>
 			<outputDirectory>bustime/webapps</outputDirectory>
 		</file>
 		<file>
@@ -28,11 +28,6 @@
 			<source>deploy/conf/jetty/webdefault.xml</source>
 			<destName>webdefault.xml</destName>
 			<outputDirectory>bustime/conf/jetty</outputDirectory>
-		</file>
-		<file>
-			<source>deploy/conf/bustime.properties</source>
-			<destName>bustime.properties</destName>
-			<outputDirectory>bustime/conf</outputDirectory>
 		</file>
 		<file>
 			<source>deploy/conf/bustime_local.properties</source>

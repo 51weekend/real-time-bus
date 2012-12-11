@@ -32,9 +32,9 @@
 		<property name="locations">
 			<list>
 				<!-- 如果有相同的Key,放在后面文件中的覆盖前面的 -->
-				<value>file://${project.home}/conf/bustime.properties</value>
-				<value>file://${project.home}/conf/bustime_${project.env:local}.properties
-				</value>
+				<value>classpath://bustime.properties</value>
+				<!-- <value>file://${project.home}/conf/bustime_${project.env:local}.properties 
+					</value> -->
 			</list>
 		</property>
 	</bean>
@@ -45,9 +45,9 @@
 		<property name="cacheSeconds" value="300" />
 		<property name="basenames">
 			<list>
-				<value>file://${project.home}/conf/bustime.properties</value>
-				<value>file://${project.home}/conf/bustime_${project.env:local}
-				</value>
+				<value>classpath://bustime.properties</value>
+				<!-- <value>file://${project.home}/conf/bustime.properties</value> <value>file://${project.home}/conf/bustime_${project.env:local} 
+					</value> -->
 			</list>
 		</property>
 	</bean>

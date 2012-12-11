@@ -42,17 +42,16 @@ import android.content.Context;
 public class DownloadData {
 
     protected static final String TAG = DownloadData.class.getSimpleName();
-
-    public static final String SERVER_HOST = "http://dev.ll.sdo.com";
+    public static final String SERVER_HOST = "http://bustime.sinaapp.com/";
 
     public static final String SERVER_CONTEXT = "/api";
-    public static final String QUERY_LINE_PATH = SERVER_CONTEXT + "/api/queryLine";
-    public static final String QUERY_SINGLE_LINE_PATH = SERVER_CONTEXT + "/api/querySingleLine";
-    public static final String QUERY_STATION_PATH = SERVER_CONTEXT + "/api/queryStation";
-    public static final String QUERY_STATION_BUS_PATH = SERVER_CONTEXT + "/api/queryStationBus";
-    public static final String QUERY_CONFIG_PATH = SERVER_CONTEXT + "/api/queryConfig";
-    public static final String DOWNLOAD_STATION_PATH = SERVER_CONTEXT + "/api/downloadStation";
-    public static final String DOWNLOAD_LINE_PATH = SERVER_CONTEXT + "/api/downloadLine";
+    public static final String QUERY_LINE_PATH = SERVER_CONTEXT + "/queryLine";
+    public static final String QUERY_SINGLE_LINE_PATH = SERVER_CONTEXT + "/querySingleLine";
+    public static final String QUERY_STATION_PATH = SERVER_CONTEXT + "/queryStation";
+    public static final String QUERY_STATION_BUS_PATH = SERVER_CONTEXT + "/queryStationBus";
+    public static final String QUERY_CONFIG_PATH = SERVER_CONTEXT + "/queryConfig";
+    public static final String DOWNLOAD_STATION_PATH = SERVER_CONTEXT + "/downloadStation";
+    public static final String DOWNLOAD_LINE_PATH = SERVER_CONTEXT + "/downloadLine";
 
     /**
      * 获取车次信息
