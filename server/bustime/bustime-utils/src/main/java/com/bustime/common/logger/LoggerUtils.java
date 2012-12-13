@@ -16,9 +16,9 @@ import org.slf4j.LoggerFactory;
  */
 public class LoggerUtils {
 
-    private static final Logger error = LoggerFactory.getLogger("com.snda.family.server.looger.error");
-    private static final Logger alarm = LoggerFactory.getLogger("com.snda.family.server.looger.alarm");
-    private static final Logger info = LoggerFactory.getLogger("com.snda.family.server.looger.info");
+    private static final Logger error = LoggerFactory.getLogger("me.chengdong.bustime.looger.error");
+    private static final Logger alarm = LoggerFactory.getLogger("me.chengdong.bustime.looger.alarm");
+    private static final Logger info = LoggerFactory.getLogger("me.chengdong.bustime.looger.info");
 
     public static void error(String errorMessage, Throwable e) {
         e.printStackTrace();

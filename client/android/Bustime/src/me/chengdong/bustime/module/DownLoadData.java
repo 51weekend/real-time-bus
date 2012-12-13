@@ -42,9 +42,9 @@ import android.content.Context;
 public class DownloadData {
 
     protected static final String TAG = DownloadData.class.getSimpleName();
-    public static final String SERVER_HOST = "http://bustime.sinaapp.com/";
+    public static final String SERVER_HOST = "http://42.121.117.61:6068";
 
-    public static final String SERVER_CONTEXT = "/api";
+    public static final String SERVER_CONTEXT = "/bustime/api";
     public static final String QUERY_LINE_PATH = SERVER_CONTEXT + "/queryLine";
     public static final String QUERY_SINGLE_LINE_PATH = SERVER_CONTEXT + "/querySingleLine";
     public static final String QUERY_STATION_PATH = SERVER_CONTEXT + "/queryStation";

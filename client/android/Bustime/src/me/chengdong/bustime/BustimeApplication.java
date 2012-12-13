@@ -22,7 +22,7 @@ public class BustimeApplication extends Application {
         super.onCreate();
 
         // --- JPush ----
-        JPushInterface.setDebugMode(true);
+        JPushInterface.setDebugMode(false);
         JPushInterface.init(this);
 
         String imei = DeviceUtil.getImei(this);

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log4j:configuration>
+	<!-- 日志保存基本路径 -->
+	<!--将级别为ERROR的信息输出到控制台 -->
+	<appender name="rootAppender"
+		class="com.bustime.common.logger.DailyRollingFileAppenderWithDate">
+		<param name="file" value="${log.home}/root.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %c{2} - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="DEBUG" />
+			<param name="LevelMax" value="ERROR" />
+		</filter>
+	</appender>
+
+	<appender name="ERROR_LOG"
+		class="com.bustime.common.logger.DailyRollingFileAppenderWithDate">
+		<param name="file" value="${log.home}/error.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %c{2} - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="ERROR" />
+			<param name="LevelMax" value="ERROR" />
+		</filter>
+	</appender>
+
+	<appender name="alarmAppender"
+		class="com.bustime.common.logger.DailyRollingFileAppenderWithDate">
+		<param name="file" value="${log.home}/alarm.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %c{2} - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="INFO" />
+			<param name="LevelMax" value="ERROR" />
+		</filter>
+	</appender>
+
+	<logger name="me.chengdong.bustime.looger.error" additivity="false">
+		<appender-ref ref="ERROR_LOG" />
+	</logger>
+
+
+	<logger name="me.chengdong.bustime.looger.alarm" additivity="false">
+		<appender-ref ref="alarmAppender" />
+	</logger>
+
+
+	<root>
+		<level value="info" />
+		<appender-ref ref="rootAppender" />
+	</root>
+</log4j:configuration>
