@@ -23,9 +23,9 @@ public class JPushMessageReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        LogUtil.d(TAG, "onReceive start ...");
+        LogUtil.d(TAG, "onReceive bustime start ...");
         Bundle bundle = intent.getExtras();
-        LogUtil.d(TAG, "onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
+        LogUtil.d(TAG, "onReceive  bustime - " + intent.getAction() + ", extras: " + printBundle(bundle));
 
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
 

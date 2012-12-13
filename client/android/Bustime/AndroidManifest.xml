@@ -148,6 +148,16 @@
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="944ebc8489d8098fb9985c74" />
+
+        <activity
+            android:name=".FavoriteActivity"
+            android:label="@string/title_activity_favorite" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

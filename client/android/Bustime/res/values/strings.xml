@@ -40,5 +40,6 @@
     <string name="title_activity_station_info">StationInfoActivity</string>
     <string name="title_activity_station_bus">StationBusActivity</string>
     <string name="title_activity_update_version">UpdateVersionActivity</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
 
 </resources>

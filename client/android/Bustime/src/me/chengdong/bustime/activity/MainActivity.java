@@ -1,5 +1,6 @@
 package me.chengdong.bustime.activity;
 
+import me.chengdong.bustime.FavoriteActivity;
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.task.CheckVersionTask;
 import me.chengdong.bustime.task.LoadDataTask;
@@ -32,6 +33,7 @@ public class MainActivity extends TabActivity {
     private void setTabs() {
         addTab("车次查询", R.drawable.tab_home, LineActivity.class);
         addTab("站台查询", R.drawable.tab_search, StationActivity.class);
+        addTab("收藏", R.drawable.tab_favorite, FavoriteActivity.class);
     }
 
     private void addTab(String labelId, int drawableId, Class<?> c) {
