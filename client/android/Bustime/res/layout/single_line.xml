@@ -39,9 +39,18 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10.7dip"
-            android:contentDescription="@string/refresh"
-            android:background="@drawable/btn_refresh" />
+            android:background="@drawable/btn_refresh"
+            android:contentDescription="@string/refresh" />
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/favorite_btn"
+        style="@style/titlebtnfont"
+        android:layout_width="44dip"
+        android:layout_height="44dip"
+        android:background="@drawable/tab_favorite"
+        android:gravity="center_horizontal"
+        android:text="@string/favorite" />
 
     <ListView
         android:id="@+id/single_line_listview"

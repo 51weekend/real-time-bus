@@ -17,6 +17,7 @@ public class ParamUtil {
     public static final String LINE_GUID = "lineGuid";
     public static final String STATION_CODE = "stationCode";
     public static final String LINE_NUMBER = "lineNumber";
+    public static final String FAVORITE = "favorite";
     // app apk name
     public static final String BUNDLE_APK_NAME = "apk_name";
     public static final String BUNDLE_VERSION_NAME = "version_name";

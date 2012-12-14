@@ -5,9 +5,14 @@ import java.util.List;
 
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.StationBusAdapter;
+import me.chengdong.bustime.db.TbFavoriteHandler;
 import me.chengdong.bustime.db.TbLineHandler;
+import me.chengdong.bustime.db.TbStationHandler;
+import me.chengdong.bustime.meta.FavoriteType;
+import me.chengdong.bustime.model.Favorite;
 import me.chengdong.bustime.model.Line;
 import me.chengdong.bustime.model.ResultData;
+import me.chengdong.bustime.model.Station;
 import me.chengdong.bustime.model.StationBus;
 import me.chengdong.bustime.module.DownloadData;
 import me.chengdong.bustime.utils.LogUtil;
@@ -24,6 +29,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class StationBusActivity extends BaseActivity implements OnItemClickListener {
 
@@ -37,13 +43,15 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
 
     ImageView mFrefreshBtn;
 
-    Button mBackBtn;
+    Button mBackBtn, mFavoriteBtn;
 
     TextView mTitle;
 
     final List<StationBus> mStationBusList = new ArrayList<StationBus>(0);
 
     private TbLineHandler tbLineHandler = new TbLineHandler(StationBusActivity.this);
+    private TbStationHandler tbStationHandler = new TbStationHandler(StationBusActivity.this);
+    private TbFavoriteHandler tbFavoriteHandler = new TbFavoriteHandler(StationBusActivity.this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,11 +63,13 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
         mFrefreshBtn = (ImageView) findViewById(R.id.iv_refresh);
 
         mBackBtn = (Button) findViewById(R.id.back_btn);
+        mFavoriteBtn = (Button) findViewById(R.id.favorite_btn);
 
         mTitle = (TextView) findViewById(R.id.title_textview);
 
         mFrefreshBtn.setOnClickListener(this);
         mBackBtn.setOnClickListener(this);
+        mFavoriteBtn.setOnClickListener(this);
 
         mLoadDialog = new ProgressDialog(this);
         mLoadDialog.setMessage("正在查询站台车辆信息...");
@@ -97,6 +107,20 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
         case R.id.iv_refresh:
             mLoadDialog.show();
             new QueryStationBusTask().execute();
+            break;
+        case R.id.favorite_btn:
+            Favorite favorite = new Favorite();
+            Station station = tbStationHandler.selectOne(stationCode);
+            favorite.setCode(stationCode);
+            favorite.setName(station.getStandName());
+            favorite.setPropertyOne(station.getRoad());
+            favorite.setPropertyTwo(station.getTrend());
+            favorite.setPropertyThree(station.getLines());
+            favorite.setType(FavoriteType.STATION.getType());
+
+            tbFavoriteHandler.saveOrUpdate(favorite);
+
+            Toast.makeText(this, "收藏站台信息成功", Toast.LENGTH_SHORT).show();
             break;
         default:
             break;
@@ -141,9 +165,7 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
                         sb.append(",");
                     }
                 }
-                LogUtil.i(TAG, sb.toString());
                 List<Line> lines = tbLineHandler.selectListByManyGuid(sb.toString());
-                LogUtil.i(TAG, "线路的大小为:" + lines.size());
                 for (Line line : lines) {
                     for (StationBus stationBus : temps) {
                         if (line.getLineGuid().equals(stationBus.getLineGuid())) {

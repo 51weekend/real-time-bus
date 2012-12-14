@@ -170,4 +170,43 @@ public class TbStationHandler {
 
     }
 
+    public Station selectOne(String stationCode) {
+        SQLiteDatabase m_oData = null;
+        Cursor oCursor = null;
+        try {
+            m_oData = this.mSQLite.getWritableDatabase();
+            oCursor = m_oData.rawQuery(SELECT_SQL, new String[]{stationCode});
+            int codeIndex = oCursor.getColumnIndex(COLUMN_CODE);
+            int nameIndex = oCursor.getColumnIndex(COLUMN_NAME);
+            int roadIndex = oCursor.getColumnIndex(COLUMN_ROAD);
+            int trendIndex = oCursor.getColumnIndex(COLUMN_TREND);
+            int linesIndex = oCursor.getColumnIndex(COLUMN_LINES);
+            int areaIndex = oCursor.getColumnIndex(COLUMN_AREA);
+            if (oCursor.moveToFirst()) {
+                Station station = new Station();
+                station.setStandCode(oCursor.getString(codeIndex));
+                station.setStandName(oCursor.getString(nameIndex));
+                station.setRoad(oCursor.getString(roadIndex));
+                station.setTrend(oCursor.getString(trendIndex));
+                station.setLines(oCursor.getString(linesIndex));
+                station.setArea(oCursor.getString(areaIndex));
+                return station;
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+        } finally {
+            if (oCursor != null) {
+                oCursor.close();
+                oCursor = null;
+            }
+            if (m_oData != null) {
+                m_oData.close();
+                m_oData = null;
+            }
+        }
+        return null;
+
+    }
 }

@@ -5,6 +5,11 @@ import java.util.List;
 
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.SingleLineAdapter;
+import me.chengdong.bustime.db.TbFavoriteHandler;
+import me.chengdong.bustime.db.TbLineHandler;
+import me.chengdong.bustime.meta.FavoriteType;
+import me.chengdong.bustime.model.Favorite;
+import me.chengdong.bustime.model.Line;
 import me.chengdong.bustime.model.ResultData;
 import me.chengdong.bustime.model.SingleLine;
 import me.chengdong.bustime.module.DownloadData;
@@ -20,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SingleLineActivity extends BaseActivity {
 
@@ -35,7 +41,10 @@ public class SingleLineActivity extends BaseActivity {
 
     ImageView mFrefreshBtn;
 
-    Button mBackBtn;
+    Button mBackBtn, mFavoriteBtn;
+
+    TbFavoriteHandler tbFavoriteHandler = new TbFavoriteHandler(SingleLineActivity.this);
+    TbLineHandler tbLineHandler = new TbLineHandler(SingleLineActivity.this);
 
     private final List<SingleLine> mSingleLineList = new ArrayList<SingleLine>();
 
@@ -44,16 +53,18 @@ public class SingleLineActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_line);
 
-        singleLineListView = (ListView) this.findViewById(R.id.single_line_listview);
+        singleLineListView = (ListView) findViewById(R.id.single_line_listview);
 
-        mTitle = (TextView) this.findViewById(R.id.title_textview);
+        mTitle = (TextView) findViewById(R.id.title_textview);
 
-        mFrefreshBtn = (ImageView) this.findViewById(R.id.iv_refresh);
+        mFrefreshBtn = (ImageView) findViewById(R.id.iv_refresh);
 
-        mBackBtn = (Button) this.findViewById(R.id.back_btn);
+        mBackBtn = (Button) findViewById(R.id.back_btn);
+        mFavoriteBtn = (Button) findViewById(R.id.favorite_btn);
 
         mFrefreshBtn.setOnClickListener(this);
         mBackBtn.setOnClickListener(this);
+        mFavoriteBtn.setOnClickListener(this);
 
         mLoadDialog = new ProgressDialog(this);
         mLoadDialog.setMessage("正在查询车次动态信息...");
@@ -83,6 +94,24 @@ public class SingleLineActivity extends BaseActivity {
         case R.id.iv_refresh:
             mLoadDialog.show();
             new QuerySingleLineTask().execute();
+            break;
+        case R.id.favorite_btn:
+            Favorite favorite = new Favorite();
+            List<Line> lines = tbLineHandler.selectListByManyGuid("'" + lineGuid + "'");
+            if (lines.size() == 0) {
+                break;
+            }
+            Line line = lines.get(0);
+            favorite.setCode(lineGuid);
+            favorite.setName(line.getLineNumber());
+            favorite.setPropertyOne(line.getStartStation());
+            favorite.setPropertyTwo(line.getEndStation());
+            favorite.setPropertyThree(line.getRunTime());
+            favorite.setType(FavoriteType.LINE.getType());
+
+            tbFavoriteHandler.saveOrUpdate(favorite);
+
+            Toast.makeText(this, "收藏线路信息成功", Toast.LENGTH_SHORT).show();
             break;
         default:
             break;

@@ -8,7 +8,6 @@ import me.chengdong.bustime.adapter.LineInfoAdapter;
 import me.chengdong.bustime.db.TbConfigHandler;
 import me.chengdong.bustime.db.TbLineHandler;
 import me.chengdong.bustime.model.Line;
-import me.chengdong.bustime.ui.SideNavigationLayout;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.ParamUtil;
 import me.chengdong.bustime.utils.StringUtil;
@@ -34,8 +33,6 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 
     ListView lineListView;
 
-    SideNavigationLayout mSideNavigationView;
-
     TbConfigHandler tbConfigHandler = new TbConfigHandler(LineActivity.this);
 
     private String lineNumber;
@@ -51,7 +48,6 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
         mSearchClear = (ImageView) findViewById(R.id.iv_search_clear);
 
         mLineEdittext = (EditText) findViewById(R.id.line);
-        ;
 
         lineListView = (ListView) findViewById(R.id.line_info_listview);
 
@@ -90,7 +86,6 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
         mLineAdapter = new LineInfoAdapter(LineActivity.this, mLineList);
         lineListView.setAdapter(mLineAdapter);
         lineListView.setOnItemClickListener(this);
-        mSideNavigationView = (SideNavigationLayout) findViewById(R.id.side_nav);
 
     }
 
@@ -122,11 +117,6 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 
         switch (v.getId()) {
         case R.id.iv_search_clear:
-            if (mSideNavigationView.isShowingNavigationView()) {
-                mSideNavigationView.showContentView();
-            } else {
-                mSideNavigationView.showNavigationView();
-            }
             mLineEdittext.setText("");
             break;
         default:

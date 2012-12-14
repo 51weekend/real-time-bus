@@ -1,7 +1,10 @@
 package me.chengdong.bustime.activity;
 
-import me.chengdong.bustime.FavoriteActivity;
+import java.util.List;
+
 import me.chengdong.bustime.R;
+import me.chengdong.bustime.db.TbFavoriteHandler;
+import me.chengdong.bustime.model.Favorite;
 import me.chengdong.bustime.task.CheckVersionTask;
 import me.chengdong.bustime.task.LoadDataTask;
 import android.app.TabActivity;
@@ -15,6 +18,9 @@ import android.widget.TextView;
 
 @SuppressWarnings("deprecation")
 public class MainActivity extends TabActivity {
+
+    TbFavoriteHandler tbFavoriteHandler = new TbFavoriteHandler(MainActivity.this);
+    boolean hasFavorite = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,14 +37,23 @@ public class MainActivity extends TabActivity {
     }
 
     private void setTabs() {
+
+        List<Favorite> list = tbFavoriteHandler.selectAll();
+        hasFavorite = list.size() > 0 ? true : false;
+        if (hasFavorite) {
+            addTab("收藏", R.drawable.tab_favorite, FavoriteActivity.class);
+        }
         addTab("车次查询", R.drawable.tab_home, LineActivity.class);
         addTab("站台查询", R.drawable.tab_search, StationActivity.class);
-        addTab("收藏", R.drawable.tab_favorite, FavoriteActivity.class);
+        if (!hasFavorite) {
+            addTab("收藏", R.drawable.tab_favorite, FavoriteActivity.class);
+        }
     }
 
     private void addTab(String labelId, int drawableId, Class<?> c) {
         TabHost tabHost = getTabHost();
         Intent intent = new Intent(this, c);
+
         TabHost.TabSpec spec = tabHost.newTabSpec("tab" + labelId);
 
         View tabIndicator = LayoutInflater.from(this).inflate(R.layout.tab_indicator, getTabWidget(), false);

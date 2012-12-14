@@ -1,14 +1,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="0px"
+    android:background="@drawable/main_bg"
+    android:orientation="vertical"
+    android:padding="0px" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/top_relativelayout"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world"
-        tools:context=".FavoriteActivity" />
+        android:background="@drawable/top_bg" >
+
+        <TextView
+            android:id="@+id/title_textview"
+            style="@style/titlefont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/favorite_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/top_relativelayout"
+        android:layout_marginTop="20dip"
+        android:cacheColorHint="#00000000"
+        android:divider="@drawable/set_line" >
+    </ListView>
 
 </RelativeLayout>

@@ -40,11 +40,21 @@
             android:contentDescription="@string/refresh" />
     </RelativeLayout>
 
+    <Button
+        android:id="@+id/favorite_btn"
+        style="@style/titlebtnfont"
+        android:layout_width="44dip"
+        android:layout_height="44dip"
+        android:layout_below="@+id/top_relativelayout"
+        android:background="@drawable/tab_favorite"
+        android:gravity="center_horizontal"
+        android:text="@string/favorite" />
+
     <ListView
         android:id="@+id/station_bus_listview"
         android:layout_width="200dip"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/top_relativelayout"
+        android:layout_below="@+id/favorite_btn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dip"
         android:cacheColorHint="#00000000"
