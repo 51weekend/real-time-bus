@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
@@ -54,6 +55,7 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
         mSearchClear.setOnClickListener(this);
 
         mLineEdittext.setSingleLine(true);
+        mLineEdittext.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5)});
 
         mLineEdittext.addTextChangedListener(new TextWatcher() {
 

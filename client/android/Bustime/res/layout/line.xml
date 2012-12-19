@@ -42,6 +42,8 @@
                 android:layout_marginRight="50dip"
                 android:background="@drawable/search_bar_edit_normal"
                 android:hint="@string/lineName"
+                android:imeOptions="actionDone"
+                android:inputType="number"
                 android:paddingLeft="20dip"
                 android:paddingRight="30dip"
                 android:textColorHint="#afafaf"
