@@ -18,6 +18,7 @@ import me.chengdong.bustime.db.TbLineHandler;
 import me.chengdong.bustime.db.TbStationHandler;
 import me.chengdong.bustime.http.HttpClientUtil;
 import me.chengdong.bustime.http.HttpResult;
+import me.chengdong.bustime.model.CodeValue;
 import me.chengdong.bustime.model.Config;
 import me.chengdong.bustime.model.Line;
 import me.chengdong.bustime.model.ResultData;
@@ -47,6 +48,7 @@ public class DownloadData {
     public static final String SERVER_CONTEXT = "/bustime/api";
     public static final String QUERY_LINE_PATH = SERVER_CONTEXT + "/queryLine";
     public static final String QUERY_SINGLE_LINE_PATH = SERVER_CONTEXT + "/querySingleLine";
+    public static final String QUERY_RUN_SINGLE_LINE_PATH = SERVER_CONTEXT + "/queryRunSingleLine";
     public static final String QUERY_STATION_PATH = SERVER_CONTEXT + "/queryStation";
     public static final String QUERY_STATION_BUS_PATH = SERVER_CONTEXT + "/queryStationBus";
     public static final String QUERY_CONFIG_PATH = SERVER_CONTEXT + "/queryConfig";
@@ -109,6 +111,31 @@ public class DownloadData {
 
         return result;
 
+    }
+
+    public static ResultData getRunSingleLine(Activity context, String lineGuid) {
+
+        ResultData result = getDataFromRemote(context, QUERY_RUN_SINGLE_LINE_PATH, "lineCode=" + lineGuid);
+        if (result.failed()) {
+            return result;
+        }
+        List<CodeValue> runData = new ArrayList<CodeValue>();
+        try {
+            JSONArray records = (JSONArray) result.getData();
+            for (int i = 0, len = records.length(); i < len; i++) {
+                CodeValue codeValue = new CodeValue();
+                codeValue.deserialize(records.getJSONObject(i));
+                runData.add(codeValue);
+
+            }
+        } catch (Exception e) {
+            result.setResultCode(DECODE_JSON_ERROR);
+            return result;
+        }
+
+        result.setData(runData);
+
+        return result;
     }
 
     public static ResultData getStation(Activity context, String stationName) {
@@ -278,4 +305,5 @@ public class DownloadData {
 
         return result;
     }
+
 }

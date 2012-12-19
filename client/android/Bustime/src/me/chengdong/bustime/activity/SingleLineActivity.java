@@ -8,6 +8,7 @@ import me.chengdong.bustime.adapter.SingleLineAdapter;
 import me.chengdong.bustime.db.TbFavoriteHandler;
 import me.chengdong.bustime.db.TbLineHandler;
 import me.chengdong.bustime.meta.FavoriteType;
+import me.chengdong.bustime.model.CodeValue;
 import me.chengdong.bustime.model.Favorite;
 import me.chengdong.bustime.model.Line;
 import me.chengdong.bustime.model.ResultData;
@@ -15,6 +16,7 @@ import me.chengdong.bustime.model.SingleLine;
 import me.chengdong.bustime.module.DownloadData;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.ParamUtil;
+import me.chengdong.bustime.utils.TipUtil;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -81,7 +83,7 @@ public class SingleLineActivity extends BaseActivity {
         lineGuid = intent.getStringExtra(ParamUtil.LINE_GUID);
         mTitle.setText(intent.getStringExtra(ParamUtil.LINE_NUMBER));
         openProgressDialog();
-        new QuerySingleLineTask().execute();
+        new QuerySingleLineTask(true).execute();
     }
 
     @Override
@@ -93,7 +95,7 @@ public class SingleLineActivity extends BaseActivity {
             break;
         case R.id.iv_refresh:
             mLoadDialog.show();
-            new QuerySingleLineTask().execute();
+            new QuerySingleLineTask(false).execute();
             break;
         case R.id.favorite_btn:
             Favorite favorite = new Favorite();
@@ -126,6 +128,11 @@ public class SingleLineActivity extends BaseActivity {
     }
 
     private class QuerySingleLineTask extends AsyncTask<Void, Void, Void> {
+        private boolean loadAllData = false;
+
+        public QuerySingleLineTask(boolean loadAllData) {
+            this.loadAllData = loadAllData;
+        }
 
         @Override
         public void onPreExecute() {
@@ -136,14 +143,36 @@ public class SingleLineActivity extends BaseActivity {
         protected Void doInBackground(Void... params) {
 
             try {
-                ResultData result = DownloadData.getSingleLine(SingleLineActivity.this, lineGuid);
+                ResultData result = null;
+                if (loadAllData) {
+                    result = DownloadData.getSingleLine(SingleLineActivity.this, lineGuid);
+                } else {
+                    result = DownloadData.getRunSingleLine(SingleLineActivity.this, lineGuid);
+                }
                 if (result.success()) {
-                    @SuppressWarnings("unchecked")
-                    List<SingleLine> temps = (List<SingleLine>) result.getData();
-                    mSingleLineList.clear();
-                    mSingleLineList.addAll(temps);
+                    if (loadAllData) {
+                        @SuppressWarnings("unchecked")
+                        List<SingleLine> temps = (List<SingleLine>) result.getData();
+                        mSingleLineList.clear();
+                        mSingleLineList.addAll(temps);
+                    } else {
+                        for (SingleLine singleLine : mSingleLineList) {
+                            singleLine.setTime("");
+                        }
+                        @SuppressWarnings("unchecked")
+                        List<CodeValue> temps = (List<CodeValue>) result.getData();
+                        for (SingleLine singleLine : mSingleLineList) {
+                            for (CodeValue codeValue : temps) {
+                                if (codeValue.getCode().equals(singleLine.getStandCode())) {
+                                    singleLine.setTime(codeValue.getValue());
+                                }
+
+                            }
+                        }
+                    }
                 } else {
                     // TODO 提示错误给用户
+                    TipUtil.tipDescription(SingleLineActivity.this, result.getMessage());
                 }
 
             } catch (Exception e) {
