@@ -14,19 +14,24 @@ import me.chengdong.bustime.module.DownloadData;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.ParamUtil;
 import me.chengdong.bustime.utils.StringUtil;
+import me.chengdong.bustime.utils.TipUtil;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 public class StationActivity extends BaseActivity implements OnItemClickListener {
 
@@ -87,6 +92,26 @@ public class StationActivity extends BaseActivity implements OnItemClickListener
 
             }
 
+        });
+
+        mStationEditText.setOnEditorActionListener(new OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    String lineNumber = mStationEditText.getText().toString();
+                    if (StringUtil.isBlank(lineNumber)) {
+                        TipUtil.tipDescription(StationActivity.this, "请输入站台名称！");
+                    } else {
+                        // TODO 查询内容
+                        if (mStationList.size() != 0) {
+                            return false;
+                        }
+                        new QueryStationFromServerTask().execute();
+                    }
+                }
+                return false;
+            }
         });
 
         mLoadDialog = new ProgressDialog(this);
