@@ -11,6 +11,7 @@ import static com.bustime.common.utils.ResultModel.SERVER_ERROR;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bustime.common.logger.LoggerUtils;
+import com.bustime.common.model.CodeValue;
 import com.bustime.common.model.Line;
+import com.bustime.common.model.SingleLine;
 import com.bustime.common.model.Station;
 import com.bustime.common.utils.ResultModel;
 import com.bustime.core.service.ApiService;
@@ -92,6 +95,27 @@ public class ApiController {
             return result;
         }
         result.setData(apiService.querySingleLine(lineCode));
+        return result;
+    }
+
+    @RequestMapping
+    @ResponseBody
+    public ResultModel queryRunSingleLine(@RequestParam(value = "lineCode", required = false) String lineCode) {
+        ResultModel result = new ResultModel();
+        if (StringUtils.isEmpty(lineCode)) {
+            result.setResultCode(PARAMETER_ERROR);
+            return result;
+        }
+        List<SingleLine> runBuses = apiService.querySingleLine(lineCode);
+
+        List<CodeValue> runData = new ArrayList<CodeValue>();
+        for (SingleLine singleLine : runBuses) {
+            if (StringUtils.isNotEmpty(singleLine.getTime())) {
+                CodeValue codeValue = new CodeValue(singleLine.getStandCode(), singleLine.getTime());
+                runData.add(codeValue);
+            }
+        }
+        result.setData(runData);
         return result;
     }
 
