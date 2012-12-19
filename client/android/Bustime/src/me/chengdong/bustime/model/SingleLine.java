@@ -14,9 +14,18 @@ import org.json.JSONObject;
  * @author chengdong
  */
 public class SingleLine {
+    private String lineGuid;
     private String standCode;
     private String standName;
     private String time;
+
+    public String getLineGuid() {
+        return lineGuid;
+    }
+
+    public void setLineGuid(String lineGuid) {
+        this.lineGuid = lineGuid;
+    }
 
     public String getStandCode() {
         return standCode;

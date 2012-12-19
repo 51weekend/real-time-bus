@@ -40,6 +40,12 @@ public class TbFavoriteHandler {
             + COLUMN_PROPERTY_THREE + " TEXT, " + COLUMN_TYPE + " NUMERIC);";
     public static final String DROP_TABLE_SQL = "DROP TABLE IF EXISTS " + TABLE;
 
+    public static final String SELECT_BY_CODE = "SELECT * FROM " + TABLE + " WHERE " + COLUMN_CODE + "=? ";
+
+    public static final String INSERT_SQL = "INSERT INTO " + TABLE + " (" + COLUMN_CODE + ", " + COLUMN_NAME + ", "
+            + COLUMN_PROPERTY_ONE + ", " + COLUMN_PROPERTY_TWO + ", " + COLUMN_PROPERTY_THREE + ", " + COLUMN_TYPE
+            + ") VALUES(?,?,?,?,?,?)";
+
     public static final String SELECT_ALL = "select * from " + TABLE;
 
     public TbFavoriteHandler(Context context) {
@@ -53,15 +59,12 @@ public class TbFavoriteHandler {
         try {
             m_oData = this.mSQLite.getWritableDatabase();
 
-            String sql = "SELECT * FROM " + TABLE + " WHERE " + COLUMN_CODE + "=? ";
-            oCursor = m_oData.rawQuery(sql, new String[]{favorite.getCode()});
+            oCursor = m_oData.rawQuery(SELECT_BY_CODE, new String[]{favorite.getCode()});
             if (!oCursor.moveToFirst()) {
-                sql = "INSERT INTO " + TABLE + " (" + COLUMN_CODE + ", " + COLUMN_NAME + ", " + COLUMN_PROPERTY_ONE
-                        + ", " + COLUMN_PROPERTY_TWO + ", " + COLUMN_PROPERTY_THREE + ", " + COLUMN_TYPE
-                        + ") VALUES(?,?,?,?,?,?)";
+
                 Object[] paramsValue = new Object[]{favorite.getCode(), favorite.getName(), favorite.getPropertyOne(),
                         favorite.getPropertyTwo(), favorite.getPropertyThree(), favorite.getType()};
-                m_oData.execSQL(sql, paramsValue);
+                m_oData.execSQL(INSERT_SQL, paramsValue);
             }
         } catch (Exception e) {
             LogUtil.e(TAG, "save favorite error：", e);

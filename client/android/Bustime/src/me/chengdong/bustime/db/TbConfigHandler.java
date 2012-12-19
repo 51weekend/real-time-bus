@@ -38,6 +38,13 @@ public class TbConfigHandler {
             + COLUMN_VAL + " TEXT);";
     public static final String DROP_TABLE_SQL = "DROP TABLE IF EXISTS " + TABLE;
 
+    public static final String SELECT_BY_KEY = "SELECT * FROM " + TABLE + " WHERE " + COLUMN_KEY + "=? ";
+
+    public static final String UPDATE_SQL = "update " + TABLE + " set " + COLUMN_VAL + "=? where " + COLUMN_KEY + "=? ";
+
+    public static final String INSERT_SQL = "INSERT INTO " + TABLE + " (" + COLUMN_KEY + ", " + COLUMN_VAL
+            + ") VALUES(?, ?)";
+
     public TbConfigHandler(Context context) {
         mSQLite = new MainSQLiteOpenHelper(context);
     }
@@ -52,16 +59,15 @@ public class TbConfigHandler {
         try {
             m_oData = this.mSQLite.getWritableDatabase();
 
-            String sql = "SELECT * FROM " + TABLE + " WHERE " + COLUMN_KEY + "=? ";
-            oCursor = m_oData.rawQuery(sql, new String[]{key});
+            oCursor = m_oData.rawQuery(SELECT_BY_KEY, new String[]{key});
             if (oCursor.moveToFirst()) {
-                sql = "update " + TABLE + " set " + COLUMN_VAL + "=? where " + COLUMN_KEY + "=? ";
+
                 Object[] paramsValue = new Object[]{val, key};
-                m_oData.execSQL(sql, paramsValue);
+                m_oData.execSQL(UPDATE_SQL, paramsValue);
             } else {
-                sql = "INSERT INTO " + TABLE + " (" + COLUMN_KEY + ", " + COLUMN_VAL + ") VALUES(?, ?)";
+
                 Object[] paramsValue = new Object[]{key, val};
-                m_oData.execSQL(sql, paramsValue);
+                m_oData.execSQL(INSERT_SQL, paramsValue);
             }
         } catch (Exception e) {
             LogUtil.e(TAG, "save config error：", e);
@@ -123,9 +129,8 @@ public class TbConfigHandler {
         Cursor oCursor = null;
         try {
             m_oData = this.mSQLite.getReadableDatabase();
-            String sql = "SELECT * FROM " + TABLE + " WHERE " + COLUMN_KEY + " =?";
-            LogUtil.i(TAG, "sql：" + sql);
-            oCursor = m_oData.rawQuery(sql, new String[]{key});
+
+            oCursor = m_oData.rawQuery(SELECT_BY_KEY, new String[]{key});
             if (oCursor.moveToNext()) {
                 return getConfigFromCursor(oCursor);
             }
