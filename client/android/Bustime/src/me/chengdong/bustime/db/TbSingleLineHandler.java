@@ -33,12 +33,12 @@ public class TbSingleLineHandler {
     private static final String COLUMN_STAND_CODE = "standCode";
     private static final String COLUMN_STAND_NAME = "standName";
 
-    public static final String CREATE_TABLE_SQL = " CREATE TABLE " + TABLE + " (" + COLUMN_LINE_GUID
-            + " TEXT PRIMARY KEY, " + COLUMN_STAND_CODE + " TEXT, " + COLUMN_STAND_NAME + " TEXT);";
+    public static final String CREATE_TABLE_SQL = " CREATE TABLE " + TABLE + " (" + COLUMN_LINE_GUID + " TEXT, "
+            + COLUMN_STAND_CODE + " TEXT, " + COLUMN_STAND_NAME + " TEXT);";
     public static final String DROP_TABLE_SQL = "DROP TABLE IF EXISTS " + TABLE;
 
     private static final String INSERT_SQL = "INSERT INTO " + TABLE + " (" + COLUMN_STAND_CODE + ", "
-            + COLUMN_STAND_NAME + ", " + COLUMN_LINE_GUID + ") VALUES(?, ?, ?, ?)";
+            + COLUMN_STAND_NAME + ", " + COLUMN_LINE_GUID + ") VALUES(?, ?, ?)";
     private static final String SELECT_BY_LINE_GUID_SQL = "SELECT * FROM " + TABLE + " WHERE " + COLUMN_LINE_GUID
             + "=? ";
 
@@ -47,9 +47,9 @@ public class TbSingleLineHandler {
     }
 
     public List<SingleLine> selectList(String lineGuid) {
-        List<SingleLine> stations = new ArrayList<SingleLine>();
+        List<SingleLine> singleLines = new ArrayList<SingleLine>();
         if (StringUtil.isEmpty(lineGuid)) {
-            return stations;
+            return singleLines;
         }
 
         SQLiteDatabase m_oData = null;
@@ -67,7 +67,7 @@ public class TbSingleLineHandler {
                     singleLine.setLineGuid(oCursor.getString(lineGuidIndex));
                     singleLine.setStandCode(oCursor.getString(standCodeIndex));
                     singleLine.setStandName(oCursor.getString(standNameIndex));
-                    stations.add(singleLine);
+                    singleLines.add(singleLine);
                     oCursor.moveToNext();
                 }
 
@@ -84,22 +84,17 @@ public class TbSingleLineHandler {
                 m_oData = null;
             }
         }
-        return stations;
+        return singleLines;
     }
 
-    public void saveOrUpdate(SingleLine singleLine) {
+    public void save(SingleLine singleLine) {
 
         SQLiteDatabase m_oData = null;
         Cursor oCursor = null;
         try {
             m_oData = this.mSQLite.getWritableDatabase();
-            oCursor = m_oData.rawQuery(SELECT_BY_LINE_GUID_SQL, new String[]{singleLine.getLineGuid()});
-            if (oCursor.moveToFirst()) {
-                return;
-            } else {
-                m_oData.execSQL(INSERT_SQL, new String[]{singleLine.getStandCode(), singleLine.getStandName(),
-                        singleLine.getLineGuid()});
-            }
+            m_oData.execSQL(INSERT_SQL,
+                    new String[]{singleLine.getStandCode(), singleLine.getStandName(), singleLine.getLineGuid()});
         } catch (Exception e) {
             LogUtil.e(TAG, "save singleLine error：", e);
         } finally {
@@ -112,6 +107,34 @@ public class TbSingleLineHandler {
                 m_oData = null;
             }
         }
+
+    }
+
+    public boolean exist(String lineGuid) {
+
+        SQLiteDatabase m_oData = null;
+        Cursor oCursor = null;
+        try {
+            m_oData = this.mSQLite.getWritableDatabase();
+            oCursor = m_oData.rawQuery(SELECT_BY_LINE_GUID_SQL, new String[]{lineGuid});
+            if (oCursor.moveToFirst()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            LogUtil.e(TAG, "query singleLine error：", e);
+        } finally {
+            if (oCursor != null) {
+                oCursor.close();
+                oCursor = null;
+            }
+            if (m_oData != null) {
+                m_oData.close();
+                m_oData = null;
+            }
+        }
+        return false;
 
     }
 

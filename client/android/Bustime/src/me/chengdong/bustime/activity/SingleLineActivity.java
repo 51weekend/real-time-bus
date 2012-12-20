@@ -7,6 +7,7 @@ import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.SingleLineAdapter;
 import me.chengdong.bustime.db.TbFavoriteHandler;
 import me.chengdong.bustime.db.TbLineHandler;
+import me.chengdong.bustime.db.TbSingleLineHandler;
 import me.chengdong.bustime.meta.FavoriteType;
 import me.chengdong.bustime.model.CodeValue;
 import me.chengdong.bustime.model.Favorite;
@@ -47,6 +48,7 @@ public class SingleLineActivity extends BaseActivity {
 
     TbFavoriteHandler tbFavoriteHandler = new TbFavoriteHandler(SingleLineActivity.this);
     TbLineHandler tbLineHandler = new TbLineHandler(SingleLineActivity.this);
+    TbSingleLineHandler tbSingleLineHandler = new TbSingleLineHandler(SingleLineActivity.this);
 
     private final List<SingleLine> mSingleLineList = new ArrayList<SingleLine>();
 
@@ -143,7 +145,13 @@ public class SingleLineActivity extends BaseActivity {
         protected Void doInBackground(Void... params) {
 
             try {
-                ResultData result = null;
+                ResultData result = new ResultData();
+                List<SingleLine> localData = tbSingleLineHandler.selectList(lineGuid);
+                if (localData.size() > 0) {
+                    mSingleLineList.clear();
+                    mSingleLineList.addAll(localData);
+                    loadAllData = false;
+                }
                 if (loadAllData) {
                     result = DownloadData.getSingleLine(SingleLineActivity.this, lineGuid);
                 } else {
@@ -155,6 +163,15 @@ public class SingleLineActivity extends BaseActivity {
                         List<SingleLine> temps = (List<SingleLine>) result.getData();
                         mSingleLineList.clear();
                         mSingleLineList.addAll(temps);
+
+                        if (tbSingleLineHandler.exist(lineGuid)) {
+                            return null;
+                        }
+                        for (SingleLine singleLine : temps) {
+                            singleLine.setLineGuid(lineGuid);
+                            tbSingleLineHandler.save(singleLine);
+                        }
+
                     } else {
                         for (SingleLine singleLine : mSingleLineList) {
                             singleLine.setTime("");

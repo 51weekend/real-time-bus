@@ -15,15 +15,15 @@ public class ReaderFileData {
     private static final String TAG = ReaderFileData.class.getSimpleName();
 
     public static void readLineFile(Context context) {
-        InputStream lineFile = context.getResources().openRawResource(R.raw.line);
-        BufferedReader lineReader = null;
+        InputStream inputStream = context.getResources().openRawResource(R.raw.line);
+        BufferedReader reader = null;
 
         try {
-            lineReader = new BufferedReader(new InputStreamReader(lineFile, "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 
             TbLineHandler tbLineHandler = new TbLineHandler(context);
             while (true) {
-                String lineString = lineReader.readLine();
+                String lineString = reader.readLine();
                 if (StringUtil.isEmpty(lineString)) {
                     break;
                 }
@@ -31,18 +31,18 @@ public class ReaderFileData {
             }
 
         } catch (Exception e) {
-            LogUtil.e(TAG, "reader the line file error", e);
+            LogUtil.e(TAG, "reader the file error", e);
         } finally {
             try {
 
-                if (lineReader != null) {
-                    lineReader.close();
+                if (reader != null) {
+                    reader.close();
                 }
-                if (lineFile != null) {
-                    lineFile.close();
+                if (inputStream != null) {
+                    inputStream.close();
                 }
             } catch (Exception e2) {
-                LogUtil.e(TAG, "close line file error", e2);
+                LogUtil.e(TAG, "close file error", e2);
             }
         }
 

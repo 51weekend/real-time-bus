@@ -8,6 +8,7 @@ package me.chengdong.bustime.db.helper;
 import me.chengdong.bustime.db.TbConfigHandler;
 import me.chengdong.bustime.db.TbFavoriteHandler;
 import me.chengdong.bustime.db.TbLineHandler;
+import me.chengdong.bustime.db.TbSingleLineHandler;
 import me.chengdong.bustime.db.TbStationHandler;
 import me.chengdong.bustime.utils.LogUtil;
 import android.content.Context;
@@ -42,6 +43,8 @@ public class MainSQLiteOpenHelper extends SQLiteOpenHelper {
 
         db.execSQL(TbFavoriteHandler.CREATE_TABLE_SQL);
 
+        db.execSQL(TbSingleLineHandler.CREATE_TABLE_SQL);
+
         LogUtil.d(TAG, " database created.");
     }
 
@@ -60,6 +63,9 @@ public class MainSQLiteOpenHelper extends SQLiteOpenHelper {
 
             db.execSQL(TbFavoriteHandler.DROP_TABLE_SQL);
             db.execSQL(TbFavoriteHandler.CREATE_TABLE_SQL);
+
+            db.execSQL(TbSingleLineHandler.DROP_TABLE_SQL);
+            db.execSQL(TbSingleLineHandler.CREATE_TABLE_SQL);
         }
 
         LogUtil.d(TAG, " database upgraded.");

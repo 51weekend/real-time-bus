@@ -33,6 +33,7 @@ public class HttpClientUtil {
         }
         long start = System.currentTimeMillis();
         HttpResult httpResult = HttpClientTools.httpGet(ctx, host, path, req, encoding);
+        LogUtil.d(TAG, path + req);
         LogUtil.d(TAG, "http request cost time:" + (System.currentTimeMillis() - start));
         if (httpResult == null) {
             return new HttpResult(ResultData.HTTP_EXCEPTION, "resp null");
