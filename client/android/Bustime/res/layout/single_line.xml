@@ -21,7 +21,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10.7dip"
-            android:background="@drawable/btn_back"
+            android:background="@drawable/btn_top"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/back" />
 
@@ -40,46 +40,33 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10.7dip"
-            android:background="@drawable/btn_back"
+            android:background="@drawable/btn_top"
             android:text="@string/change_error" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/run_start_icon"
+        android:layout_width="40dip"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_relativelayout" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/start_icon"
+            android:contentDescription="@string/stationName" />
     </RelativeLayout>
 
     <ListView
         android:id="@+id/single_line_listview"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/top_relativelayout"
-        android:layout_marginBottom="50dip"
-        android:cacheColorHint="#00000000"
-        android:divider="@color/white" >
+        android:layout_below="@+id/run_start_icon"
+        android:layout_marginBottom="50dip" >
     </ListView>
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/tab_bottom" >
-
-        <ImageButton
-            android:id="@+id/btn_refresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10.7dip"
-            android:background="@drawable/btn_refresh"
-            android:contentDescription="@string/refresh"
-            android:src="@drawable/refresh" />
-
-        <ImageButton
-            android:id="@+id/btn_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/btn_refresh"
-            android:background="@drawable/btn_favorite"
-            android:contentDescription="@string/favorite"
-            android:src="@drawable/tab_favorite_icon" />
-    </RelativeLayout>
+    <include layout="@layout/bottom_toolbar" />
 
 </RelativeLayout>

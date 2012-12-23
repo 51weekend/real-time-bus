@@ -2,41 +2,55 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="42dip"
-    android:layout_marginTop="5dip"
-    android:background="@drawable/set_bg_kuang3"
+    android:layout_height="wrap_content"
+    android:background="@drawable/station_bus_item_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:id="@+id/layout_station_bus"
-        android:layout_width="50dip"
+        android:id="@+id/layout_line_total"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#62B736" >
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="13.3dip"
+        android:layout_marginTop="8dp" >
 
-        <TextView
-            android:id="@+id/tv_lineNumber"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center_horizontal"
-            android:singleLine="true"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="5dip"
+            android:background="@drawable/line"
+            android:contentDescription="@string/line"
+            android:gravity="center_horizontal" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/layout_station_lines"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/layout_station_bus" >
+        android:layout_marginLeft="10dip"
+        android:layout_toRightOf="@+id/layout_line_total" >
+
+        <TextView
+            android:id="@+id/tv_lineNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:background="#62B736"
+            android:paddingLeft="15dip"
+            android:paddingRight="15dip"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_next_bus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dip"
+            android:layout_marginTop="10dip"
+            android:layout_toRightOf="@+id/tv_lineNumber"
             android:text="@string/name_next_bus"
             android:textColor="#000000"
             android:textSize="16sp" />
@@ -45,8 +59,8 @@
             android:id="@+id/tv_standNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="5dip"
+            android:layout_marginTop="10dip"
             android:layout_toRightOf="@+id/tv_next_bus"
             android:textColor="@color/green"
             android:textSize="18sp" />
@@ -55,32 +69,31 @@
             android:id="@+id/station_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="5dip"
+            android:layout_marginTop="10dip"
             android:layout_toRightOf="@+id/tv_standNum"
             android:singleLine="true"
             android:text="@string/name_station"
             android:textColor="#000000"
             android:textSize="16sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_station_bus" >
 
         <TextView
             android:id="@+id/tv_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_lineNumber"
+            android:layout_marginTop="5dip"
             android:text="@string/name_start"
-            android:textColor="#000000"
+            android:textColor="#50810C"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_startStation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_lineNumber"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="5dip"
             android:layout_toRightOf="@+id/tv_start"
             android:text="@string/name_next_bus"
             android:textColor="#000000"
@@ -91,15 +104,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_start"
+            android:layout_marginTop="5dip"
             android:text="@string/name_end"
-            android:textColor="#000000"
+            android:textColor="#A01818"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_endStation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_startStation"
+            android:layout_below="@+id/tv_start"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="5dip"
             android:layout_toRightOf="@+id/tv_endt"
             android:textColor="#000000"
             android:textSize="16sp" />

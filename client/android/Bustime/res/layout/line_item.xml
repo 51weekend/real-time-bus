@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="#EDEDED"
     android:descendantFocusability="blocksDescendants"
     android:gravity="center_vertical" >
 
@@ -35,44 +35,55 @@
             android:id="@+id/tv_lineNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/green"
+            android:background="#5B9B00"
             android:gravity="center_horizontal"
-            android:paddingLeft="6dip"
-            android:paddingRight="6dip"
+            android:paddingLeft="5dip"
+            android:paddingRight="5dip"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/tv_time"
+        <RelativeLayout
+            android:id="@+id/line_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_lineNumber"
-            android:layout_marginTop="3.33dp"
-            android:singleLine="true"
-            android:text="@string/name_run_time"
-            android:textColor="#000000"
-            android:textSize="12sp" />
+            android:layout_marginTop="5dip"
+            android:background="#226EB9"
+            android:paddingLeft="5dip"
+            android:paddingRight="5dip" >
 
-        <TextView
-            android:id="@+id/tv_run_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tv_time"
-            android:layout_below="@+id/tv_lineNumber"
-            android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@+id/tv_time"
-            android:singleLine="true"
-            android:textColor="#000000"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="3.33dp"
+                android:singleLine="true"
+                android:text="@string/name_run_time"
+                android:textColor="#E3ECF5"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_run_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_time"
+                android:layout_marginLeft="5dip"
+                android:layout_toRightOf="@+id/tv_time"
+                android:singleLine="true"
+                android:textColor="#E3ECF5"
+                android:textSize="12sp" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_time"
+            android:layout_below="@+id/line_time"
+            android:layout_marginTop="5dip"
             android:gravity="fill_horizontal"
             android:text="@string/name_start"
-            android:textColor="#008000"
+            android:textColor="#B3C593"
             android:textSize="14sp" />
 
         <TextView
@@ -80,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_start"
-            android:layout_below="@+id/tv_run_time"
+            android:layout_below="@+id/line_time"
             android:layout_marginLeft="5dip"
             android:layout_toRightOf="@+id/tv_start"
             android:gravity="fill_horizontal"
@@ -93,9 +104,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_start"
             android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dip"
             android:gravity="fill_horizontal"
             android:text="@string/name_end"
-            android:textColor="#FF0000"
+            android:textColor="#AE4446"
             android:textSize="14sp" />
 
         <TextView

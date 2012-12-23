@@ -43,7 +43,7 @@ public class SingleLineActivity extends BaseActivity {
 	TextView mTitle;
 
 	Button mBackBtn, mChangeErroBtn;
-	ImageButton mFavoriteBtn;
+	ImageButton mFavoriteBtn, mRefreshBtn;
 
 	TbFavoriteHandler tbFavoriteHandler = new TbFavoriteHandler(
 			SingleLineActivity.this);
@@ -59,17 +59,22 @@ public class SingleLineActivity extends BaseActivity {
 		setContentView(R.layout.single_line);
 
 		singleLineListView = (ListView) findViewById(R.id.single_line_listview);
+		singleLineListView.setDivider(null);
+		singleLineListView.setDividerHeight(0);
 
 		mTitle = (TextView) findViewById(R.id.title_textview);
 
 		mChangeErroBtn = (Button) findViewById(R.id.change_error);
+		mChangeErroBtn.setOnClickListener(this);
 
 		mBackBtn = (Button) findViewById(R.id.back_btn);
-		mFavoriteBtn = (ImageButton) findViewById(R.id.btn_favorite);
-
-		mChangeErroBtn.setOnClickListener(this);
 		mBackBtn.setOnClickListener(this);
+
+		mFavoriteBtn = (ImageButton) findViewById(R.id.btn_favorite);
 		mFavoriteBtn.setOnClickListener(this);
+
+		mRefreshBtn = (ImageButton) findViewById(R.id.btn_refresh);
+		mRefreshBtn.setOnClickListener(this);
 
 		mLoadDialog = new ProgressDialog(this);
 		mLoadDialog.setMessage("正在查询车次动态信息...");
@@ -97,7 +102,7 @@ public class SingleLineActivity extends BaseActivity {
 		case R.id.back_btn:
 			this.finish();
 			break;
-		case R.id.change_error:
+		case R.id.btn_refresh:
 			mLoadDialog.show();
 			new QuerySingleLineTask(false).execute();
 			break;

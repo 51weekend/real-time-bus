@@ -1,44 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="120dip"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
-    android:layout_marginTop="20dip"
-    android:background="@drawable/set_bg_kuang3"
-    android:gravity="center_horizontal"
-    android:orientation="vertical" >
+    android:background="#EDEDED"
+    android:descendantFocusability="blocksDescendants"
+    android:gravity="center_vertical" >
 
     <RelativeLayout
-        android:id="@+id/layout_station_name"
-        android:layout_width="120dip"
+        android:id="@+id/layout_station_icon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:background="#62B736"
-        android:visibility="visible" >
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="13.3dip"
+        android:layout_marginTop="8dp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/station"
+            android:contentDescription="@string/stationName"
+            android:gravity="center_horizontal" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_station_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13.3dip"
+        android:layout_marginTop="5dip"
+        android:layout_toRightOf="@+id/layout_station_icon" >
 
         <TextView
             android:id="@+id/tv_stationName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center_horizontal"
+            android:background="#1D6BB7"
             android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="14sp" />
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/layout_station_position"
-        android:layout_width="120dip"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_station_name" >
+        <ImageView
+            android:id="@+id/position_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_stationName"
+            android:layout_marginTop="5dip"
+            android:background="@drawable/position"
+            android:contentDescription="@string/name_position"
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/tv_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignBaseline="@+id/position_icon"
+            android:layout_below="@+id/tv_stationName"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="5dip"
+            android:layout_toRightOf="@+id/position_icon"
             android:text="@string/name_position"
             android:textColor="#000000"
             android:textSize="14sp" />
@@ -47,29 +67,71 @@
             android:id="@+id/tv_road"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_stationName"
+            android:layout_marginTop="5dip"
             android:layout_toRightOf="@+id/tv_position"
             android:singleLine="true"
             android:textColor="#000000"
             android:textSize="14sp" />
 
+        <ImageView
+            android:id="@+id/compass_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_stationName"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="8dip"
+            android:layout_toRightOf="@+id/tv_road"
+            android:background="@drawable/compass"
+            android:contentDescription="@string/name_position" />
+
         <TextView
             android:id="@+id/tv_trend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dip"
-            android:layout_toRightOf="@+id/tv_road"
+            android:layout_below="@+id/tv_stationName"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="5dip"
+            android:layout_toRightOf="@+id/compass_icon"
             android:singleLine="true"
             android:textColor="#F26224"
             android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/station_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/position_icon"
+            android:layout_marginTop="5dip"
+            android:background="@drawable/bus"
+            android:contentDescription="@string/name_position" />
+
+        <TextView
+            android:id="@+id/tv_lines"
+            android:layout_width="200dip"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/station_icon"
+            android:layout_below="@+id/position_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="3dip"
+            android:layout_toRightOf="@+id/station_icon"
+            android:textColor="@color/green"
+            android:textSize="14sp" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_lines"
-        android:layout_width="120dip"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_station_position"
-        android:layout_gravity="center_vertical"
-        android:textColor="#000000"
-        android:textSize="14sp" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/detail"
+            android:contentDescription="@string/detail" />
+    </RelativeLayout>
 
 </RelativeLayout>

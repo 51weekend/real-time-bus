@@ -31,11 +31,10 @@
         <EditText
             android:id="@+id/line"
             style="@style/search_tip"
-            android:layout_width="fill_parent"
+            android:layout_width="180dip"
             android:layout_height="35dip"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="50dip"
-            android:layout_marginRight="50dip"
+            android:layout_marginLeft="30dip"
             android:background="@drawable/search_bar_edit_normal"
             android:hint="@string/lineName"
             android:imeOptions="actionDone"
@@ -49,9 +48,9 @@
             android:id="@+id/iv_search_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="60dip"
+            android:layout_marginLeft="-25dip"
+            android:layout_toRightOf="@+id/line"
             android:background="@drawable/btn_search_clear"
             android:contentDescription="@string/search_clear"
             android:visibility="gone" />
@@ -67,7 +66,6 @@
     </ListView>
 
     <ImageView
-        android:id="@+id/iv_refresh"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/line_info_listview"
