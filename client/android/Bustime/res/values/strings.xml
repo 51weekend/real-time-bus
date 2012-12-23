@@ -11,9 +11,9 @@
     <string name="back">返回</string>
     <string name="logout">退出</string>
     <string name="refresh">刷新</string>
-    <string name="name_start">始发:</string>
+    <string name="name_start">起点:</string>
     <string name="name_end">终点:</string>
-    <string name="name_run_time">首末班:</string>
+    <string name="name_run_time">首末班时间:</string>
     <string name="name_next_bus">下趟车</string>
     <string name="name_station">站</string>
     <string name="arrive_station_time">进站时间:</string>
@@ -26,11 +26,16 @@
     <string name="title_station">站台查询</string>
     <string name="title_single_line">车辆运行动态信息</string>
     <string name="title_update_version">新版本功能说明</string>
+    <string name="title_favorite">收藏</string>
     <string name="version_name">版本号:</string>
     <string name="search_clear">清除</string>
     <string name="update_download">更新</string>
     <string name="update_cancel">取消</string>
     <string name="favorite">收藏</string>
+    <string name="list_bottom">底部撕边</string>
+    <string name="line">公交</string>
+    <string name="detail">详细信息</string>
+    <string name="change_error">纠错</string>
 
     <string-array name="Spinner_Content">
         <item>One</item>

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:state_pressed="true" android:drawable="@drawable/top_icon_message_point" /> <!-- pressed -->
-	<item android:state_focused="true" android:drawable="@drawable/top_icon_message" /> <!-- focused -->
-	<item android:drawable="@drawable/top_icon_message" /> <!-- default -->
+
+    <item android:drawable="@drawable/left_tab_btn_point" android:state_pressed="true"/>
+ <!-- pressed -->
+    <item android:drawable="@drawable/left_tab_btn" android:state_focused="true"/>
+ <!-- focused -->
+    <item android:drawable="@drawable/left_tab_btn"/>
+ <!-- default -->
+
 </selector>

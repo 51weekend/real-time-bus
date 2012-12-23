@@ -1,110 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:background="#FFFFFF"
     android:descendantFocusability="blocksDescendants"
     android:gravity="center_vertical" >
 
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:id="@+id/layout_line_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="13.3dip"
+        android:layout_marginTop="8dp" >
 
-        <RelativeLayout
-            android:id="@+id/layout_line_total"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="13.3dip"
-            android:layout_marginTop="8dp"
-            android:background="@color/green" >
-
-            <TextView
-                android:id="@+id/tv_lineNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textColor="@color/white"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/layout_line_detail_start"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="13.3dip"
-            android:layout_marginTop="5dip"
-            android:layout_toRightOf="@+id/layout_line_total" >
-
-            <TextView
-                android:id="@+id/tv_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="fill_horizontal"
-                android:text="@string/name_start"
-                android:textColor="#008000"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_startStation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/tv_start"
-                android:gravity="fill_horizontal"
-                android:textColor="#000000"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_startStation"
-                android:layout_marginTop="3.33dp"
-                android:singleLine="true"
-                android:text="@string/name_run_time"
-                android:textColor="#000000"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tv_run_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/tv_time"
-                android:layout_below="@+id/tv_startStation"
-                android:layout_marginLeft="5dip"
-                android:layout_toRightOf="@+id/tv_time"
-                android:singleLine="true"
-                android:textColor="#000000"
-                android:textSize="10sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/layout_line_detail_end"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_line_detail_start"
-            android:layout_marginLeft="13.3dip"
-            android:layout_marginTop="5dip"
-            android:layout_toRightOf="@+id/layout_line_total" >
-
-            <TextView
-                android:id="@+id/tv_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="fill_horizontal"
-                android:text="@string/name_end"
-                android:textColor="#FF0000"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_endStation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/tv_end"
-                android:gravity="fill_horizontal"
-                android:textColor="#000000"
-                android:textSize="14sp" />
-        </RelativeLayout>
+            android:background="@drawable/line"
+            android:contentDescription="@string/line"
+            android:gravity="center_horizontal" />
     </RelativeLayout>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/layout_line_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13.3dip"
+        android:layout_marginTop="5dip"
+        android:layout_toRightOf="@+id/layout_line_total" >
+
+        <TextView
+            android:id="@+id/tv_lineNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/green"
+            android:gravity="center_horizontal"
+            android:paddingLeft="6dip"
+            android:paddingRight="6dip"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_lineNumber"
+            android:layout_marginTop="3.33dp"
+            android:singleLine="true"
+            android:text="@string/name_run_time"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_run_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_time"
+            android:layout_below="@+id/tv_lineNumber"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@+id/tv_time"
+            android:singleLine="true"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_time"
+            android:gravity="fill_horizontal"
+            android:text="@string/name_start"
+            android:textColor="#008000"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_startStation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_start"
+            android:layout_below="@+id/tv_run_time"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@+id/tv_start"
+            android:gravity="fill_horizontal"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_start"
+            android:layout_marginBottom="5dip"
+            android:gravity="fill_horizontal"
+            android:text="@string/name_end"
+            android:textColor="#FF0000"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_endStation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_end"
+            android:layout_below="@+id/tv_startStation"
+            android:layout_marginBottom="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@+id/tv_end"
+            android:gravity="fill_horizontal"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/detail"
+            android:contentDescription="@string/detail" />
+    </RelativeLayout>
+
+</RelativeLayout>

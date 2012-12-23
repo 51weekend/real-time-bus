@@ -7,68 +7,72 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:id="@+id/top_relativelayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/top_bg" >
 
-        <RelativeLayout
-            android:id="@+id/top_relativelayout"
-            android:layout_width="fill_parent"
+        <TextView
+            android:id="@+id/title_textview"
+            style="@style/titlefont"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/top_bg" >
-
-            <TextView
-                android:id="@+id/title_textview"
-                style="@style/titlefont"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/title_line" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/line_search_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/top_relativelayout"
-            android:background="@drawable/search_bar_bg" >
-
-            <EditText
-                android:id="@+id/line"
-                style="@style/stationName"
-                android:layout_width="fill_parent"
-                android:layout_height="35dip"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dip"
-                android:layout_marginRight="50dip"
-                android:background="@drawable/search_bar_edit_normal"
-                android:hint="@string/lineName"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:paddingLeft="20dip"
-                android:paddingRight="30dip"
-                android:textColorHint="#afafaf"
-                android:textSize="14.7sp" />
-
-            <ImageView
-                android:id="@+id/iv_search_clear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="60dip"
-                android:background="@drawable/btn_search_clear"
-                android:contentDescription="@string/search_clear"
-                android:visibility="gone" />
-        </RelativeLayout>
-
-        <ListView
-            android:id="@+id/line_info_listview"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@+id/line_search_layout"
-            android:cacheColorHint="#00000000"
-            android:divider="@drawable/set_line" >
-        </ListView>
+            android:layout_centerInParent="true"
+            android:text="@string/title_line" />
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/line_search_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_relativelayout"
+        android:background="@drawable/search_bar_bg" >
+
+        <EditText
+            android:id="@+id/line"
+            style="@style/search_tip"
+            android:layout_width="fill_parent"
+            android:layout_height="35dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dip"
+            android:layout_marginRight="50dip"
+            android:background="@drawable/search_bar_edit_normal"
+            android:hint="@string/lineName"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:paddingLeft="30dip"
+            android:paddingRight="30dip"
+            android:textColorHint="#afafaf"
+            android:textSize="14.7sp" />
+
+        <ImageView
+            android:id="@+id/iv_search_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="60dip"
+            android:background="@drawable/btn_search_clear"
+            android:contentDescription="@string/search_clear"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/line_info_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line_search_layout"
+        android:cacheColorHint="#00000000"
+        android:divider="@drawable/set_line" >
+    </ListView>
+
+    <ImageView
+        android:id="@+id/iv_refresh"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line_info_listview"
+        android:layout_centerVertical="true"
+        android:background="@drawable/list_bottom"
+        android:contentDescription="@string/list_bottom" />
 
 </RelativeLayout>

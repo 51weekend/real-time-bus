@@ -30,7 +30,7 @@
 
         <EditText
             android:id="@+id/stationName"
-            style="@style/stationName"
+            style="@style/search_tip"
             android:layout_width="fill_parent"
             android:layout_height="35dip"
             android:layout_centerVertical="true"
@@ -38,7 +38,7 @@
             android:layout_marginRight="50dip"
             android:background="@drawable/search_bar_edit_normal"
             android:hint="@string/stationName"
-            android:paddingLeft="20dip"
+            android:paddingLeft="30dip"
             android:paddingRight="30dip"
             android:textSize="14.7sp" />
 

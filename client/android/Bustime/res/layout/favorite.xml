@@ -14,11 +14,11 @@
         android:background="@drawable/top_bg" >
 
         <TextView
-            android:id="@+id/title_textview"
             style="@style/titlefont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:text="@string/title_favorite" />
     </RelativeLayout>
 
     <ListView
