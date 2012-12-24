@@ -21,11 +21,42 @@
             android:text="@string/title_favorite" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/favorite_bar_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_relativelayout"
+        android:background="@drawable/search_bar_bg" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" >
+
+            <Button
+                android:id="@+id/btn_select_station"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_select_station"
+                android:contentDescription="@string/stationName"
+                android:text="@string/stationName" />
+
+            <Button
+                android:id="@+id/btn_select_line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/btn_select_station"
+                android:background="@drawable/btn_select_line"
+                android:contentDescription="@string/line"
+                android:text="@string/line" />
+        </RelativeLayout>
+    </RelativeLayout>
+
     <ListView
         android:id="@+id/favorite_listview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/top_relativelayout"
+        android:layout_below="@+id/favorite_bar_layout"
         android:layout_marginTop="20dip"
         android:cacheColorHint="#00000000"
         android:divider="@drawable/set_line" >

@@ -41,13 +41,13 @@ public class MainActivity extends TabActivity {
 
 		List<Favorite> list = tbFavoriteHandler.selectAll();
 		hasFavorite = list.size() > 0 ? true : false;
-		if (hasFavorite) {
-			addTab("收藏", R.drawable.tab_favorite, FavoriteActivity.class);
-		}
+		// if (hasFavorite) {
+		// addTab("收藏", R.drawable.tab_favorite, FavoriteActivity.class);
+		// }
 		addTab("车次查询", R.drawable.tab_line, LineActivity.class);
 		addTab("站台查询", R.drawable.tab_station, StationActivity.class);
+		addTab("收藏", R.drawable.tab_favorite, FavoriteActivity.class);
 		if (!hasFavorite) {
-			addTab("收藏", R.drawable.tab_favorite, FavoriteActivity.class);
 		}
 		addTab("更多", R.drawable.more, StationActivity.class);
 	}

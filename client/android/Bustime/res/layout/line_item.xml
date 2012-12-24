@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="13.3dip"
-        android:layout_marginTop="5dip"
+        android:layout_marginTop="3.33dp"
         android:layout_toRightOf="@+id/layout_line_total" >
 
         <TextView
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_lineNumber"
-            android:layout_marginTop="5dip"
+            android:layout_marginTop="3.33dp"
             android:background="#226EB9"
             android:paddingLeft="5dip"
             android:paddingRight="5dip" >
@@ -68,6 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/tv_time"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="5dip"
                 android:layout_toRightOf="@+id/tv_time"
                 android:singleLine="true"
@@ -80,10 +81,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/line_time"
-            android:layout_marginTop="5dip"
+            android:layout_marginTop="3.33dp"
             android:gravity="fill_horizontal"
             android:text="@string/name_start"
-            android:textColor="#B3C593"
+            android:textColor="#50810C"
             android:textSize="14sp" />
 
         <TextView
@@ -103,11 +104,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_start"
-            android:layout_marginBottom="5dip"
-            android:layout_marginTop="5dip"
+            android:layout_marginBottom="3.33dp"
+            android:layout_marginTop="3.33dp"
             android:gravity="fill_horizontal"
             android:text="@string/name_end"
-            android:textColor="#AE4446"
+            android:textColor="#A01818"
             android:textSize="14sp" />
 
         <TextView
@@ -116,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_end"
             android:layout_below="@+id/tv_startStation"
-            android:layout_marginBottom="5dip"
+            android:layout_marginBottom="3.33dp"
             android:layout_marginLeft="5dip"
             android:layout_toRightOf="@+id/tv_end"
             android:gravity="fill_horizontal"
@@ -129,7 +130,7 @@
         android:layout_height="fill_parent"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="15dp" >
+        android:layout_marginRight="20dip" >
 
         <ImageView
             android:layout_width="wrap_content"

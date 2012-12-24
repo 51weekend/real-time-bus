@@ -27,7 +27,6 @@
         android:id="@+id/layout_station_position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="13.3dip"
         android:layout_marginTop="5dip"
         android:layout_toRightOf="@+id/layout_station_icon" >
 
@@ -35,7 +34,10 @@
             android:id="@+id/tv_stationName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="13.3dip"
             android:background="#1D6BB7"
+            android:paddingLeft="5dip"
+            android:paddingRight="5dip"
             android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="14sp" />
@@ -45,6 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_stationName"
+            android:layout_marginLeft="13.3dip"
             android:layout_marginTop="5dip"
             android:background="@drawable/position"
             android:contentDescription="@string/name_position"
@@ -102,6 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/position_icon"
+            android:layout_marginLeft="10.3dip"
             android:layout_marginTop="5dip"
             android:background="@drawable/bus"
             android:contentDescription="@string/name_position" />
@@ -125,7 +129,7 @@
         android:layout_height="fill_parent"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="15dp" >
+        android:layout_marginRight="20dip" >
 
         <ImageView
             android:layout_width="wrap_content"
