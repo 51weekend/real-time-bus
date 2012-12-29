@@ -37,7 +37,7 @@
                 android:id="@+id/btn_select_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/btn_select_station"
+                android:background="@drawable/btn_station_press"
                 android:contentDescription="@string/stationName"
                 android:text="@string/stationName" />
 
@@ -57,9 +57,17 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@+id/favorite_bar_layout"
-        android:layout_marginTop="20dip"
         android:cacheColorHint="#00000000"
         android:divider="@drawable/set_line" >
     </ListView>
+
+    <ImageView
+        android:id="@+id/noFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/no_favorite"
+        android:contentDescription="@string/favorite"
+        android:src="@drawable/no_favorite" />
 
 </RelativeLayout>

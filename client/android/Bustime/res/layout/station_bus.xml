@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
 
+        <!--
         <Button
             android:id="@+id/change_error"
             style="@style/titlebtnfont"
@@ -38,7 +39,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10.7dip"
             android:background="@drawable/btn_top"
-            android:text="@string/change_error" />
+            android:text="@string/change_error" />
+        -->
     </RelativeLayout>
 
     <ListView

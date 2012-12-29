@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.chengdong.bustime.R;
-import me.chengdong.bustime.activity.StationActivity;
 import me.chengdong.bustime.model.Station;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +28,7 @@ public class StationAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<Station> items = new ArrayList<Station>();
 
-    public StationAdapter(StationActivity context, List<Station> items) {
+    public StationAdapter(Activity context, List<Station> items) {
         this.inflater = LayoutInflater.from(context);
         this.items = items;
     }

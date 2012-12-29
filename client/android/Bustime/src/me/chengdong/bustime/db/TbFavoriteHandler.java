@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.chengdong.bustime.db.helper.MainSQLiteOpenHelper;
+import me.chengdong.bustime.meta.FavoriteType;
 import me.chengdong.bustime.model.Favorite;
 import me.chengdong.bustime.utils.LogUtil;
 import android.content.Context;
@@ -46,7 +47,7 @@ public class TbFavoriteHandler {
             + COLUMN_PROPERTY_ONE + ", " + COLUMN_PROPERTY_TWO + ", " + COLUMN_PROPERTY_THREE + ", " + COLUMN_TYPE
             + ") VALUES(?,?,?,?,?,?)";
 
-    public static final String SELECT_ALL = "select * from " + TABLE;
+    public static final String SELECT_ALL = "select * from " + TABLE + " WHERE " + COLUMN_TYPE + "=? ";
 
     public TbFavoriteHandler(Context context) {
         mSQLite = new MainSQLiteOpenHelper(context);
@@ -80,14 +81,14 @@ public class TbFavoriteHandler {
         }
     }
 
-    public List<Favorite> selectAll() {
+    public List<Favorite> selectAll(FavoriteType favoriteType) {
         List<Favorite> favorites = new ArrayList<Favorite>();
 
         SQLiteDatabase m_oData = null;
         Cursor oCursor = null;
         try {
             m_oData = this.mSQLite.getReadableDatabase();
-            oCursor = m_oData.rawQuery(SELECT_ALL, new String[]{});
+            oCursor = m_oData.rawQuery(SELECT_ALL, new String[]{String.valueOf(favoriteType.getType())});
 
             favorites = iteratorCursor(oCursor);
 

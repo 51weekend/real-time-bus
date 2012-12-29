@@ -29,9 +29,12 @@ public class FavoriteAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<Favorite> items = new ArrayList<Favorite>();
 
-    public FavoriteAdapter(Activity context, List<Favorite> items) {
+    private FavoriteType favoriteType;
+
+    public FavoriteAdapter(Activity context, List<Favorite> items, FavoriteType favoriteType) {
         this.inflater = LayoutInflater.from(context);
         this.items = items;
+        this.favoriteType = favoriteType;
     }
 
     @Override
@@ -53,14 +56,24 @@ public class FavoriteAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.favorite_item, null);
             holder = new ViewHolder();
+            if (favoriteType == FavoriteType.STATION) {
 
-            holder.tvType = (TextView) convertView.findViewById(R.id.tv_type);
-            holder.tvName = (TextView) convertView.findViewById(R.id.tv_name);
-            holder.tvPropertyOne = (TextView) convertView.findViewById(R.id.tv_property_one);
-            holder.tvpropertyTwo = (TextView) convertView.findViewById(R.id.tv_property_two);
-            holder.tvpropertyThree = (TextView) convertView.findViewById(R.id.tv_property_three);
+                convertView = inflater.inflate(R.layout.station_item, null);
+
+                holder.tvName = (TextView) convertView.findViewById(R.id.tv_stationName);
+                holder.tvPropertyOne = (TextView) convertView.findViewById(R.id.tv_road);
+                holder.tvpropertyTwo = (TextView) convertView.findViewById(R.id.tv_trend);
+                holder.tvpropertyThree = (TextView) convertView.findViewById(R.id.tv_lines);
+
+            } else {
+                convertView = inflater.inflate(R.layout.line_item, null);
+
+                holder.tvName = (TextView) convertView.findViewById(R.id.tv_lineNumber);
+                holder.tvPropertyOne = (TextView) convertView.findViewById(R.id.tv_startStation);
+                holder.tvpropertyTwo = (TextView) convertView.findViewById(R.id.tv_run_time);
+                holder.tvpropertyThree = (TextView) convertView.findViewById(R.id.tv_endStation);
+            }
 
             convertView.setTag(holder);
         } else {
@@ -71,7 +84,6 @@ public class FavoriteAdapter extends BaseAdapter {
         if (favorite == null) {
             return convertView;
         }
-        holder.tvType.setText(FavoriteType.resolve(favorite.getType()).getName());
         holder.tvName.setText(favorite.getName());
 
         holder.tvPropertyOne.setText(favorite.getPropertyOne());
@@ -82,7 +94,6 @@ public class FavoriteAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        TextView tvType;
         TextView tvName;
         TextView tvPropertyOne;
         TextView tvpropertyTwo;

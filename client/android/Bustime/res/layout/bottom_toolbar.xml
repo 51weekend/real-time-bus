@@ -10,22 +10,60 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" >
 
-        <ImageButton
-            android:id="@+id/btn_refresh"
+        <RelativeLayout
+            android:id="@+id/btn_refresh_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_refresh"
-            android:contentDescription="@string/refresh"
-            android:src="@drawable/refresh" />
+            android:background="@drawable/btn_refresh" >
 
-        <ImageButton
-            android:id="@+id/btn_favorite"
+            <ImageButton
+                android:id="@+id/btn_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dip"
+                android:background="@drawable/refresh"
+                android:contentDescription="@string/refresh" />
+
+            <TextView
+                android:id="@+id/tv_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dip"
+                android:layout_toRightOf="@+id/btn_refresh"
+                android:text="@string/refresh"
+                android:textColor="#4F4F4F"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_favorite_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/btn_refresh"
-            android:background="@drawable/btn_favorite"
-            android:contentDescription="@string/favorite"
-            android:src="@drawable/tab_favorite_icon" />
+            android:layout_toRightOf="@+id/btn_refresh_layout"
+            android:background="@drawable/btn_favorite" >
+
+            <ImageButton
+                android:id="@+id/btn_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="25dip"
+                android:background="@drawable/tab_favorite_icon"
+                android:contentDescription="@string/favorite" />
+
+            <TextView
+                android:id="@+id/tv_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dip"
+                android:layout_toRightOf="@+id/btn_favorite"
+                android:text="@string/favorite"
+                android:textColor="#4F4F4F"
+                android:textSize="14sp" />
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>
