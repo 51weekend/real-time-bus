@@ -37,7 +37,7 @@
                 android:id="@+id/btn_select_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/btn_station_press"
+                android:background="@drawable/tab_left_press"
                 android:contentDescription="@string/stationName"
                 android:text="@string/stationName" />
 
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/btn_select_station"
-                android:background="@drawable/btn_select_line"
+                android:background="@drawable/tab_right"
                 android:contentDescription="@string/line"
                 android:text="@string/line" />
         </RelativeLayout>
