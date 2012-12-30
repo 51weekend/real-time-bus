@@ -132,10 +132,23 @@
         android:layout_marginRight="20dip" >
 
         <ImageView
+            android:id="@+id/iv_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/detail"
             android:contentDescription="@string/detail" />
+
+        <Button
+            android:id="@+id/btn_delete"
+            style="@style/titlebtnfont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10.7dip"
+            android:background="@drawable/btn_delete"
+            android:text="@string/delete"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </RelativeLayout>

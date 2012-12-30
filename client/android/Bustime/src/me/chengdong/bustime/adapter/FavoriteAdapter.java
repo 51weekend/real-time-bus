@@ -10,13 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.chengdong.bustime.R;
+import me.chengdong.bustime.db.TbFavoriteHandler;
 import me.chengdong.bustime.meta.FavoriteType;
 import me.chengdong.bustime.model.Favorite;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -24,80 +29,138 @@ import android.widget.TextView;
  * 
  * @author chengdong
  */
-public class FavoriteAdapter extends BaseAdapter {
+@SuppressLint("ShowToast")
+public class FavoriteAdapter extends BaseAdapter implements OnClickListener {
 
-    private LayoutInflater inflater;
-    private List<Favorite> items = new ArrayList<Favorite>();
+	private LayoutInflater inflater;
+	private List<Favorite> items = new ArrayList<Favorite>();
 
-    private FavoriteType favoriteType;
+	private FavoriteType favoriteType;
 
-    public FavoriteAdapter(Activity context, List<Favorite> items, FavoriteType favoriteType) {
-        this.inflater = LayoutInflater.from(context);
-        this.items = items;
-        this.favoriteType = favoriteType;
-    }
+	TbFavoriteHandler tbFavoriteHandler;
 
-    @Override
-    public int getCount() {
-        return this.items.size();
-    }
+	private boolean editable;
 
-    @Override
-    public Object getItem(int position) {
-        return this.items.get(position);
-    }
+	public FavoriteAdapter(Activity context, List<Favorite> items,
+			FavoriteType favoriteType, boolean editable) {
+		this.inflater = LayoutInflater.from(context);
+		this.items = items;
+		this.favoriteType = favoriteType;
+		this.editable = editable;
+		this.tbFavoriteHandler = new TbFavoriteHandler(context);
+	}
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+	@Override
+	public int getCount() {
+		return this.items.size();
+	}
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            holder = new ViewHolder();
-            if (favoriteType == FavoriteType.STATION) {
+	@Override
+	public Object getItem(int position) {
+		return this.items.get(position);
+	}
 
-                convertView = inflater.inflate(R.layout.station_item, null);
+	@Override
+	public long getItemId(int position) {
+		return position;
+	}
 
-                holder.tvName = (TextView) convertView.findViewById(R.id.tv_stationName);
-                holder.tvPropertyOne = (TextView) convertView.findViewById(R.id.tv_road);
-                holder.tvpropertyTwo = (TextView) convertView.findViewById(R.id.tv_trend);
-                holder.tvpropertyThree = (TextView) convertView.findViewById(R.id.tv_lines);
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		ViewHolder holder;
+		if (convertView == null) {
+			holder = new ViewHolder();
+			if (favoriteType == FavoriteType.STATION) {
 
-            } else {
-                convertView = inflater.inflate(R.layout.line_item, null);
+				convertView = inflater.inflate(R.layout.station_item, null);
 
-                holder.tvName = (TextView) convertView.findViewById(R.id.tv_lineNumber);
-                holder.tvPropertyOne = (TextView) convertView.findViewById(R.id.tv_startStation);
-                holder.tvpropertyTwo = (TextView) convertView.findViewById(R.id.tv_run_time);
-                holder.tvpropertyThree = (TextView) convertView.findViewById(R.id.tv_endStation);
-            }
+				holder.tvName = (TextView) convertView
+						.findViewById(R.id.tv_stationName);
+				holder.tvPropertyOne = (TextView) convertView
+						.findViewById(R.id.tv_road);
+				holder.tvpropertyTwo = (TextView) convertView
+						.findViewById(R.id.tv_trend);
+				holder.tvpropertyThree = (TextView) convertView
+						.findViewById(R.id.tv_lines);
 
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
+			} else {
+				convertView = inflater.inflate(R.layout.line_item, null);
 
-        Favorite favorite = items.get(position);
-        if (favorite == null) {
-            return convertView;
-        }
-        holder.tvName.setText(favorite.getName());
+				holder.tvName = (TextView) convertView
+						.findViewById(R.id.tv_lineNumber);
+				holder.tvPropertyOne = (TextView) convertView
+						.findViewById(R.id.tv_startStation);
+				holder.tvpropertyTwo = (TextView) convertView
+						.findViewById(R.id.tv_run_time);
+				holder.tvpropertyThree = (TextView) convertView
+						.findViewById(R.id.tv_endStation);
+			}
 
-        holder.tvPropertyOne.setText(favorite.getPropertyOne());
-        holder.tvpropertyTwo.setText(favorite.getPropertyTwo());
-        holder.tvpropertyThree.setText(favorite.getPropertyThree());
+			holder.ivDetail = (ImageView) convertView
+					.findViewById(R.id.iv_detail);
+			holder.btnDelete = (Button) convertView
+					.findViewById(R.id.btn_delete);
 
-        return convertView;
-    }
+			holder.btnDelete.setOnClickListener(this);
 
-    class ViewHolder {
-        TextView tvName;
-        TextView tvPropertyOne;
-        TextView tvpropertyTwo;
-        TextView tvpropertyThree;
-    }
+			if (editable) {
+				holder.btnDelete.setVisibility(View.VISIBLE);
+				holder.ivDetail.setVisibility(View.GONE);
+			} else {
+				holder.btnDelete.setVisibility(View.GONE);
+				holder.ivDetail.setVisibility(View.VISIBLE);
+			}
 
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
+		}
+
+		Favorite favorite = items.get(position);
+		if (favorite == null) {
+			return convertView;
+		}
+		holder.tvName.setText(favorite.getName());
+
+		holder.tvPropertyOne.setText(favorite.getPropertyOne());
+		holder.tvpropertyTwo.setText(favorite.getPropertyTwo());
+		holder.tvpropertyThree.setText(favorite.getPropertyThree());
+
+		holder.btnDelete.setTag(favorite.getCode());
+
+		return convertView;
+	}
+
+	class ViewHolder {
+		TextView tvName;
+		TextView tvPropertyOne;
+		TextView tvpropertyTwo;
+		TextView tvpropertyThree;
+		Button btnDelete;
+		ImageView ivDetail;
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.btn_delete:
+			tbFavoriteHandler.delete(String.valueOf(v.getTag()));
+			Favorite delete = null;
+			for (Favorite favorite : items) {
+				if (favorite.getCode().equals(v.getTag())) {
+					delete = favorite;
+					break;
+				}
+			}
+			if (delete != null) {
+				items.remove(delete);
+			}
+			this.notifyDataSetChanged();
+			break;
+
+		default:
+			break;
+		}
+
+	}
 }

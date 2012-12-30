@@ -22,129 +22,157 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-public class FavoriteActivity extends Activity implements OnItemClickListener, OnClickListener {
+public class FavoriteActivity extends Activity implements OnItemClickListener,
+		OnClickListener {
 
-    private static String TAG = FavoriteActivity.class.getSimpleName();
+	private static String TAG = FavoriteActivity.class.getSimpleName();
 
-    ImageView noFavorite;
-    ListView favoriteListView;
+	ImageView noFavorite;
+	ListView favoriteListView;
 
-    Button mSelectStationBtn, mSelectLineBtn;
+	Button mSelectStationBtn, mSelectLineBtn, mEditBtn;
 
-    FavoriteAdapter mAdapter;
+	private boolean editable;
 
-    final List<Favorite> mFavoriteList = new ArrayList<Favorite>();
+	FavoriteAdapter mAdapter;
 
-    private FavoriteType favoriteType = FavoriteType.STATION;
+	final List<Favorite> mFavoriteList = new ArrayList<Favorite>();
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.favorite);
+	private FavoriteType favoriteType = FavoriteType.STATION;
 
-        favoriteListView = (ListView) findViewById(R.id.favorite_listview);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.favorite);
 
-        noFavorite = (ImageView) findViewById(R.id.noFavorite);
+		favoriteListView = (ListView) findViewById(R.id.favorite_listview);
 
-        mSelectStationBtn = (Button) findViewById(R.id.btn_select_station);
-        mSelectStationBtn.setOnClickListener(this);
+		noFavorite = (ImageView) findViewById(R.id.noFavorite);
 
-        mSelectLineBtn = (Button) findViewById(R.id.btn_select_line);
-        mSelectLineBtn.setOnClickListener(this);
+		mSelectStationBtn = (Button) findViewById(R.id.btn_select_station);
+		mSelectStationBtn.setOnClickListener(this);
 
-        mAdapter = new FavoriteAdapter(FavoriteActivity.this, mFavoriteList, FavoriteType.STATION);
-        favoriteListView.setAdapter(mAdapter);
+		mSelectLineBtn = (Button) findViewById(R.id.btn_select_line);
+		mSelectLineBtn.setOnClickListener(this);
 
-        favoriteListView.setOnItemClickListener(this);
-    }
+		mEditBtn = (Button) findViewById(R.id.btn_edit);
+		mEditBtn.setOnClickListener(this);
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        new QueryFavoriteTask().execute();
-    }
+		mAdapter = new FavoriteAdapter(FavoriteActivity.this, mFavoriteList,
+				FavoriteType.STATION, editable);
+		favoriteListView.setAdapter(mAdapter);
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View convertView, int position, long id) {
+		favoriteListView.setOnItemClickListener(this);
+	}
 
-        Favorite favorite = this.mFavoriteList.get((int) id);
-        if (favorite == null) {
-            return;
-        }
+	@Override
+	public void onResume() {
+		super.onResume();
+		new QueryFavoriteTask().execute();
+	}
 
-        Intent intent = new Intent();
-        if (FavoriteType.resolve(favorite.getType()) == FavoriteType.LINE) {
-            intent.putExtra(ParamUtil.LINE_GUID, favorite.getCode());
-            intent.putExtra(ParamUtil.LINE_NUMBER, favorite.getName());
-            intent.setClass(this, SingleLineActivity.class);
-        } else {
-            intent.putExtra(ParamUtil.STATION_CODE, favorite.getCode());
-            intent.putExtra(ParamUtil.STATION_NAME, favorite.getName());
-            intent.setClass(this, StationBusActivity.class);
-        }
-        startActivity(intent);
+	@Override
+	public void onItemClick(AdapterView<?> parent, View convertView,
+			int position, long id) {
 
-    }
+		Favorite favorite = this.mFavoriteList.get((int) id);
+		if (favorite == null) {
+			return;
+		}
 
-    @Override
-    public void onClick(View v) {
+		Intent intent = new Intent();
+		if (FavoriteType.resolve(favorite.getType()) == FavoriteType.LINE) {
+			intent.putExtra(ParamUtil.LINE_GUID, favorite.getCode());
+			intent.putExtra(ParamUtil.LINE_NUMBER, favorite.getName());
+			intent.setClass(this, SingleLineActivity.class);
+		} else {
+			intent.putExtra(ParamUtil.STATION_CODE, favorite.getCode());
+			intent.putExtra(ParamUtil.STATION_NAME, favorite.getName());
+			intent.setClass(this, StationBusActivity.class);
+		}
+		startActivity(intent);
 
-        switch (v.getId()) {
-        case R.id.btn_select_station:
-            mSelectStationBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_left_press));
-            mSelectLineBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_right));
-            this.favoriteType = FavoriteType.STATION;
-            mAdapter = new FavoriteAdapter(FavoriteActivity.this, mFavoriteList, FavoriteType.STATION);
-            favoriteListView.setAdapter(mAdapter);
-            new QueryFavoriteTask().execute();
-            break;
-        case R.id.btn_select_line:
-            mSelectStationBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_left));
-            mSelectLineBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_right_press));
-            this.favoriteType = FavoriteType.LINE;
-            mAdapter = new FavoriteAdapter(FavoriteActivity.this, mFavoriteList, FavoriteType.LINE);
-            favoriteListView.setAdapter(mAdapter);
-            new QueryFavoriteTask().execute();
-            break;
+	}
 
-        default:
-            break;
-        }
+	@Override
+	public void onClick(View v) {
 
-    }
+		switch (v.getId()) {
+		case R.id.btn_select_station:
+			mSelectStationBtn.setBackgroundDrawable(getResources().getDrawable(
+					R.drawable.tab_left_press));
+			mSelectLineBtn.setBackgroundDrawable(getResources().getDrawable(
+					R.drawable.tab_right));
+			this.favoriteType = FavoriteType.STATION;
+			mAdapter = new FavoriteAdapter(FavoriteActivity.this,
+					mFavoriteList, FavoriteType.STATION, editable);
+			favoriteListView.setAdapter(mAdapter);
+			new QueryFavoriteTask().execute();
+			break;
+		case R.id.btn_select_line:
+			mSelectStationBtn.setBackgroundDrawable(getResources().getDrawable(
+					R.drawable.tab_left));
+			mSelectLineBtn.setBackgroundDrawable(getResources().getDrawable(
+					R.drawable.tab_right_press));
+			this.favoriteType = FavoriteType.LINE;
+			mAdapter = new FavoriteAdapter(FavoriteActivity.this,
+					mFavoriteList, FavoriteType.LINE, editable);
+			favoriteListView.setAdapter(mAdapter);
+			new QueryFavoriteTask().execute();
+			break;
 
-    private class QueryFavoriteTask extends AsyncTask<Void, Void, Void> {
+		case R.id.btn_edit:
+			if (editable) {
+				editable = false;
+				mEditBtn.setText("编辑");
+			} else {
+				editable = true;
+				mEditBtn.setText("完成");
+			}
+			mAdapter = new FavoriteAdapter(FavoriteActivity.this,
+					mFavoriteList, FavoriteType.LINE, editable);
+			favoriteListView.setAdapter(mAdapter);
+			new QueryFavoriteTask().execute();
 
-        @Override
-        public void onPreExecute() {
-        }
+		default:
+			break;
+		}
 
-        @Override
-        protected Void doInBackground(Void... params) {
+	}
 
-            try {
-                TbFavoriteHandler tbFavoriteHandler = new TbFavoriteHandler(FavoriteActivity.this);
-                List<Favorite> list = tbFavoriteHandler.selectAll(favoriteType);
-                mFavoriteList.clear();
-                mFavoriteList.addAll(list);
+	private class QueryFavoriteTask extends AsyncTask<Void, Void, Void> {
 
-            } catch (Exception e) {
-                LogUtil.e(TAG, "query favorite error", e);
-            }
+		@Override
+		public void onPreExecute() {
+		}
 
-            return null;
-        }
+		@Override
+		protected Void doInBackground(Void... params) {
 
-        @Override
-        protected void onPostExecute(Void result) {
-            mAdapter.notifyDataSetChanged();
+			try {
+				TbFavoriteHandler tbFavoriteHandler = new TbFavoriteHandler(
+						FavoriteActivity.this);
+				List<Favorite> list = tbFavoriteHandler.selectAll(favoriteType);
+				mFavoriteList.clear();
+				mFavoriteList.addAll(list);
 
-            if (mFavoriteList.size() > 0) {
-                noFavorite.setVisibility(View.GONE);
-            } else {
-                noFavorite.setVisibility(View.VISIBLE);
-            }
-        }
-    }
+			} catch (Exception e) {
+				LogUtil.e(TAG, "query favorite error", e);
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			mAdapter.notifyDataSetChanged();
+
+			if (mFavoriteList.size() > 0) {
+				noFavorite.setVisibility(View.GONE);
+			} else {
+				noFavorite.setVisibility(View.VISIBLE);
+			}
+		}
+	}
 
 }

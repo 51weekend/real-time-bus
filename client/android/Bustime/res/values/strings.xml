@@ -11,6 +11,8 @@
     <string name="back">返回</string>
     <string name="logout">退出</string>
     <string name="refresh">刷新</string>
+    <string name="edit">编辑</string>
+    <string name="delete">删除</string>
     <string name="name_start">起点:</string>
     <string name="name_end">终点:</string>
     <string name="name_run_time">首末班时间:</string>

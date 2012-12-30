@@ -19,6 +19,17 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/title_favorite" />
+
+        <Button
+            android:id="@+id/btn_edit"
+            style="@style/titlebtnfont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10.7dip"
+            android:background="@drawable/btn_top"
+            android:text="@string/edit" />
     </RelativeLayout>
 
     <RelativeLayout
