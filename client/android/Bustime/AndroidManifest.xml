@@ -73,13 +73,27 @@
             android:name=".activity.UpdateVersionActivity"
             android:label="@string/title_activity_update_version"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" >
         </activity>
         <activity
             android:name=".activity.FavoriteActivity"
             android:label="@string/title_activity_favorite"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.MoreActivity"
+            android:label="@string/title_activity_more"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" >
         </activity>
 
         <!-- Required -->

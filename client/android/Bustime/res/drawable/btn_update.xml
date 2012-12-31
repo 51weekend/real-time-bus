@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- pressed -->
+    <item android:drawable="@drawable/btn_update_press" android:state_pressed="true"/>
+    <!-- focused -->
+    <item android:drawable="@drawable/btn_update" android:state_focused="true"/>
+    <!-- default -->
+    <item android:drawable="@drawable/btn_update"/>
+
+</selector>

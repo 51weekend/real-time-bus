@@ -39,7 +39,7 @@ public class MainActivity extends TabActivity {
 
     private void setTabs() {
 
-        //TODO
+        // TODO
         List<Favorite> list = tbFavoriteHandler.selectAll(FavoriteType.STATION);
         hasFavorite = list.size() > 0 ? true : false;
         // if (hasFavorite) {
@@ -50,7 +50,7 @@ public class MainActivity extends TabActivity {
         addTab("收藏", R.drawable.tab_favorite, FavoriteActivity.class);
         if (!hasFavorite) {
         }
-        addTab("更多", R.drawable.more, StationActivity.class);
+        addTab("更多", R.drawable.more, MoreActivity.class);
     }
 
     private void addTab(String labelId, int drawableId, Class<?> c) {

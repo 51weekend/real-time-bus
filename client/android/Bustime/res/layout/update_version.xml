@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_bg" >
+    android:background="@drawable/pop_bg" >
 
     <RelativeLayout
         android:id="@+id/top_relativelayout"
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="80dip"
-            android:background="@drawable/btn_top"
+            android:background="@drawable/btn_update"
             android:text="@string/update_download" />
 
         <Button
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="80dip"
-            android:background="@drawable/btn_top_red"
+            android:background="@drawable/btn_next_done"
             android:text="@string/update_cancel" />
     </RelativeLayout>
 

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="13.3dip"
-        android:layout_marginTop="8dp" >
+        android:layout_marginTop="16.3dp" >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -27,7 +27,8 @@
         android:id="@+id/layout_station_position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dip"
+        android:layout_marginBottom="13.3dip"
+        android:layout_marginTop="13.3dip"
         android:layout_toRightOf="@+id/layout_station_icon" >
 
         <TextView

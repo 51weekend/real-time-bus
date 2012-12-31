@@ -29,10 +29,11 @@
     <string name="title_single_line">车辆运行动态信息</string>
     <string name="title_update_version">新版本功能说明</string>
     <string name="title_favorite">收藏</string>
+    <string name="title_more">更多</string>
     <string name="version_name">版本号:</string>
     <string name="search_clear">清除</string>
     <string name="update_download">更新</string>
-    <string name="update_cancel">取消</string>
+    <string name="update_cancel">下次再说</string>
     <string name="favorite">收藏</string>
     <string name="list_bottom">底部撕边</string>
     <string name="line">公交</string>
@@ -49,5 +50,7 @@
     <string name="title_activity_station_bus">StationBusActivity</string>
     <string name="title_activity_update_version">UpdateVersionActivity</string>
     <string name="title_activity_favorite">FavoriteActivity</string>
+    <string name="title_activity_more">MoreActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
 
 </resources>

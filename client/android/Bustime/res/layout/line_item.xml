@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dip"
     android:background="#EDEDED"
     android:descendantFocusability="blocksDescendants"
     android:gravity="center_vertical" >
@@ -13,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="13.3dip"
-        android:layout_marginTop="8dp" >
+        android:layout_marginTop="16.3dp" >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -27,20 +28,21 @@
         android:id="@+id/layout_line_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="13.3dip"
         android:layout_marginLeft="13.3dip"
-        android:layout_marginTop="3.33dp"
+        android:layout_marginTop="13.3dip"
         android:layout_toRightOf="@+id/layout_line_total" >
 
         <TextView
             android:id="@+id/tv_lineNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#5B9B00"
+            android:background="#5B9C00"
             android:gravity="center_horizontal"
             android:paddingLeft="5dip"
             android:paddingRight="5dip"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <RelativeLayout
             android:id="@+id/line_time"
@@ -48,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_lineNumber"
             android:layout_marginTop="3.33dp"
-            android:background="#226EB9"
+            android:background="#226FB8"
             android:paddingLeft="5dip"
             android:paddingRight="5dip" >
 
