@@ -1,12 +1,7 @@
 package me.chengdong.bustime;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import me.chengdong.bustime.utils.DeviceUtil;
 import me.chengdong.bustime.utils.LogUtil;
 import android.app.Application;
-import cn.jpush.android.api.JPushInterface;
 
 /**
  * bustime
@@ -22,14 +17,14 @@ public class BustimeApplication extends Application {
         super.onCreate();
 
         // --- JPush ----
-        JPushInterface.setDebugMode(false);
-        JPushInterface.init(this);
+        // JPushInterface.setDebugMode(false);
+        // JPushInterface.init(this);
 
-        String imei = DeviceUtil.getImei(this);
-        LogUtil.d(TAG, "imei[" + imei + "]");
-        Set<String> tags = new HashSet<String>();
-        tags.add(imei);
-        JPushInterface.setAliasAndTags(this, imei, tags);
+        // String imei = DeviceUtil.getImei(this);
+        // LogUtil.d(TAG, "imei[" + imei + "]");
+        // Set<String> tags = new HashSet<String>();
+        // tags.add(imei);
+        // JPushInterface.setAliasAndTags(this, imei, tags);
 
         MyCrashHandler handler = MyCrashHandler.getInstance();
 

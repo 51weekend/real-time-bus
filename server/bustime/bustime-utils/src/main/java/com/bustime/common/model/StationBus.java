@@ -27,6 +27,8 @@ public class StationBus {
 
     private String lineInfo;
     private String lineNumber;
+    private String startStation;
+    private String endStation;
 
     // private String trend;
 
@@ -108,6 +110,22 @@ public class StationBus {
 
     public String toString() {
         return JSON.toJSONString(this);
+    }
+
+    public String getStartStation() {
+        return startStation;
+    }
+
+    public void setStartStation(String startStation) {
+        this.startStation = startStation;
+    }
+
+    public String getEndStation() {
+        return endStation;
+    }
+
+    public void setEndStation(String endStation) {
+        this.endStation = endStation;
     }
 
 }

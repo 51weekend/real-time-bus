@@ -1,13 +1,8 @@
 package me.chengdong.bustime.activity;
 
-import java.util.List;
-
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.db.TbFavoriteHandler;
-import me.chengdong.bustime.meta.FavoriteType;
-import me.chengdong.bustime.model.Favorite;
 import me.chengdong.bustime.task.CheckVersionTask;
-import me.chengdong.bustime.task.LoadDataTask;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,7 +16,6 @@ import android.widget.TextView;
 public class MainActivity extends TabActivity {
 
     TbFavoriteHandler tbFavoriteHandler = new TbFavoriteHandler(MainActivity.this);
-    boolean hasFavorite = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,22 +28,19 @@ public class MainActivity extends TabActivity {
     public void onResume() {
         super.onResume();
         new CheckVersionTask(MainActivity.this).execute();
-        new LoadDataTask(MainActivity.this).execute();
+        // new LoadDataTask(MainActivity.this).execute();
     }
 
     private void setTabs() {
-
-        // TODO
-        List<Favorite> list = tbFavoriteHandler.selectAll(FavoriteType.STATION);
-        hasFavorite = list.size() > 0 ? true : false;
+        // boolean hasFavorite = tbFavoriteHandler.hasFavorite();
         // if (hasFavorite) {
         // addTab("收藏", R.drawable.tab_favorite, FavoriteActivity.class);
         // }
         addTab("车次查询", R.drawable.tab_line, LineActivity.class);
         addTab("站台查询", R.drawable.tab_station, StationActivity.class);
         addTab("收藏", R.drawable.tab_favorite, FavoriteActivity.class);
-        if (!hasFavorite) {
-        }
+        // if (!hasFavorite) {
+        // }
         addTab("更多", R.drawable.more, MoreActivity.class);
     }
 

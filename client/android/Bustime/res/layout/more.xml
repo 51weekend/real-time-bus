@@ -21,16 +21,53 @@
             android:text="@string/title_more" />
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/more_listview"
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/top_relativelayout"
-        android:layout_marginLeft="10dip"
-        android:layout_marginRight="10dip"
-        android:layout_marginTop="20dip"
-        android:background="@drawable/more_bg"
-        android:divider="@drawable/more_set_line" >
-    </ListView>
+        android:layout_marginLeft="13.3dip"
+        android:layout_marginRight="13.3dip"
+        android:layout_marginTop="40dip"
+        android:background="@drawable/more_bg" >
+
+        <TextView
+            android:id="@+id/contact_me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="联系我们"
+            android:textColor="@color/tabDark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/weibo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contact_me"
+            android:layout_marginTop="30dip"
+            android:text="新浪微博:@程冬_coder"
+            android:textColor="@color/tabDark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/weibo"
+            android:layout_marginTop="13.3dip"
+            android:text="联系邮箱:51weekend@gmail.com"
+            android:textColor="@color/tabDark"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/qq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mail"
+            android:layout_marginTop="13.3dip"
+            android:paddingLeft="35dip"
+            android:text="QQ:157084314"
+            android:textColor="@color/tabDark"
+            android:textSize="14sp" />
+    </RelativeLayout>
 
 </RelativeLayout>

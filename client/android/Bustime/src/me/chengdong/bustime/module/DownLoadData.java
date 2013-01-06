@@ -163,7 +163,7 @@ public class DownloadData {
         return result;
     }
 
-    public static void downloadStation(Context context) {
+    public static void downloadStation(Activity context) {
 
         ResultData result = getDataFromRemote(context, DOWNLOAD_STATION_PATH, "");
         if (result.failed()) {
@@ -184,7 +184,7 @@ public class DownloadData {
 
     }
 
-    public static void downloadLine(Context context) {
+    public static void downloadLine(Activity context) {
 
         ResultData result = getDataFromRemote(context, DOWNLOAD_LINE_PATH, "");
         if (result.failed()) {

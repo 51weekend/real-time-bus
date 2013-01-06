@@ -10,7 +10,7 @@
 		where
 		status = 'enable'
 		<if test="lineNumber !=null">
-			and lineNumber = #{lineNumber}
+			and lineNumber like #{lineNumber}
 		</if>
 
 	</select>
@@ -23,6 +23,16 @@
 		where
 		status = 'enable'
 		and lineGuid = #{lineGuid}
+	</select>
+	
+	<select id="queryLinesByGuid" parameterType="hashmap"
+		resultType="com.bustime.common.model.Line">
+		select lineGuid, lineNumber, lineInfo, link,
+		startStation,endStation,runTime,totalStation ,status
+		from line
+		where
+		status = 'enable'
+		and lineGuid in (${lineGuid})
 	</select>
 
 	<select id="queryNoRunTimeLine" resultType="com.bustime.common.model.Line">

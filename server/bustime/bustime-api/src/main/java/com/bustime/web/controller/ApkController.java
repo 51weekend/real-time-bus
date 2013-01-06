@@ -32,7 +32,7 @@ public class ApkController {
     private String apkUploadUrl;
 
     @RequestMapping
-    public String down(@RequestParam(value = "fileName", required = false) String fileName, HttpServletRequest request,
+    public String down(@RequestParam(value = "fileName", required = false) String fileName,
             HttpServletResponse response, Model model) {
         if ((StringUtils.isBlank(fileName))) {
             return null;

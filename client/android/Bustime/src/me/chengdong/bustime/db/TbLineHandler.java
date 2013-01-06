@@ -198,4 +198,53 @@ public class TbLineHandler {
         return lines;
     }
 
+    public void saveOrUpdate(Line line) {
+        SQLiteDatabase m_oData = null;
+        Cursor oCursor = null;
+        try {
+            m_oData = this.mSQLite.getWritableDatabase();
+
+            oCursor = m_oData.rawQuery(SELECT_BY_CODE, new String[]{line.getLineGuid()});
+            boolean hasData = oCursor.moveToFirst();
+
+            if (hasData) {
+                if (StringUtil.isNumeric(line.getLineNumber())) {
+                    m_oData.execSQL(
+                            UPDATE_SQL_HAS_NAME,
+                            new String[]{line.getLineNumber(), line.getRunTime(), line.getStartStation(),
+                                    line.getEndStation(), line.getLineGuid()});
+                } else {
+                    m_oData.execSQL(
+                            UPDATE_SQL_HAS_S_NAME,
+                            new String[]{line.getLineNumber(), line.getRunTime(), line.getStartStation(),
+                                    line.getEndStation(), line.getLineGuid()});
+                }
+            } else {
+                if (StringUtil.isNumeric(line.getLineNumber())) {
+                    m_oData.execSQL(
+                            INSERT_SQL_HAS_NAME,
+                            new String[]{line.getLineNumber(), line.getRunTime(), line.getStartStation(),
+                                    line.getEndStation(), line.getLineGuid()});
+                } else {
+                    m_oData.execSQL(
+                            INSERT_SQL_HAS_S_NAME,
+                            new String[]{line.getLineNumber(), line.getRunTime(), line.getStartStation(),
+                                    line.getEndStation(), line.getLineGuid()});
+                }
+            }
+        } catch (Exception e) {
+            LogUtil.e(TAG, "save line error：", e);
+        } finally {
+            if (oCursor != null) {
+                oCursor.close();
+                oCursor = null;
+            }
+            if (m_oData != null) {
+                m_oData.close();
+                m_oData = null;
+            }
+        }
+
+    }
+
 }

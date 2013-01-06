@@ -1,5 +1,6 @@
 package me.chengdong.bustime.activity;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import me.chengdong.bustime.adapter.LineInfoAdapter;
 import me.chengdong.bustime.db.TbConfigHandler;
 import me.chengdong.bustime.db.TbLineHandler;
 import me.chengdong.bustime.model.Line;
+import me.chengdong.bustime.model.ResultData;
+import me.chengdong.bustime.module.DownloadData;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.ParamUtil;
 import me.chengdong.bustime.utils.StringUtil;
@@ -20,6 +23,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -34,11 +38,13 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 
     ListView lineListView;
 
+    Button mSearchBtn;
+
     TbConfigHandler tbConfigHandler = new TbConfigHandler(LineActivity.this);
 
     private String lineNumber;
 
-    private LineInfoAdapter mLineAdapter;
+    private LineInfoAdapter mAdapter;
     private final List<Line> mLineList = new ArrayList<Line>(0);
 
     @Override
@@ -47,16 +53,16 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
         setContentView(R.layout.line);
 
         mSearchClear = (ImageView) findViewById(R.id.iv_search_clear);
+        mSearchClear.setOnClickListener(this);
 
-        mLineEdittext = (EditText) findViewById(R.id.line);
+        mSearchBtn = (Button) this.findViewById(R.id.search_btn);
+        mSearchBtn.setOnClickListener(this);
 
         lineListView = (ListView) findViewById(R.id.line_info_listview);
 
-        mSearchClear.setOnClickListener(this);
-
+        mLineEdittext = (EditText) findViewById(R.id.line);
         mLineEdittext.setSingleLine(true);
         mLineEdittext.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5)});
-
         mLineEdittext.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
@@ -85,8 +91,8 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 
         lineListView.setCacheColorHint(0);
 
-        mLineAdapter = new LineInfoAdapter(LineActivity.this, mLineList);
-        lineListView.setAdapter(mLineAdapter);
+        mAdapter = new LineInfoAdapter(LineActivity.this, mLineList);
+        lineListView.setAdapter(mAdapter);
         lineListView.setOnItemClickListener(this);
 
     }
@@ -120,6 +126,9 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
         switch (v.getId()) {
         case R.id.iv_search_clear:
             mLineEdittext.setText("");
+            break;
+        case R.id.search_btn:
+            new QueryLineFromServerTask().execute();
             break;
         default:
             break;
@@ -172,7 +181,54 @@ public class LineActivity extends BaseActivity implements OnItemClickListener {
 
         @Override
         protected void onPostExecute(Void result) {
-            mLineAdapter.notifyDataSetChanged();
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private class QueryLineFromServerTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        public void onPreExecute() {
+            if (StringUtil.isEmpty(lineNumber)) {
+                return;
+            }
+            openProgressDialog();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            try {
+                if (StringUtil.isEmpty(lineNumber)) {
+                    return null;
+                }
+                String name = URLEncoder.encode(lineNumber, "utf-8");
+                ResultData result = DownloadData.getLine(LineActivity.this, URLEncoder.encode(name, "utf-8"));
+                if (result.success()) {
+                    @SuppressWarnings("unchecked")
+                    List<Line> temps = (List<Line>) result.getData();
+                    mLineList.clear();
+                    mLineList.addAll(temps);
+
+                    TbLineHandler tbLineHandler = new TbLineHandler(LineActivity.this);
+                    for (Line line : temps) {
+                        tbLineHandler.saveOrUpdate(line);
+                    }
+                } else {
+                    // TODO 进行错误提示
+                }
+
+            } catch (Exception e) {
+                LogUtil.e(TAG, "decode error", e);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            closeProgressDialog();
+            mAdapter.notifyDataSetChanged();
         }
     }
 

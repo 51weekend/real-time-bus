@@ -75,6 +75,8 @@ public class StationBus {
         standNum = json.optString("standNum", "");
         time = json.optString("time", "");
         lineNumber = json.optString("lineNumber", "");
+        startStation = json.optString("startStation", "");
+        endStation = json.optString("endStation", "");
     }
 
 }

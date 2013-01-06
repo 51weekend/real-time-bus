@@ -94,10 +94,10 @@ public class ApiService {
      */
     public List<Line> queryLine(String lineNumber) {
         Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("lineNumber", lineNumber);
+        parameters.put("lineNumber", "%" + lineNumber + "%");
         List<Line> lines = lineDao.selectList("queryLine", parameters);
         if (!CollectionUtils.isEmpty(lines)) {
-            return lines;
+            return filterLines(lineNumber, lines);
         }
 
         lines = lineParser.getData(lineNumber);
@@ -124,6 +124,10 @@ public class ApiService {
             }
         });
 
+        return filterLines(lineNumber, lines);
+    }
+
+    private List<Line> filterLines(String lineNumber, List<Line> lines) {
         List<Line> result = new ArrayList<Line>();
         for (Line line : lines) {
             // 远程爬的数据、支持模糊查询、去掉多余的数据
@@ -198,13 +202,33 @@ public class ApiService {
      * @return
      */
     public List<StationBus> queryStationBus(final String stationCode) {
-        final List<StationBus> stationBus = stationBusParser.getData(stationCode);
+        final List<StationBus> stationBuses = stationBusParser.getData(stationCode);
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0, n = stationBuses.size(); i < n; i++) {
+            sb.append("'").append(stationBuses.get(i).getLineGuid()).append("'");
+            if (i < n - 1) {
+                sb.append(",");
+            }
+        }
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("lineGuid", sb.toString());
+        List<Line> lines = lineDao.selectList("queryLinesByGuid", map);
+        for (Line line : lines) {
+            for (StationBus stationBus : stationBuses) {
+
+                if (line.getLineGuid().equals(stationBus.getLineGuid())) {
+                    stationBus.setStartStation(line.getStartStation());
+                    stationBus.setEndStation(line.getEndStation());
+                }
+            }
+        }
 
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 StringBuilder sb = new StringBuilder();
-                for (StationBus staBus : stationBus) {
+                for (StationBus staBus : stationBuses) {
                     sb.append(staBus.getLineNumber()).append(",");
                     try {
                         List<StationBus> dbData = stationBusDao.selectList("queryStationBus", staBus);
@@ -228,7 +252,7 @@ public class ApiService {
 
             }
         });
-        return stationBus;
+        return stationBuses;
     }
 
     /**

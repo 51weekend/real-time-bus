@@ -56,7 +56,7 @@
         <ListView
             android:id="@+id/update_intro_listview"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:cacheColorHint="#00000000"
             android:divider="@color/white" >
         </ListView>
@@ -67,27 +67,32 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dip"
         android:background="@drawable/search_bar_bg" >
 
-        <Button
-            android:id="@+id/update_download"
-            style="@style/titlebtnfont"
-            android:layout_width="44dip"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="80dip"
-            android:background="@drawable/btn_update"
-            android:text="@string/update_download" />
+            android:layout_centerInParent="true" >
 
-        <Button
-            android:id="@+id/update_cancel"
-            style="@style/titlebtnfont"
-            android:layout_width="44dip"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="80dip"
-            android:background="@drawable/btn_next_done"
-            android:text="@string/update_cancel" />
+            <Button
+                android:id="@+id/update_download"
+                style="@style/titlebtnfont"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_update"
+                android:text="@string/update_download" />
+
+            <Button
+                android:id="@+id/update_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:layout_toRightOf="@+id/update_download"
+                android:background="@drawable/btn_next_done"
+                android:text="@string/update_cancel"
+                android:textColor="#4F4F4F" />
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>

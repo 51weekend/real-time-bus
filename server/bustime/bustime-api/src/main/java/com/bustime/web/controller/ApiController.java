@@ -167,12 +167,19 @@ public class ApiController {
     @RequestMapping
     @ResponseBody
     public ResultModel queryStationBus(@RequestParam(value = "stationCode", required = false) String stationCode) {
+
         ResultModel result = new ResultModel();
+
         if (StringUtils.isEmpty(stationCode)) {
             result.setResultCode(PARAMETER_ERROR);
             return result;
         }
-        result.setData(apiService.queryStationBus(stationCode));
+        try {
+            result.setData(apiService.queryStationBus(stationCode));
+        } catch (Exception e) {
+            LoggerUtils.error("query station bus error", e);
+            result.setResultCode(SERVER_ERROR);
+        }
         return result;
     }
 

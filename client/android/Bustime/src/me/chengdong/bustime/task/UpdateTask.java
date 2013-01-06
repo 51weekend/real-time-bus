@@ -56,7 +56,7 @@ public class UpdateTask extends AsyncTask<String, String, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        String url = DownloadData.SERVER_HOST + DownloadData.SERVER_CONTEXT + "/apks/" + this.apkName;
+        String url = DownloadData.SERVER_HOST + "/bustime/apk?fileName=" + this.apkName;
 
         HttpClient client = new DefaultHttpClient();
         HttpGet get = new HttpGet(url);

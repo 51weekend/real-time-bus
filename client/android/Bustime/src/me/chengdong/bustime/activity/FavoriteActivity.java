@@ -26,7 +26,7 @@ public class FavoriteActivity extends Activity implements OnItemClickListener, O
 
     private static String TAG = FavoriteActivity.class.getSimpleName();
 
-    ImageView noFavorite;
+    ImageView noFavorite, listBottom;
     ListView favoriteListView;
 
     Button mSelectStationBtn, mSelectLineBtn, mEditBtn;
@@ -47,6 +47,7 @@ public class FavoriteActivity extends Activity implements OnItemClickListener, O
         favoriteListView = (ListView) findViewById(R.id.favorite_listview);
 
         noFavorite = (ImageView) findViewById(R.id.noFavorite);
+        listBottom = (ImageView) findViewById(R.id.list_bottom);
 
         mSelectStationBtn = (Button) findViewById(R.id.btn_select_station);
         mSelectStationBtn.setOnClickListener(this);
@@ -145,7 +146,7 @@ public class FavoriteActivity extends Activity implements OnItemClickListener, O
 
             try {
                 TbFavoriteHandler tbFavoriteHandler = new TbFavoriteHandler(FavoriteActivity.this);
-                List<Favorite> list = tbFavoriteHandler.selectAll(favoriteType);
+                List<Favorite> list = tbFavoriteHandler.selectByType(favoriteType);
                 mFavoriteList.clear();
                 mFavoriteList.addAll(list);
 
@@ -161,8 +162,10 @@ public class FavoriteActivity extends Activity implements OnItemClickListener, O
             mAdapter.notifyDataSetChanged();
 
             if (mFavoriteList.size() > 0) {
+                listBottom.setVisibility(View.VISIBLE);
                 noFavorite.setVisibility(View.GONE);
             } else {
+                listBottom.setVisibility(View.GONE);
                 noFavorite.setVisibility(View.VISIBLE);
             }
         }

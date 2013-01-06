@@ -11,23 +11,21 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!-- Required -->
+    <!--
     <permission
         android:name="me.chengdong.bustime.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
-    <!-- Required -->
     <uses-permission android:name="me.chengdong.bustime.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />    -->
+    
     <application
         android:name=".BustimeApplication"
         android:icon="@drawable/ic_launcher"
@@ -74,7 +72,7 @@
             android:label="@string/title_activity_update_version"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name=".activity.FavoriteActivity"
@@ -97,6 +95,7 @@
         </activity>
 
         <!-- Required -->
+        <!--  
         <service
             android:name="cn.jpush.android.service.PushService"
             android:enabled="true"
@@ -107,7 +106,6 @@
                 <action android:name="cn.jpush.android.intent.PushService" />
             </intent-filter>
         </service>
-        <!-- Required -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true" >
@@ -123,7 +121,6 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
-        <!-- Required SDK:RICH PUSH -->
 
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
@@ -142,32 +139,26 @@
             android:enabled="true" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
-                <!-- Required  用户注册SDK的权限 -->
                 <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
-                <!-- Required  用户接收SDK消息的权限 -->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
-                <!-- Required  用户接收SDK通知栏信息的权限 -->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
-                <!-- Required  用户打开自定义通知栏的权限 -->
                 <category android:name="me.chengdong.bustime" />
             </intent-filter>
         </receiver>
-        <!-- Required SDK:RICH PUSH -->
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
             android:exported="false" >
         </service>
-        <!-- Required SDK -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
-        <!-- Required. For publish channel feature -->
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="developer-default" />
-        <!-- Required. AppKey copied from Portal -->
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="944ebc8489d8098fb9985c74" />
+        
+        -->
     </application>
 
 </manifest>

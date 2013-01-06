@@ -10,7 +10,7 @@ import me.chengdong.bustime.db.helper.MainSQLiteOpenHelper;
 import me.chengdong.bustime.model.Config;
 import me.chengdong.bustime.utils.LogUtil;
 import me.chengdong.bustime.utils.StringUtil;
-import android.content.Context;
+import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -30,6 +30,7 @@ public class TbConfigHandler {
     private static final String HAS_LINE_DATA = "line_data";
     private static final String LINE_NUMBER_EDIT_VALUE = "line_number_edit_value";
     private static final String STATION_NAME_EDIT_VALUE = "station_name_edit_value";
+    private static final String NO_CHECK_VERSION = "no_check_version";
 
     private static final String COLUMN_KEY = "key";
     private static final String COLUMN_VAL = "value";
@@ -45,7 +46,7 @@ public class TbConfigHandler {
     public static final String INSERT_SQL = "INSERT INTO " + TABLE + " (" + COLUMN_KEY + ", " + COLUMN_VAL
             + ") VALUES(?, ?)";
 
-    public TbConfigHandler(Context context) {
+    public TbConfigHandler(Activity context) {
         mSQLite = new MainSQLiteOpenHelper(context);
     }
 
@@ -115,14 +116,25 @@ public class TbConfigHandler {
         return config.getConfigValue();
     }
 
+    public boolean checkUpdate() {
+        Config config = selectOne(NO_CHECK_VERSION);
+        if (config == null) {
+            return true;
+        }
+        return false;
+    }
+
+    public void noCheckUpdate() {
+        saveOrUpdate(NO_CHECK_VERSION, NO_CHECK_VERSION);
+    }
+
     public void saveLineData() {
         saveOrUpdate(HAS_LINE_DATA, HAS_LINE_DATA);
     }
 
     public Config selectOne(String key) {
-        Config config = new Config();
         if (StringUtil.isEmpty(key)) {
-            return config;
+            return null;
         }
 
         SQLiteDatabase m_oData = null;
@@ -146,7 +158,7 @@ public class TbConfigHandler {
                 m_oData = null;
             }
         }
-        return config;
+        return null;
     }
 
     private Config getConfigFromCursor(Cursor oCursor) {

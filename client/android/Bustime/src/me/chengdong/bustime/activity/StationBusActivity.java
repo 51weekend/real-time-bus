@@ -6,11 +6,9 @@ import java.util.List;
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.StationBusAdapter;
 import me.chengdong.bustime.db.TbFavoriteHandler;
-import me.chengdong.bustime.db.TbLineHandler;
 import me.chengdong.bustime.db.TbStationHandler;
 import me.chengdong.bustime.meta.FavoriteType;
 import me.chengdong.bustime.model.Favorite;
-import me.chengdong.bustime.model.Line;
 import me.chengdong.bustime.model.ResultData;
 import me.chengdong.bustime.model.Station;
 import me.chengdong.bustime.model.StationBus;
@@ -51,7 +49,7 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
 
     final List<StationBus> mStationBusList = new ArrayList<StationBus>(0);
 
-    private TbLineHandler tbLineHandler = new TbLineHandler(StationBusActivity.this);
+    //private TbLineHandler tbLineHandler = new TbLineHandler(StationBusActivity.this);
     private TbStationHandler tbStationHandler = new TbStationHandler(StationBusActivity.this);
     private TbFavoriteHandler tbFavoriteHandler = new TbFavoriteHandler(StationBusActivity.this);
 
@@ -185,15 +183,16 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
                         sb.append(",");
                     }
                 }
-                List<Line> lines = tbLineHandler.selectListByManyGuid(sb.toString());
-                for (Line line : lines) {
-                    for (StationBus stationBus : temps) {
-                        if (line.getLineGuid().equals(stationBus.getLineGuid())) {
-                            stationBus.setStartStation(line.getStartStation());
-                            stationBus.setEndStation(line.getEndStation());
-                        }
-                    }
-                }
+                // List<Line> lines =
+                // tbLineHandler.selectListByManyGuid(sb.toString());
+                // for (Line line : lines) {
+                // for (StationBus stationBus : temps) {
+                // if (line.getLineGuid().equals(stationBus.getLineGuid())) {
+                // stationBus.setStartStation(line.getStartStation());
+                // stationBus.setEndStation(line.getEndStation());
+                // }
+                // }
+                // }
                 mStationBusList.clear();
                 mStationBusList.addAll(temps);
             } else {

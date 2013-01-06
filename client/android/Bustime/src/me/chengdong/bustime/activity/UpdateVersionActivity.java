@@ -5,6 +5,7 @@ import java.util.List;
 
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.adapter.UpdateIntroAdapter;
+import me.chengdong.bustime.db.TbConfigHandler;
 import me.chengdong.bustime.task.UpdateTask;
 import me.chengdong.bustime.utils.CfgConstant;
 import me.chengdong.bustime.utils.ParamUtil;
@@ -33,6 +34,8 @@ public class UpdateVersionActivity extends BaseActivity {
     Button mCancel;
 
     UpdateIntroAdapter mAdapter;
+
+    TbConfigHandler tbConfigHandler = new TbConfigHandler(UpdateVersionActivity.this);
 
     final List<String> mUpdateIntroList = new ArrayList<String>(0);
 
@@ -101,6 +104,7 @@ public class UpdateVersionActivity extends BaseActivity {
             break;
 
         case R.id.update_cancel:
+            tbConfigHandler.noCheckUpdate();
             this.finish();
             EasyTracker.getTracker().trackEvent("ui_action", "button_press", "update_cancel", 1l);
             break;

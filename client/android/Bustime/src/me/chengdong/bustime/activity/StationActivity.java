@@ -63,14 +63,14 @@ public class StationActivity extends BaseActivity implements
 		mStationEditText = (EditText) this.findViewById(R.id.stationName);
 
 		mSearchClear = (ImageView) this.findViewById(R.id.iv_search_clear);
+		mSearchClear.setOnClickListener(this);
 
 		mSearchBtn = (Button) this.findViewById(R.id.search_btn);
+		mSearchBtn.setOnClickListener(this);
 
 		stationListView = (ListView) this
 				.findViewById(R.id.station_info_listview);
 
-		mSearchClear.setOnClickListener(this);
-		mSearchBtn.setOnClickListener(this);
 
 		mStationEditText.setSingleLine(true);
 		mStationEditText.clearFocus();

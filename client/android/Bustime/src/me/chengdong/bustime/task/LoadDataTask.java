@@ -9,6 +9,7 @@ package me.chengdong.bustime.task;
 import me.chengdong.bustime.db.TbConfigHandler;
 import me.chengdong.bustime.module.ReaderFileData;
 import me.chengdong.bustime.utils.LogUtil;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -43,7 +44,7 @@ public class LoadDataTask extends AsyncTask<String, String, String> {
         }
     }
 
-    public LoadDataTask(Context ctx) {
+    public LoadDataTask(Activity ctx) {
         mLoadDialog = new ProgressDialog(ctx);
         mLoadDialog.setMessage("从本地导入初始化数据,请稍候...");
         this.ctx = ctx;

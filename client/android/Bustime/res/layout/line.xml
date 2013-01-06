@@ -26,34 +26,50 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/top_relativelayout"
+        android:layout_centerInParent="true"
         android:background="@drawable/search_bar_bg" >
 
-        <EditText
-            android:id="@+id/line"
-            style="@style/search_tip"
-            android:layout_width="180dip"
-            android:layout_height="35dip"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="30dip"
-            android:background="@drawable/search_bar_edit_normal"
-            android:hint="@string/lineName"
-            android:imeOptions="actionDone"
-            android:inputType="number"
-            android:paddingLeft="30dip"
-            android:paddingRight="30dip"
-            android:textColorHint="#afafaf"
-            android:textSize="14.7sp" />
-
-        <ImageView
-            android:id="@+id/iv_search_clear"
+        <RelativeLayout
+            android:id="@+id/line_search_input_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="-25dip"
-            android:layout_toRightOf="@+id/line"
-            android:background="@drawable/btn_search_clear"
-            android:contentDescription="@string/search_clear"
-            android:visibility="gone" />
+            android:layout_marginLeft="30dip" >
+
+            <EditText
+                android:id="@+id/line"
+                style="@style/search_tip"
+                android:layout_width="180dip"
+                android:layout_height="35dip"
+                android:background="@drawable/search_bar_edit_normal"
+                android:hint="@string/lineName"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:paddingLeft="30dip"
+                android:textColorHint="#afafaf"
+                android:textSize="14.7sp" />
+
+            <ImageView
+                android:id="@+id/iv_search_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="-25dip"
+                android:layout_toRightOf="@+id/line"
+                android:background="@drawable/btn_search_clear"
+                android:contentDescription="@string/search_clear"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/search_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@+id/line_search_input_layout"
+            android:background="@drawable/btn_search"
+            android:text="@string/search" />
     </RelativeLayout>
 
     <ListView

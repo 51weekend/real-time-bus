@@ -12,12 +12,14 @@ import java.util.List;
 
 import me.chengdong.bustime.R;
 import me.chengdong.bustime.activity.UpdateVersionActivity;
+import me.chengdong.bustime.db.TbConfigHandler;
 import me.chengdong.bustime.model.Config;
 import me.chengdong.bustime.model.ResultData;
 import me.chengdong.bustime.module.DownloadData;
 import me.chengdong.bustime.utils.AppUtil;
 import me.chengdong.bustime.utils.ParamUtil;
 import me.chengdong.bustime.utils.StringUtil;
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -33,14 +35,18 @@ import android.os.Bundle;
  */
 public class CheckVersionTask extends AsyncTask<Void, Void, Void> {
 
-    public CheckVersionTask(Context context) {
+    public CheckVersionTask(Activity context) {
         this.context = context;
     }
 
-    private Context context;
+    private Activity context;
 
     @Override
     protected Void doInBackground(Void... arg0) {
+        TbConfigHandler tbConfigHandler = new TbConfigHandler(context);
+        if (!tbConfigHandler.checkUpdate()) {
+            return null;
+        }
         ResultData result = DownloadData.queryConfigByKey(context, "versionCode");
         if (result.failed()) {
             return null;

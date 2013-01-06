@@ -89,9 +89,9 @@ public class FavoriteAdapter extends BaseAdapter implements OnClickListener {
 				holder.tvName = (TextView) convertView
 						.findViewById(R.id.tv_lineNumber);
 				holder.tvPropertyOne = (TextView) convertView
-						.findViewById(R.id.tv_startStation);
-				holder.tvpropertyTwo = (TextView) convertView
 						.findViewById(R.id.tv_run_time);
+				holder.tvpropertyTwo = (TextView) convertView
+						.findViewById(R.id.tv_startStation);
 				holder.tvpropertyThree = (TextView) convertView
 						.findViewById(R.id.tv_endStation);
 			}
