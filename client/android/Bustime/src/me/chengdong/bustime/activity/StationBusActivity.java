@@ -40,7 +40,7 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
 
     ListView stationBusListView;
 
-    Button mBackBtn, mChangeErroBtn;
+    Button mBackBtn;
     ImageButton mFavoriteBtn, mRefreshBtn;
     RelativeLayout mFavoriteLayout, mRefreshLayout;
     TextView mFavoriteText, mRefreshText;
@@ -60,7 +60,7 @@ public class StationBusActivity extends BaseActivity implements OnItemClickListe
 
         stationBusListView = (ListView) findViewById(R.id.station_bus_listview);
 
-        mChangeErroBtn = (Button) findViewById(R.id.change_error);
+       // mChangeErroBtn = (Button) findViewById(R.id.change_error);
 
         mBackBtn = (Button) findViewById(R.id.back_btn);
         mBackBtn.setOnClickListener(this);

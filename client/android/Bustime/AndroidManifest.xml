@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="me.chengdong.bustime"
-    android:versionCode="2"
-    android:versionName="2.0" >
+    android:versionCode="3"
+    android:versionName="3.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -9,6 +9,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!-- Required -->
     <!--
@@ -24,8 +26,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />    -->
-    
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    -->
+
     <application
         android:name=".BustimeApplication"
         android:icon="@drawable/ic_launcher"
@@ -95,7 +98,7 @@
         </activity>
 
         <!-- Required -->
-        <!--  
+        <!--
         <service
             android:name="cn.jpush.android.service.PushService"
             android:enabled="true"
@@ -156,8 +159,7 @@
             android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="944ebc8489d8098fb9985c74" />
-        
+            android:value="944ebc8489d8098fb9985c74" />
         -->
     </application>
 

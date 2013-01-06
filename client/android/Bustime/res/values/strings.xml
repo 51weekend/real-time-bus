@@ -37,6 +37,7 @@
     <string name="favorite">收藏</string>
     <string name="list_bottom">底部撕边</string>
     <string name="line">公交</string>
+    <string name="station">站台</string>
     <string name="detail">详细信息</string>
     <string name="change_error">纠错</string>
 

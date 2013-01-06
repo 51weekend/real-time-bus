@@ -43,7 +43,7 @@ public class SingleLineActivity extends BaseActivity {
 
     TextView mTitle;
 
-    Button mBackBtn, mChangeErroBtn;
+    Button mBackBtn;
     ImageButton mFavoriteBtn, mRefreshBtn;
     RelativeLayout mFavoriteLayout, mRefreshLayout;
     TextView mFavoriteText, mRefreshText;
@@ -65,8 +65,8 @@ public class SingleLineActivity extends BaseActivity {
 
         mTitle = (TextView) findViewById(R.id.title_textview);
 
-        mChangeErroBtn = (Button) findViewById(R.id.change_error);
-        mChangeErroBtn.setOnClickListener(this);
+        // mChangeErroBtn = (Button) findViewById(R.id.change_error);
+        //mChangeErroBtn.setOnClickListener(this);
 
         mBackBtn = (Button) findViewById(R.id.back_btn);
         mBackBtn.setOnClickListener(this);

@@ -49,8 +49,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/tab_left_press"
-                android:contentDescription="@string/stationName"
-                android:text="@string/stationName" />
+                android:contentDescription="@string/station"
+                android:text="@string/station" />
 
             <Button
                 android:id="@+id/btn_select_line"
