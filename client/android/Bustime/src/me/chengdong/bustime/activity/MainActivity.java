@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-@SuppressWarnings("deprecation")
 public class MainActivity extends TabActivity {
 
     TbFavoriteHandler tbFavoriteHandler = new TbFavoriteHandler(MainActivity.this);

@@ -91,10 +91,10 @@ public class CheckVersionTask extends AsyncTask<Void, Void, Void> {
         NotificationManager mNotificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         int icon = R.drawable.ic_launcher;
-        CharSequence tickerText = "苏州实时公交更新通知";
+        CharSequence tickerText = "新版本更新通知";
         long when = System.currentTimeMillis();
         Notification notification = new Notification(icon, tickerText, when);
-        CharSequence contentTitle = "苏州实时公交更新通知";
+        CharSequence contentTitle = "新版本更新通知";
         CharSequence contentText = "发现新版本" + versionName + ",请更新!";
         notification.flags = Notification.FLAG_ONLY_ALERT_ONCE;
         Intent notificationIntent = new Intent(context, UpdateVersionActivity.class);

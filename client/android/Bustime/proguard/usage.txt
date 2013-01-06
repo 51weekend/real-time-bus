@@ -1,0 +1,188 @@
+me.chengdong.bustime.BuildConfig
+me.chengdong.bustime.MyCrashHandler:
+    private static final java.lang.String TAG
+me.chengdong.bustime.R
+me.chengdong.bustime.R$array
+me.chengdong.bustime.R$attr
+me.chengdong.bustime.R$bool
+me.chengdong.bustime.R$color
+me.chengdong.bustime.R$dimen
+me.chengdong.bustime.R$drawable
+me.chengdong.bustime.R$id
+me.chengdong.bustime.R$layout
+me.chengdong.bustime.R$menu
+me.chengdong.bustime.R$raw
+me.chengdong.bustime.R$string
+me.chengdong.bustime.R$style
+me.chengdong.bustime.adapter.MoreAdapter
+me.chengdong.bustime.adapter.MoreAdapter$ViewHolder
+me.chengdong.bustime.db.TbConfigHandler:
+    public static final java.lang.String TABLE
+    private static final java.lang.String HAS_STATION_DATA
+    private static final java.lang.String HAS_LINE_DATA
+    private static final java.lang.String LINE_NUMBER_EDIT_VALUE
+    private static final java.lang.String STATION_NAME_EDIT_VALUE
+    private static final java.lang.String NO_CHECK_VERSION
+    private static final java.lang.String COLUMN_KEY
+    private static final java.lang.String COLUMN_VAL
+    public static final java.lang.String CREATE_TABLE_SQL
+    public static final java.lang.String DROP_TABLE_SQL
+    public static final java.lang.String SELECT_BY_KEY
+    public static final java.lang.String UPDATE_SQL
+    public static final java.lang.String INSERT_SQL
+    88:92:public boolean hasStationData()
+    96:97:public void saveStationData()
+    100:104:public boolean hasLineData()
+    132:133:public void saveLineData()
+me.chengdong.bustime.db.TbFavoriteHandler:
+    public static final java.lang.String TABLE
+    private static final java.lang.String COLUMN_CODE
+    private static final java.lang.String COLUMN_NAME
+    private static final java.lang.String COLUMN_TYPE
+    private static final java.lang.String COLUMN_PROPERTY_ONE
+    private static final java.lang.String COLUMN_PROPERTY_TWO
+    private static final java.lang.String COLUMN_PROPERTY_THREE
+    public static final java.lang.String CREATE_TABLE_SQL
+    public static final java.lang.String DROP_TABLE_SQL
+    public static final java.lang.String SELECT_BY_CODE
+    public static final java.lang.String INSERT_SQL
+    public static final java.lang.String SELECT_ALL
+    public static final java.lang.String SELECT_BY_TYPE
+    public static final java.lang.String DELETE_BY_CODE
+    113:137:public boolean hasFavorite()
+me.chengdong.bustime.db.TbLineHandler:
+    public static final java.lang.String TABLE
+    private static final java.lang.String COLUMN_CODE
+    private static final java.lang.String COLUMN_NAME
+    private static final java.lang.String COLUMN_S_NAME
+    private static final java.lang.String COLUMN_RUN_TIME
+    private static final java.lang.String COLUMN_START_STATION
+    private static final java.lang.String COLUMN_END_STATION
+    public static final java.lang.String CREATE_TABLE_SQL
+    private static final java.lang.String SELECT_LIKE_BY_NAME
+    private static final java.lang.String SELECT_CONDITION_IN_CODE
+    private static final java.lang.String SELECT_BY_CODE
+    public static final java.lang.String DROP_TABLE_SQL
+    74:114:public void saveOrUpdate(java.lang.String)
+me.chengdong.bustime.db.TbSingleLineHandler:
+    public static final java.lang.String TABLE
+    private static final java.lang.String COLUMN_LINE_GUID
+    private static final java.lang.String COLUMN_STAND_CODE
+    private static final java.lang.String COLUMN_STAND_NAME
+    public static final java.lang.String CREATE_TABLE_SQL
+    public static final java.lang.String DROP_TABLE_SQL
+    private static final java.lang.String INSERT_SQL
+    private static final java.lang.String SELECT_BY_LINE_GUID_SQL
+me.chengdong.bustime.db.TbStationHandler:
+    public static final java.lang.String TABLE
+    private static final java.lang.String COLUMN_CODE
+    private static final java.lang.String COLUMN_NAME
+    private static final java.lang.String COLUMN_ROAD
+    private static final java.lang.String COLUMN_TREND
+    private static final java.lang.String COLUMN_AREA
+    private static final java.lang.String COLUMN_LINES
+    public static final java.lang.String CREATE_TABLE_SQL
+    private static final java.lang.String UPDATE_SQL
+    private static final java.lang.String INSERT_SQL
+    private static final java.lang.String SELECT_SQL
+    private static final java.lang.String SELECT_LIKE_BY_NAME_SQL
+    public static final java.lang.String DROP_TABLE_SQL
+    109:142:public void saveOrUpdate(java.lang.String)
+me.chengdong.bustime.db.helper.MainSQLiteOpenHelper:
+    private static final int VERSION
+    private static final java.lang.String DB_NAME
+me.chengdong.bustime.http.HttpClientTools:
+    private static final java.lang.String TAG
+    42:42:public HttpClientTools()
+    316:356:public static me.chengdong.bustime.http.HttpResult httpPost(android.content.Context,java.lang.String,java.util.Map)
+me.chengdong.bustime.http.HttpClientUtil:
+    46:57:public static me.chengdong.bustime.http.HttpResult submitByPost(android.content.Context,java.lang.String,java.util.Map)
+me.chengdong.bustime.http.HttpResult:
+    23:24:public void setCode(int)
+    31:32:public void setResponse(java.lang.String)
+me.chengdong.bustime.meta.FavoriteType:
+    31:32:public void setType(int)
+    35:35:public java.lang.String getName()
+    39:40:public void setName(java.lang.String)
+me.chengdong.bustime.model.CodeValue:
+    26:27:public void setCode(java.lang.String)
+    34:35:public void setValue(java.lang.String)
+me.chengdong.bustime.model.Line:
+    42:42:public int getTotalStation()
+    46:47:public void setTotalStation(int)
+me.chengdong.bustime.model.More
+me.chengdong.bustime.model.ResultData:
+    public static final int PARAMETER_ERROR
+    public static final int NO_DATA
+    public static final int SERVER_ERROR
+    public static final int NETWORK_DISABLED
+    public static final int DECODE_JSON_ERROR
+    public static final int SUCCESS
+    public static final int ERR_CODE_NO_NET
+    public static final int HTTP_SOCKET_FAIL
+    public static final int HTTP_CODE_ERROR
+    public static final int HTTP_RESPONSE_ERROR
+    public static final int HTTP_EXCEPTION
+    public static final int HTTP_RESPONSE_ERROR_WIFI
+    public static final int HTTP_AIRPLANE_MODE
+me.chengdong.bustime.model.StationBus:
+    30:31:public void setLineGuid(java.lang.String)
+    38:39:public void setStandNum(java.lang.String)
+    42:42:public java.lang.String getTime()
+    46:47:public void setTime(java.lang.String)
+    54:55:public void setLineNumber(java.lang.String)
+    62:63:public void setStartStation(java.lang.String)
+    70:71:public void setEndStation(java.lang.String)
+me.chengdong.bustime.module.DownloadData:
+    public static final java.lang.String SERVER_HOST
+    public static final java.lang.String SERVER_CONTEXT
+    public static final java.lang.String QUERY_LINE_PATH
+    public static final java.lang.String QUERY_SINGLE_LINE_PATH
+    public static final java.lang.String QUERY_RUN_SINGLE_LINE_PATH
+    public static final java.lang.String QUERY_STATION_PATH
+    public static final java.lang.String QUERY_STATION_BUS_PATH
+    public static final java.lang.String QUERY_CONFIG_PATH
+    public static final java.lang.String DOWNLOAD_STATION_PATH
+    public static final java.lang.String DOWNLOAD_LINE_PATH
+    168:185:public static void downloadStation(android.app.Activity)
+    189:206:public static void downloadLine(android.app.Activity)
+me.chengdong.bustime.module.ReaderFileData
+me.chengdong.bustime.task.LoadDataTask
+me.chengdong.bustime.task.UpdateTask:
+    public static final java.lang.String TAG
+me.chengdong.bustime.ui.SideNavigationLayout
+me.chengdong.bustime.utils.AppUtil:
+    private static final java.lang.String TAG
+    15:15:public AppUtil()
+    29:40:public static java.lang.String getVersionName(android.content.Context)
+    44:44:public static final java.lang.String getPkg(android.content.Context)
+    48:63:public static final java.lang.String getAppMetaData(android.content.Context,java.lang.String)
+me.chengdong.bustime.utils.CfgConstant
+me.chengdong.bustime.utils.DeviceUtil
+me.chengdong.bustime.utils.EscapeUtil
+me.chengdong.bustime.utils.LogUtil:
+    12:12:public LogUtil()
+    16:20:public static int v(java.lang.String,java.lang.String)
+    25:29:public static int v(java.lang.String,java.lang.String,java.lang.Throwable)
+    43:47:public static int d(java.lang.String,java.lang.String,java.lang.Throwable)
+    61:65:public static int i(java.lang.String,java.lang.String,java.lang.Throwable)
+    70:74:public static int w(java.lang.String,java.lang.String)
+    79:83:public static int w(java.lang.String,java.lang.String,java.lang.Throwable)
+    88:91:public static int w(java.lang.String,java.lang.Throwable)
+me.chengdong.bustime.utils.NetworkUtil:
+    public static final java.lang.String TAG
+    14:14:public NetworkUtil()
+    94:98:public static boolean isWifiOn(android.content.Context)
+me.chengdong.bustime.utils.ParamUtil
+me.chengdong.bustime.utils.StringUtil:
+    14:14:public StringUtil()
+    32:32:public static boolean isNotBlank(java.lang.String)
+    42:47:public static boolean isMobileNO(java.lang.String)
+    58:63:public static boolean isEmail(java.lang.String)
+    74:84:public static java.util.List split2list(java.lang.String,java.lang.String)
+    93:94:public static boolean isPinYin(java.lang.String)
+    98:99:public static boolean containCn(java.lang.String)
+    109:114:public static void setTextOfView(android.widget.TextView,java.lang.String)
+    122:134:public static java.lang.String toDBC(java.lang.String)
+me.chengdong.bustime.utils.TipUtil:
+    12:12:public TipUtil()

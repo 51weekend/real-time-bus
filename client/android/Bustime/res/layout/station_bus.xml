@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_bg" >
@@ -39,7 +38,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10.7dip"
             android:background="@drawable/btn_top"
-            android:text="@string/change_error" />
+            android:text="@string/change_error" />
         -->
     </RelativeLayout>
 
