@@ -19,6 +19,7 @@ public class LoggerUtils {
     private static final Logger error = LoggerFactory.getLogger("me.chengdong.bustime.looger.error");
     private static final Logger alarm = LoggerFactory.getLogger("me.chengdong.bustime.looger.alarm");
     private static final Logger info = LoggerFactory.getLogger("me.chengdong.bustime.looger.info");
+    private static final Logger request = LoggerFactory.getLogger("me.chengdong.bustime.looger.request");
 
     public static void error(String errorMessage, Throwable e) {
         e.printStackTrace();
@@ -35,6 +36,10 @@ public class LoggerUtils {
 
     public static void alarm(String string) {
         alarm.info(string);
+    }
+
+    public static void request(String infoMessage) {
+        request.info(infoMessage);
     }
 
 }

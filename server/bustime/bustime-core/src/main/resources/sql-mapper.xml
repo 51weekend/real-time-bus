@@ -34,6 +34,16 @@
 		status = 'enable'
 		and lineGuid in (${lineGuid})
 	</select>
+	
+	<select id="queryLinesEqualGuid" parameterType="string"
+		resultType="com.bustime.common.model.Line">
+		select lineGuid, lineNumber, lineInfo, link,
+		startStation,endStation,runTime,totalStation ,status
+		from line
+		where
+		status = 'enable'
+		and lineGuid = #{lineGuid}
+	</select>
 
 	<select id="queryNoRunTimeLine" resultType="com.bustime.common.model.Line">
 		select lineGuid,

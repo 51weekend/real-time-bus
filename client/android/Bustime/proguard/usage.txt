@@ -14,8 +14,6 @@ me.chengdong.bustime.R$menu
 me.chengdong.bustime.R$raw
 me.chengdong.bustime.R$string
 me.chengdong.bustime.R$style
-me.chengdong.bustime.adapter.MoreAdapter
-me.chengdong.bustime.adapter.MoreAdapter$ViewHolder
 me.chengdong.bustime.db.TbConfigHandler:
     public static final java.lang.String TABLE
     private static final java.lang.String HAS_STATION_DATA

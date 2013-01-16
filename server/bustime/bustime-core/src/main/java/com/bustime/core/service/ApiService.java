@@ -203,7 +203,9 @@ public class ApiService {
      */
     public List<StationBus> queryStationBus(final String stationCode) {
         final List<StationBus> stationBuses = stationBusParser.getData(stationCode);
-
+        if (CollectionUtils.isEmpty(stationBuses)) {
+            return stationBuses;
+        }
         StringBuilder sb = new StringBuilder();
         for (int i = 0, n = stationBuses.size(); i < n; i++) {
             sb.append("'").append(stationBuses.get(i).getLineGuid()).append("'");

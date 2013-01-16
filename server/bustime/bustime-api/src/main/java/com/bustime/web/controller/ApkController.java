@@ -33,6 +33,7 @@ public class ApkController {
     @RequestMapping
     public String down(@RequestParam(value = "fileName", required = false) String fileName,
             HttpServletResponse response, Model model) {
+        LoggerUtils.request("download bustime");
         if ((StringUtils.isBlank(fileName))) {
             return null;
         }

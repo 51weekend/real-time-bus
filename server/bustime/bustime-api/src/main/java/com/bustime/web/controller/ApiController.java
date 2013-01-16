@@ -56,6 +56,7 @@ public class ApiController {
             LoggerUtils.error("query line error", e);
             result.setResultCode(SERVER_ERROR);
         }
+        LoggerUtils.request("request\tqueryLine\t" + lineNumber + "\tand response " + result);
         return result;
     }
 
@@ -77,6 +78,7 @@ public class ApiController {
             }
 
         }
+
         result.setData(sb.toString());
         return result;
     }
@@ -95,6 +97,7 @@ public class ApiController {
             return result;
         }
         result.setData(apiService.querySingleLine(lineCode));
+        LoggerUtils.request("request\tquerySingleLine\tlineCode:" + lineCode + "\tand response " + result);
         return result;
     }
 
@@ -115,6 +118,7 @@ public class ApiController {
                 runData.add(codeValue);
             }
         }
+        LoggerUtils.request("request\tqueryRunSingleLine\tlineCode:" + lineCode + "\tand response\t" + result);
         result.setData(runData);
         return result;
     }
@@ -132,7 +136,9 @@ public class ApiController {
             result.setData(list);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            result.setResultCode(SERVER_ERROR);
         }
+        LoggerUtils.request("request\tqueryStation\tstationName:" + stationName + "\tand response\t" + result);
         return result;
     }
 
@@ -180,6 +186,7 @@ public class ApiController {
             LoggerUtils.error("query station bus error", e);
             result.setResultCode(SERVER_ERROR);
         }
+        LoggerUtils.request("request\tqueryStationBus\tstationCode:" + stationCode + "\tand response\t" + result);
         return result;
     }
 
