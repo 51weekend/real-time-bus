@@ -127,5 +127,10 @@
 			<artifactId>quartz</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.sdo.billing</groupId>
+			<artifactId>billing-util</artifactId>
+		</dependency>
+
 	</dependencies>
 </project>

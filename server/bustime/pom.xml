@@ -19,6 +19,7 @@
 		<jpush.version>0.1</jpush.version>
 		<htmlparser.version>1.6</htmlparser.version>
 		<fastjson.version>1.1.23</fastjson.version>
+		<billing-util.version>1.0.7-SNAPSHOT</billing-util.version>
 	</properties>
 
 	<build>
@@ -327,6 +328,12 @@
 				<version>1.6.3</version>
 				<type>jar</type>
 				<scope>compile</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sdo.billing</groupId>
+				<artifactId>billing-util</artifactId>
+				<version>${billing-util.version}</version>
 			</dependency>
 
 		</dependencies>

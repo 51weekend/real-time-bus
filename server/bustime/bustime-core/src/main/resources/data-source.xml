@@ -11,7 +11,7 @@
            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd 
            ">
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	<bean id="dataSource" class="com.bustime.core.dbcp.EncryptPasswordBasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="${db.driverClass}" />
 		<property name="url" value="${db.jdbcUrl}" />
