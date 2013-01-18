@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.alibaba.fastjson.JSON;
-
 /**
  * 返回结果封装.
  *
@@ -77,7 +75,7 @@ public class ResultModel extends HashMap<String, Object> implements Serializable
 
     @Override
     public String toString() {
-        return JSON.toJSONString(this);
+        return "resultCode:" + resultCode + " resultMsg:" + resultMsg;
     }
 
     static {
