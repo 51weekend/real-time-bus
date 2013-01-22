@@ -63,7 +63,11 @@ public class StationBus {
     }
 
     public void setStandNum(String standNum) {
-        this.standNum = standNum;
+        if ("进站".equals(standNum)) {
+            this.standNum = "即将进站";
+        } else {
+            this.standNum = standNum;
+        }
     }
 
     @JsonIgnore
