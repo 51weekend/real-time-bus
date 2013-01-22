@@ -75,7 +75,7 @@ public class ResultModel extends HashMap<String, Object> implements Serializable
 
     @Override
     public String toString() {
-        return "resultCode:" + resultCode + " resultMsg:" + resultMsg;
+        return "resultCode:" + this.get(resultCode) + " resultMsg:" + this.get(resultMsg);
     }
 
     static {
