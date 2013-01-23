@@ -6,6 +6,8 @@
 
 package com.bustime.core.service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -310,6 +312,10 @@ public class ApiService {
         Map<String, String> parameter = new HashMap<String, String>();
         parameter.put("type", type);
         return configDao.selectList("queryConfig", parameter);
+    }
+    
+    public static void main(String[] args) throws UnsupportedEncodingException {
+        System.out.println(URLEncoder.encode("夜2", "UTF-8"));
     }
 
 }
