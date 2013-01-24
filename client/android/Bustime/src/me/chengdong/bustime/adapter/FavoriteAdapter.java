@@ -13,7 +13,6 @@ import me.chengdong.bustime.R;
 import me.chengdong.bustime.db.TbFavoriteHandler;
 import me.chengdong.bustime.meta.FavoriteType;
 import me.chengdong.bustime.model.Favorite;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +28,6 @@ import android.widget.TextView;
  * 
  * @author chengdong
  */
-@SuppressLint("ShowToast")
 public class FavoriteAdapter extends BaseAdapter implements OnClickListener {
 
     private LayoutInflater inflater;

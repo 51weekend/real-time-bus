@@ -60,6 +60,7 @@ public class FavoriteActivity extends Activity implements OnItemClickListener, O
 
         mAdapter = new FavoriteAdapter(FavoriteActivity.this, mFavoriteList, FavoriteType.STATION, editable);
         favoriteListView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
 
         favoriteListView.setOnItemClickListener(this);
     }
@@ -97,19 +98,23 @@ public class FavoriteActivity extends Activity implements OnItemClickListener, O
 
         switch (v.getId()) {
         case R.id.btn_select_station:
+            mFavoriteList.clear();
             mSelectStationBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_left_press));
             mSelectLineBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_right));
             this.favoriteType = FavoriteType.STATION;
             mAdapter = new FavoriteAdapter(FavoriteActivity.this, mFavoriteList, FavoriteType.STATION, editable);
             favoriteListView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
             new QueryFavoriteTask().execute();
             break;
         case R.id.btn_select_line:
+            mFavoriteList.clear();
             mSelectStationBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_left));
             mSelectLineBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_right_press));
             this.favoriteType = FavoriteType.LINE;
             mAdapter = new FavoriteAdapter(FavoriteActivity.this, mFavoriteList, FavoriteType.LINE, editable);
             favoriteListView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
             new QueryFavoriteTask().execute();
             break;
 
@@ -121,12 +126,14 @@ public class FavoriteActivity extends Activity implements OnItemClickListener, O
                 editable = true;
                 mEditBtn.setText("完成");
             }
+            mFavoriteList.clear();
             if (this.favoriteType == FavoriteType.LINE) {
                 mAdapter = new FavoriteAdapter(FavoriteActivity.this, mFavoriteList, FavoriteType.LINE, editable);
             } else {
                 mAdapter = new FavoriteAdapter(FavoriteActivity.this, mFavoriteList, FavoriteType.STATION, editable);
             }
             favoriteListView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
             new QueryFavoriteTask().execute();
 
         default:
