@@ -224,6 +224,7 @@ public class ApiService {
                 if (line.getLineGuid().equals(stationBus.getLineGuid())) {
                     stationBus.setStartStation(line.getStartStation());
                     stationBus.setEndStation(line.getEndStation());
+                    stationBus.setRunTime(line.getRunTime());
                 }
             }
         }
