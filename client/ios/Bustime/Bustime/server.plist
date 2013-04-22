@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>query_bus_line</key>
+	<string>http://42.121.117.61:6068/bustime/api/queryLine</string>
+	<key>query_bus_single_line</key>
+	<string>http://42.121.117.61:6068/bustime/api/querySingleLine</string>
+	<key>query_bus_single_time</key>
+	<string>http://42.121.117.61:6068/bustime/api/queryRunSingleLine</string>
+	<key>query_bus_station</key>
+	<string>http://42.121.117.61:6068/bustime/api/queryStation</string>
+	<key>query_station_line</key>
+	<string>http://42.121.117.61:6068/bustime/api/queryStationBus</string>
+</dict>
+</plist>
